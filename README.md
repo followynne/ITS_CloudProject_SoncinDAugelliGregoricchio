@@ -1,5 +1,5 @@
 # ITS_CloudProject_SoncinDAugelliGregoricchio
-Final Project for Cloud Service course ([ITS-ICT Piemonte](http://moodle.its-ictpiemonte.it/my/index.php), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
+Final Project for Cloud Service course ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
 
 Based on:
 

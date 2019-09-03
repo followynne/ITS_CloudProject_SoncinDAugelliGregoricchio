@@ -1,0 +1,15 @@
+{
+    "require": {
+        "league/plates": "^3.3",
+        "microsoft/azure-storage-blob": "*",
+        "microsoft/azure-storage-table": "*",
+        "microsoft/azure-storage-queue": "*",
+        "microsoft/azure-storage-file": "*"
+    },
+    "autoload": {
+        "psr-4":
+		{
+		"AzureClasses\\": "php/"
+		}
+    }
+}

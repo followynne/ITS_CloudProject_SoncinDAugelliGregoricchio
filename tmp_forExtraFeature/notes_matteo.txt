@@ -1,0 +1,13 @@
+- controllare che una persona sia loggata altrimenti "page 404"
+
+- inserire il container corretto della persona
+
+[- aggiungere apertura pagina per mostrare la foto con suoi dettagli exif]
+
+
+- in ottica ricerca tag, pensare a implementare ricerca tramite tag (che tag?!).
+
+- in ottica selezione/delete foto, aggiungere un selectable button + un bottone delete 1/selected.
+Implementare la funzione delete.
+
+- in ottica selezione+condivisione foto, ipotizzare pox di aprire tutte le foto in altra pagina [button, selezionabile, etc.]

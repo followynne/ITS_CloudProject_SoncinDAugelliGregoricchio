@@ -1,8 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace AzureClasses;
-
-//require "vendor/autoload.php";
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
@@ -17,35 +16,36 @@ class AzureInteraction
     $this->blobClient = BlobRestProxy::createBlobService($connectionString);
   }
 
-  function returnBlobJson(string $containerName)
+  function getBlobJson(string $containerName, int $indexPageRequested)
   {
-    $blobJson = $this->createBlobJson($containerName);
+    $blobJson = $this->createBlobJson($containerName, $indexPageRequested);
     return $blobJson;
   }
 
-  function createBlobJson($container){
+  function createBlobJson(string $container, int $indexPageRequested){
     $listBlobsOptions = new ListBlobsOptions();
-    $listBlobsOptions->setPrefix("HelloWorld");
-    $blobs = $this->createBlobsListfromContainer($container);
+    $blobs = $this->getBlobsListfromContainer($container, $listBlobsOptions);
+    $maxBlobsPerSubPage = 12;
+    $startingBlobIndex = 0 + $maxBlobsPerSubPage*$indexPageRequested;
+    $blob = $blobs->getBlobs();
 
     $blobList = '{
-        "pageData":{
-          "totalBlobsCount":"' . count($blobs->getBlobs()).'",
-          "maxBlobsPerSubPage":"5",
-          "blobs":[';
-    do
+      "pageData":{
+      "totalBlobsCount":"' . count($blobs->getBlobs()).'",
+      "maxBlobsPerSubPage":'. $maxBlobsPerSubPage.',
+      "blobs":[';
+
+    for ($i = $startingBlobIndex; $i < $startingBlobIndex+$maxBlobsPerSubPage; $i++)
     {
-      foreach ($blobs->getBlobs() as $blob)
-      {
-        $blobList .= '{"name":"'.$blob->getName().'","url":"'.$blob->getUrl().'"},';
+      if (empty($blob[$i])){
+        continue;
       }
-      $listBlobsOptions->setContinuationToken($blobs->getContinuationToken());
-    } while($blobs->getContinuationToken());
+      $blobList .= '{"name":"'.$blob[$i]->getName().'","url":"'.$blob[$i]->getUrl().'"},';
+    }
     return substr($blobList,0, strlen($blobList)-1).']}}';
   }
 
-  function createBlobsListfromContainer($container){
-    return $listBlobsAndProperties = $this->blobClient->listBlobs($container);
+  function getBlobsListfromContainer(string $container, object $listBlobsOptions){
+    return $listBlobsAndProperties = $this->blobClient->listBlobs($container, $listBlobsOptions);
   }
-
 }

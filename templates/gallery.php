@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $this->e($title) ?></title>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/clipboard/dist/clipboard.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"></link>
     <link rel="stylesheet" href="../css/main.css"></link>

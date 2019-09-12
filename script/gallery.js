@@ -1,87 +1,142 @@
+import * as func from './galleryFunctionsPaginationCreation.js';
+
 $(document).ready(() => {
+
   fetchSelectedPage(1);
+  confirmPageOpen('#fetchall');
+  selectOrDeselectAllImagesInPage('#selectall',true);
+  selectOrDeselectAllImagesInPage('#deselectall',false);
+  deleteSelectedImages('#deleteselected');
+  getShareableLink('#getlink');
+
 })
 
-function fetchSelectedPage(index){
+function fetchSelectedPage(index)
+{
     fetch('/../php/GetJsonBlobs.php?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
-    displayImagesForSubPage(data.pageData.blobs);
-    startPaginationCreation(data.pageData, index-1);
+    func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
+    if (!(window.location.pathname === '/getallblobs.php')){
+      startPaginationCreation(data.pageData, index-1);
+    }
+    enableDeleteOneIfNoneAreSelected();
+    enableDeleteForSingleImage(data.pageData, index-1);
   })
 };
 
-function displayImagesForSubPage(blobs){
-  let images = '';
-  $.each(blobs, function(key, value) {
-    images += '<div class="col-3 p-3"> ' +
-    '<div class="card h-100 border-dark">'+
-    '<div class="card-img-top">'+
-    '<div class="embed-responsive embed-responsive-4by3">'+
-    '<div class="embed-responsive-item">'+
-    '<a href="'+ value.url +'">'+
-    '<img class="img-fluid w-100" src="' + value.url + '"/>'+
-    '</a></div></div></div></div></div>';
-  });
-  $(".divForImagesShowing").html(images);
-}
-
 function startPaginationCreation(dataJson, indexPage){
   let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
-  createPagination(pagesToRender, indexPage);
+  func.createPagination(pagesToRender, indexPage);
 
   $('.fetchSelectedPage').on('click', (event) => {
     fetchSelectedPage($(event.target).attr('value'));
   })
   $('.fetchPagination').on('click', (event) => {
     startPaginationCreation(dataJson, $(event.target).attr('value')-1);
-        })
+  })
 }
 
-function createPagination(totalPages, indexSelectedPage){
-  let paginationRender = "";
-  const pagesButtonMaxAmount = 6;
-  let pagesToCycleThrough = 0;
-  pagesToCycleThrough = totalPages <= pagesButtonMaxAmount ? totalPages : pagesButtonMaxAmount;
-  let areProgressiveElementNeeded = totalPages >= pagesButtonMaxAmount;
-  let indexToStartFromForCorrectDisplayFromEndLine = totalPages-pagesButtonMaxAmount-2;
+function enableDeleteOneIfNoneAreSelected(){
+  $('.blankCheckbox').on('click', (event) => {
+    $('.divForImagesShowing input:checked').length>0 ? $('.btnDeleteOne').prop('disabled', true) : $('.btnDeleteOne').removeAttr('disabled');
+  })
+}
 
-  if (!areProgressiveElementNeeded)
-  {
-    paginationRender += addPage(pagesToCycleThrough, 1, indexSelectedPage);
-  } else
-  {
-    if (indexSelectedPage >= 0 && indexSelectedPage <= 3){
-      paginationRender += addPage(pagesToCycleThrough, 1, indexSelectedPage);
-      paginationRender += addProgressiveElement(1 + pagesButtonMaxAmount) + addToEndElement(totalPages);
-    } else if (indexSelectedPage < indexToStartFromForCorrectDisplayFromEndLine) {
-      paginationRender += addPage(indexSelectedPage+pagesToCycleThrough, indexSelectedPage, indexSelectedPage);
-      let tmp = addToEndElement(1) + addProgressiveElement(indexSelectedPage-1);
-      paginationRender = tmp + paginationRender + addProgressiveElement(indexSelectedPage+pagesButtonMaxAmount+1) + addToEndElement(totalPages);
-    } else {
-      paginationRender += addToEndElement(1) + addProgressiveElement(indexToStartFromForCorrectDisplayFromEndLine);
-      paginationRender += addPage(totalPages, indexToStartFromForCorrectDisplayFromEndLine+1, indexSelectedPage);
+function enableDeleteForSingleImage(dataJson, indexPage)
+{
+  $('.btnDeleteOne').on('click', (event) => {
+    var myInit = { method: 'DELETE'};
+    fetch('/../php/DeleteBlobs.php?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
+      if (data!= 'Delete successful'){
+        alert("Delete not successful.");
+        return;
+      }
+      fetchSelectedPage(indexPage+1);
+    })
+  })
+}
+
+function confirmPageOpen(id)
+{
+  $(id).on('click', (event)=>{
+    if (!confirm("L'apertura di questa pagina mostra tutte le immagini che hai salvato in cloud."+
+    "A seconda del numero presente, può portare a una pagina molto pesante o richiedere un alto consumo di banda."+
+    "Sei sicuro di volerla aprirla?")) {
+      event.preventDefault();
     }
-  }
-  $(".pagination").html(paginationRender);
+  })
 }
 
-function addPage(lastIndexPageOfCycle, startingIndexPage, indexSelectedPage){
-  let htmlVar = "";
-  for (var i=startingIndexPage; i<=lastIndexPageOfCycle;i++){
-    if (i-1==indexSelectedPage) {
-      htmlVar += '<li class="page-item fetchSelectedPage page-item active"><a href="#" class="page-link" value="'+i+'">'+i+'</a></li>';
-    } else {
-      htmlVar += '<li class="page-item fetchSelectedPage"><a href="#" class="page-link" value="'+i+'">'+i+'</a></li>';
+function selectOrDeselectAllImagesInPage(id, boolValue)
+{
+  $(id).on('click', (event) => {
+    $('.blankCheckbox').prop('checked', boolValue);
+    id == '#selectall' ? $('.btnDeleteOne').prop('disabled', true) : $('.btnDeleteOne').removeAttr('disabled');
+  })
+}
+
+function deleteSelectedImages(id)
+{
+  $(id).on('click', (event) => {
+    let parameterImages = func.createQueryStringFromImagesValue('.divForImagesShowing input:checked');
+    if (parameterImages === ''){
+      return;
     }
+    var myInit = { method: 'DELETE'};
+    fetch('/../php/DeleteBlobs.php?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
+      if (data!= 'Delete successful'){
+        alert("Some deletes were not successful. Please check after page reload.");
+      }
+      fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
+    })
+  })
+}
+
+
+function getShareableLink(id){
+  prepareShareUsage();
+  $(id).on('click', (event) => {
+    let body = new FormData();
+    let expirydate = validateDate();
+    let parameterImages = func.getValueOfSelectedImages('.divForImagesShowing input:checked');
+
+    if (parameterImages == '' || expirydate == false ){
+      return;
+    }
+
+    $('[data-toggle="popover"]').popover('hide');
+    let imgs = JSON.stringify(parameterImages);
+    body.append('expirydate', expirydate);
+    body.append('imgname', imgs);
+    console.log(body);
+    var myInit = { method: 'POST',
+                body: body,
+                };
+    fetch('/../php/CreateShareableLink.php', myInit).then((result) => (result.text())).then((data) => {
+      $('#sharelink').val(data);
+    })
+  })
+}
+
+function prepareShareUsage(){
+  let d = new Date();
+  let d2 = new Date();
+  d.setHours(d.getHours()+2);
+  d2.setMonth(d.getMonth()+6);
+  $('#datetimepicker').attr('min', d.getFullYear() + '-0' + (d.getMonth()+1) + '-' + d.getDate());
+  $('#datetimepicker').attr('max', d2.getFullYear() + '-0' + (d2.getMonth()+1) + '-' + d2.getDate());
+  $('[data-toggle="popover"]').popover()
+  let clipboard = new ClipboardJS('.copy');
+}
+
+function validateDate(){
+  let date = $('#datetimepicker').val();
+  let hour = $('#hourpicker').val();
+  let actualDate = new Date();
+  actualDate.setHours(actualDate.getHours()+2);
+  let choosenDate = new Date(date + 'T' + hour +'Z');
+  if (date == '' || hour == '' || actualDate>choosenDate){
+    return false;
   }
-  return htmlVar;
-}
-
-function addProgressiveElement(progressiveElement){
-  let htmlVar = '<li class="page-item fetchPagination"><a  href="#" class="page-link" value="'+progressiveElement+'" onclick="">...</a></li>';
-  return htmlVar;
-}
-
-function addToEndElement(finalPage){
-  let htmlVar = '<li class="page-item fetchSelectedPage"><a  href="#" class="page-link" value="'+finalPage+'" onclick="">'+finalPage+'</a></li>';
-  return htmlVar;
+  choosenDate.setHours(choosenDate.getHours()-2);
+  return choosenDate;
 }

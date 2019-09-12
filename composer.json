@@ -11,5 +11,8 @@
 		{
 		"AzureClasses\\": "php/"
 		}
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^3.5"
     }
 }

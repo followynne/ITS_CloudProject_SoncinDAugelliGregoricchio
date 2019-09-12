@@ -156,7 +156,7 @@ class ListBlobsResult
      *
      * @return Blob[]
      */
-    public function getBlobs()
+    public function getblobsperpage()
     {
         return $this->blobs;
     }

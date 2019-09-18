@@ -1,8 +1,10 @@
-import * as func from './galleryFunctionsPaginationCreation.js';
+import * as func from './galleryGetBlobsFunc.js';
 
-$(document).ready(() => {
+$(document).ready(() =>
+{
 
   fetchSelectedPage(1);
+  getSearchedImages('#btnsearchfortags');
   confirmPageOpen('#fetchall');
   selectOrDeselectAllImagesInPage('#selectall',true);
   selectOrDeselectAllImagesInPage('#deselectall',false);
@@ -23,7 +25,8 @@ function fetchSelectedPage(index)
   })
 };
 
-function startPaginationCreation(dataJson, indexPage){
+function startPaginationCreation(dataJson, indexPage)
+{
   let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
   func.createPagination(pagesToRender, indexPage);
 
@@ -35,7 +38,69 @@ function startPaginationCreation(dataJson, indexPage){
   })
 }
 
-function enableDeleteOneIfNoneAreSelected(){
+function getSearchedImages(id, indexPage)
+{
+  $(id).on('click', (event) => {
+    let body = new FormData();
+    let tagsInserted = getWordsSplittedBySpace('#taginput');
+    if (tagsInserted[0] == ""){
+      fetchSelectedPage(1);
+      return;
+    }
+    let tags = JSON.stringify(tagsInserted);
+    body.append('tags', tags);
+    body.append('indexpage', indexPage = 0);
+    var myInit = { method: 'POST',
+                body: body,
+                };
+    fetchSearchedPage(1, myInit);
+  })
+}
+
+function getWordsSplittedBySpace(id)
+{
+  let tags = $(id).val().trim();
+  return tags.split(" ");
+}
+
+function fetchSearchedPage(index, postPar)
+{
+  fetch('/../php/GetSearchedByTagBlobs.php', postPar).then((result) => (result.json())).then((data) => {
+    func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
+    if (!(window.location.pathname === '/getallblobs.php')){
+      startPaginationCreationForSearch(data.pageData, index-1);
+    }
+    enableDeleteOneIfNoneAreSelected();
+    enableDeleteForSingleImage(data.pageData, index-1);
+  })
+};
+
+function startPaginationCreationForSearch(dataJson, indexPage)
+{
+  let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
+  func.createPagination(pagesToRender, indexPage);
+
+  $('.fetchSelectedPage').on('click', (event) => {
+    getSearchedImages('#btnsearchfortags', $(event.target).attr('value'));
+  })
+  $('.fetchPagination').on('click', (event) => {
+    startPaginationCreationForSearch(dataJson, $(event.target).attr('value')-1);
+  })
+}
+
+function confirmPageOpen(id)
+{
+  $(id).on('click', (event)=>{
+    if (!confirm("L'apertura di questa pagina mostra tutte le immagini che hai salvato in cloud."+
+    "A seconda del numero presente, può portare a una pagina molto pesante o richiedere un alto consumo di banda."+
+    "Sei sicuro di volerla aprirla?")) {
+      event.preventDefault();
+    }
+  })
+}
+
+function enableDeleteOneIfNoneAreSelected()
+{
   $('.blankCheckbox').on('click', (event) => {
     $('.divForImagesShowing input:checked').length>0 ? $('.btnDeleteOne').prop('disabled', true) : $('.btnDeleteOne').removeAttr('disabled');
   })
@@ -52,17 +117,6 @@ function enableDeleteForSingleImage(dataJson, indexPage)
       }
       fetchSelectedPage(indexPage+1);
     })
-  })
-}
-
-function confirmPageOpen(id)
-{
-  $(id).on('click', (event)=>{
-    if (!confirm("L'apertura di questa pagina mostra tutte le immagini che hai salvato in cloud."+
-    "A seconda del numero presente, può portare a una pagina molto pesante o richiedere un alto consumo di banda."+
-    "Sei sicuro di volerla aprirla?")) {
-      event.preventDefault();
-    }
   })
 }
 
@@ -91,8 +145,8 @@ function deleteSelectedImages(id)
   })
 }
 
-
-function getShareableLink(id){
+function getShareableLink(id)
+{
   prepareShareUsage();
   $(id).on('click', (event) => {
     let body = new FormData();
@@ -107,7 +161,6 @@ function getShareableLink(id){
     let imgs = JSON.stringify(parameterImages);
     body.append('expirydate', expirydate);
     body.append('imgname', imgs);
-    console.log(body);
     var myInit = { method: 'POST',
                 body: body,
                 };
@@ -117,7 +170,8 @@ function getShareableLink(id){
   })
 }
 
-function prepareShareUsage(){
+function prepareShareUsage()
+{
   let d = new Date();
   let d2 = new Date();
   d.setHours(d.getHours()+2);
@@ -128,7 +182,8 @@ function prepareShareUsage(){
   let clipboard = new ClipboardJS('.copy');
 }
 
-function validateDate(){
+function validateDate()
+{
   let date = $('#datetimepicker').val();
   let hour = $('#hourpicker').val();
   let actualDate = new Date();

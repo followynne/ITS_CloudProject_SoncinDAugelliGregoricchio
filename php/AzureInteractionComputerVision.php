@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+namespace AzureClasses;
+
+require_once __DIR__. "/../vendor/autoload.php";
+require_once 'HTTP/Request2.php';
+
+use Dotenv\Dotenv;
+
+class AzureInteractionComputerVision {
+
+  private $ocpApimSubscriptionKey;
+
+  function __construct(){
+    $dotenv = Dotenv::create(__DIR__.'/../');
+    $dotenv->load();
+    $this->ocpApimSubscriptionKey = $_ENV['COMPUTERVISION_KEY'];
+  }
+
+function getTagsFromComputerVisionAnalysis($binaryimage){
+
+    // You must use the same location in your REST call as you used to obtain
+    // your subscription keys.
+    $uriBase = 'https://francecentral.api.cognitive.microsoft.com/vision/v2.0/';
+    $imagebinarydata = $binaryimage;
+
+    $request = new \Http_Request2($uriBase . '/analyze');
+
+    $url = $request->getUrl();
+    $headers = array(
+        'Content-Type' => 'application/octet-stream',
+        'Ocp-Apim-Subscription-Key' => $this->ocpApimSubscriptionKey
+    );
+    $request->setHeader($headers);
+    $parameters = array(
+        'visualFeatures' => 'Tags',
+        'details' => '',
+        'language' => 'en'
+    );
+    $url->setQueryVariables($parameters);
+    $request->setMethod(\HTTP_Request2::METHOD_POST);
+    $request->setBody($imagebinarydata);
+
+    try
+    {
+        $response = $request->send();
+        return json_decode($response->getBody());
+    }
+    catch (HttpException $ex)
+    {
+        echo "<pre>" . $ex . "</pre>";
+    }
+  }
+
+}
+?>

@@ -113,7 +113,22 @@ class ComposerStaticInit48289db341cdc99f83ad96b8e38654ae
             array (
                 0 => __DIR__ . '/..' . '/phpoption/phpoption/src',
             ),
+            'PEAR' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/pear_exception',
+            ),
         ),
+        'H' => 
+        array (
+            'HTTP_Request2' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/http_request2',
+            ),
+        ),
+    );
+
+    public static $classMap = array (
+        'Net_URL2' => __DIR__ . '/..' . '/pear/net_url2/Net/URL2.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -122,6 +137,7 @@ class ComposerStaticInit48289db341cdc99f83ad96b8e38654ae
             $loader->prefixLengthsPsr4 = ComposerStaticInit48289db341cdc99f83ad96b8e38654ae::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit48289db341cdc99f83ad96b8e38654ae::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit48289db341cdc99f83ad96b8e38654ae::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit48289db341cdc99f83ad96b8e38654ae::$classMap;
 
         }, null, ClassLoader::class);
     }

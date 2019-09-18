@@ -4,7 +4,8 @@
         "microsoft/azure-storage-blob": "*",
         "microsoft/azure-storage-table": "*",
         "microsoft/azure-storage-queue": "*",
-        "microsoft/azure-storage-file": "*"
+        "microsoft/azure-storage-file": "*",
+        "pear/http_request2": "^2.3"
     },
     "autoload": {
         "psr-4":

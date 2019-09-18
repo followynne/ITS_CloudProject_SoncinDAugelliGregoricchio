@@ -15,8 +15,8 @@ $UTCdate = new DateTime("@$expirydate");
 $UTCdateformatted = $UTCdate->format("Y-m-d").'T'. $UTCdate->format("H:i:s") .'Z';
 
 foreach($jsonimgs as $url){
-  $bloblink = new AzureInteractionBlob('prova1' . '/' . $url);
-  $value[] = $bloblink->getShareableBlob($UTCdateformatted);
+  $bloblink = new AzureInteractionBlob();
+  $value[] = $bloblink->getShareableBlob('prova1' . '/' . $url, $UTCdateformatted);
 }
 
 do {

@@ -3,7 +3,6 @@ session_start();
 
 require "vendor/autoload.php";
 use League\Plates\Engine;
-use AzureClasses\MakeSAConnection;
 use AzureClasses\AzureInteractionBlob;
 
 // check for Login

@@ -1,4 +1,4 @@
-import * as func from './galleryFunctionsPaginationCreation.js';
+import * as func from './galleryGetBlobsFunc.js';
 
 $(document).ready(() => {
   fetchSelectedPage(1);

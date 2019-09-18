@@ -10,6 +10,11 @@
     <button type="button" class="btn btn-danger" id="deleteselected">Delete Selected</button>
   </div>
   <div class="row justify-content-end"  style="margin-top:4px">
+    <span>Inserisci i tag in inglese separati da spazi. I tag con più di una parola van scritti uniti.</span>
+    <input type="text" name="tags" id="taginput" style="width:500px">
+    <input type="button" name="tagsearch" id="btnsearchfortags" value="Search By Tags">
+  </div>
+  <div class="row justify-content-end"  style="margin-top:4px">
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Share Selected
     </button>

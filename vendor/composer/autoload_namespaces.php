@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
+    'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'HTTP_Request2' => array($vendorDir . '/pear/http_request2'),
 );

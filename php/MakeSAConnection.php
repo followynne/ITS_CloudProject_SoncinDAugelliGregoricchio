@@ -27,6 +27,13 @@ class MakeSAConnection {
     $dotenv->load();
   }
 
+  function createBaseAccountStorageUrl(){
+    $connectionString = $_ENV['CONNECTION_STRING'];
+    $settings = StorageServiceSettings::createFromConnectionString($connectionString);
+    $accountName = $settings->getName();
+    return 'https://'. $accountName . '.blob.core.windows.net/';
+  }
+
   function createSAS(string $resource, string $date = null ){
     return $this->CreateSharedAccessRetrieve($resource, $date);
   }
@@ -82,16 +89,15 @@ class MakeSAConnection {
       $sas;
   }
 
-  function getExpiryTime(){
+  private function getExpiryTime(){
     $date_utc = new \DateTime("now + 3 minutes", new \DateTimeZone("UTC"));
     return $date_utc->format("Y-m-d").'T'. $date_utc->format("H:i:s") .'Z';
   }
 
-  function createBaseBlobUrl(){
-    $connectionString = $_ENV['CONNECTION_STRING'];
-    $settings = StorageServiceSettings::createFromConnectionString($connectionString);
-    $accountName = $settings->getName();
-    return 'https://'. $accountName . '.blob.core.windows.net/';
+  function getSASTokenValue($SAScompleteskey){
+    $SASQueryKey = 'SharedAccessSignature=';
+    $offsetWhereSASQueryKeyStart = strpos($SAScompleteskey, $SASQueryKey);
+    return substr($SAScompleteskey, $offsetWhereSASQueryKeyStart+strlen($SASQueryKey));
   }
 
 }

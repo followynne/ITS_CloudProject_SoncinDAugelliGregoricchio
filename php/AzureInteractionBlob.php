@@ -11,32 +11,51 @@ use AzureClasses\MakeSAConnection;
 
 class AzureInteractionBlob
 {
-  private $blobClient;
-  private $SASToken;
-  private $resource;
+  private $container;
 
-  function __construct($blob)
-  {
-    $this->resource = $blob;
+  function __construct(){}
+
+  function setContainerName($container){
+    $this->container = $container;
   }
 
-  private function getSASTokenValue($sakey){
-    $SASQueryKey = 'SharedAccessSignature=';
-    $offsetWhereSASQueryKeyStart = strpos($sakey, $SASQueryKey);
-    return substr($sakey, $offsetWhereSASQueryKeyStart+strlen($SASQueryKey));
-  }
-
-  function getShareableBlob($expirydate = null){
+  function createBlobJsonWithBlobNames(array $names, int $indexPageRequested){
     $saconnection = new MakeSAConnection();
-    $sakey = $saconnection->createSAS($this->resource, $expirydate);
-    $this->SASToken = $this->getSASTokenValue($sakey);
-    $url = $saconnection->createBaseBlobUrl();
-    return $this->getBlobByNameAndSAS($url);
+    $sakey = $saconnection->createSAS($this->container);
+    $SASToken = $saconnection->getSASTokenValue($sakey);
+    $url = $saconnection->createBaseAccountStorageUrl();
+
+    $maxBlobsPerSubPage = 12;
+    $startingBlobIndex = 0 + $maxBlobsPerSubPage*$indexPageRequested;
+
+    $blobList = '{
+      "pageData":{
+        "totalBlobsCount":"' . count($names).'",
+        "maxBlobsPerSubPage":'. $maxBlobsPerSubPage.',
+        "tempToken": "' . $SASToken . '",
+        "blobs":[';
+
+    for ($i = $startingBlobIndex; $i < $startingBlobIndex+$maxBlobsPerSubPage; $i++)
+    {
+      if (empty($names[$i]['Name'])){
+        continue;
+      }
+      $blobList .= '{"name":"'.$names[$i]['Name'] .'","url":"'. $url . $this->resource . '/' . $names[$i]['Name'] .'"},';
+    }
+    return substr($blobList,0, strlen($blobList)-1).']}}';
+  }
+
+  function getShareableBlob($blob, $expirydate = null){
+    $saconnection = new MakeSAConnection();
+    $sakey = $saconnection->createSAS($blob, $expirydate);
+    $SASToken = $saconnection->getSASTokenValue($sakey);
+    $url = $saconnection->createBaseAccountStorageUrl();
+    return $this->getBlobByNameAndSAS($url, $blob, $SASToken);
 
   }
 
-  function getBlobByNameAndSAS(string $url){
-    return $url . $this->resource . '?' . $this->SASToken;
+  function getBlobByNameAndSAS(string $url, $blob, $SASToken){
+    return $url . $blob . '?' . $SASToken;
   }
 
 

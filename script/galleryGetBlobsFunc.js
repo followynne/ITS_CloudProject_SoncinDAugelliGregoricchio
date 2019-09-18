@@ -66,14 +66,6 @@ function addToEndElement(finalPage){
   return htmlVar;
 }
 
-export function getValueOfSelectedImages(divToCheck){
-  let values = [];
-  $(divToCheck).siblings().each(function() {
-    values.push($(this).val());
-  })
-  return values;
-}
-
 export function createQueryStringFromImagesValue(divToCheck){
   let parameterImages = '';
   let values = getValueOfSelectedImages(divToCheck);
@@ -81,4 +73,12 @@ export function createQueryStringFromImagesValue(divToCheck){
     parameterImages+= 'name[]='+value+'&';
   })
   return parameterImages = parameterImages.substr(0, parameterImages.length-1);
+}
+
+export function getValueOfSelectedImages(divToCheck){
+  let values = [];
+  $(divToCheck).siblings().each(function() {
+    values.push($(this).val());
+  })
+  return values;
 }

@@ -16,18 +16,22 @@ class AzureInteractionContainer
 
   function __construct($container)
   {
-    // TODO: delete this string and regenerate the old one
     $this->resource = $container;
+
     $saconnection = new MakeSAConnection();
     $sakey = $saconnection->createSAS($this->resource);
-    $this->SASToken = $this->getSASTokenValue($sakey);
+
+    $this->SASToken = $saconnection->getSASTokenValue($sakey);
     $this->blobClient = BlobRestProxy::createBlobService($sakey);
   }
 
-  private function getSASTokenValue($sakey){
-    $SASQueryKey = 'SharedAccessSignature=';
-    $offsetWhereSASQueryKeyStart = strpos($sakey, $SASQueryKey);
-    return substr($sakey, $offsetWhereSASQueryKeyStart+strlen($SASQueryKey));
+  private function getBlobsListfromContainer(string $container, object $listBlobsOptions)
+  {
+    try {
+      return $listBlobsAndProperties = $this->blobClient->listBlobs($container, $listBlobsOptions);
+    } catch (ServiceException $e) {
+      return;
+    }
   }
 
   function getBlobJson(int $indexPageRequested)
@@ -98,15 +102,6 @@ class AzureInteractionContainer
     return substr($blobList,0, strlen($blobList)-1).']}}';
   }
 
-  private function getBlobsListfromContainer(string $container, object $listBlobsOptions)
-  {
-    try {
-      return $listBlobsAndProperties = $this->blobClient->listBlobs($container, $listBlobsOptions);
-    } catch (ServiceException $e) {
-      return;
-    }
-  }
-
   function deleteBlob(string $name)
   {
     try {
@@ -121,7 +116,6 @@ class AzureInteractionContainer
   function deleteBlobs(array $name)
   {
     //NY = block both || YN=GO Y, STOP N || YNY = GO Y BLOCK THE REST
-
     try {
       foreach($name as $blobInArray){
         $this->blobClient->deleteBlob($this->resource, $blobInArray);

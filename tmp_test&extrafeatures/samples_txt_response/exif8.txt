@@ -1,0 +1,110 @@
+Array
+(
+    [FileName] => phplaOFPR
+    [FileDateTime] => 1568472304
+    [FileSize] => 157569
+    [FileType] => 2
+    [MimeType] => image/jpeg
+    [SectionsFound] => ANY_TAG, IFD0, THUMBNAIL, EXIF, GPS, INTEROP, MAKERNOTE
+    [COMPUTED] => Array
+        (
+            [html] => width="640" height="480"
+            [Height] => 480
+            [Width] => 640
+            [IsColor] => 1
+            [ByteOrderMotorola] => 0
+            [ApertureFNumber] => f/5.9
+            [UserComment] =>                                                                                                                      
+            [UserCommentEncoding] => ASCII
+            [Thumbnail.FileType] => 2
+            [Thumbnail.MimeType] => image/jpeg
+        )
+
+    [ImageDescription] =>                                
+    [Make] => NIKON
+    [Model] => COOLPIX P6000
+    [Orientation] => 1
+    [XResolution] => 300/1
+    [YResolution] => 300/1
+    [ResolutionUnit] => 2
+    [Software] => Nikon Transfer 1.1 W
+    [DateTime] => 2008:11:01 21:15:11
+    [YCbCrPositioning] => 1
+    [Exif_IFD_Pointer] => 268
+    [GPS_IFD_Pointer] => 926
+    [THUMBNAIL] => Array
+        (
+            [Compression] => 6
+            [XResolution] => 72/1
+            [YResolution] => 72/1
+            [ResolutionUnit] => 2
+            [JPEGInterchangeFormat] => 4548
+            [JPEGInterchangeFormatLength] => 6112
+        )
+
+    [ExposureTime] => 1555209/100000000
+    [FNumber] => 59/10
+    [ExposureProgram] => 2
+    [ISOSpeedRatings] => 103
+    [ExifVersion] => 0220
+    [DateTimeOriginal] => 2008:10:22 16:52:15
+    [DateTimeDigitized] => 2008:10:22 16:52:15
+    [ComponentsConfiguration] => 
+    [ExposureBiasValue] => 0/10
+    [MaxApertureValue] => 29/10
+    [MeteringMode] => 5
+    [LightSource] => 0
+    [Flash] => 16
+    [FocalLength] => 24/1
+    [MakerNote] => Nikon
+    [UserComment] => ASCII                                                                                                                     
+    [FlashPixVersion] => 0100
+    [ColorSpace] => 1
+    [ExifImageWidth] => 640
+    [ExifImageLength] => 480
+    [InteroperabilityOffset] => 896
+    [FileSource] => 
+    [SceneType] => 
+    [CustomRendered] => 0
+    [ExposureMode] => 0
+    [WhiteBalance] => 0
+    [DigitalZoomRatio] => 0/100
+    [FocalLengthIn35mmFilm] => 112
+    [SceneCaptureType] => 0
+    [GainControl] => 1
+    [Contrast] => 0
+    [Saturation] => 0
+    [Sharpness] => 0
+    [SubjectDistanceRange] => 0
+    [GPSLatitudeRef] => N
+    [GPSLatitude] => Array
+        (
+            [0] => 43/1
+            [1] => 28/1
+            [2] => 211799999/100000000
+        )
+
+    [GPSLongitudeRef] => E
+    [GPSLongitude] => Array
+        (
+            [0] => 11/1
+            [1] => 52/1
+            [2] => 451680000/10000000
+        )
+
+    [GPSAltitudeRef] => 
+    [GPSTimeStamp] => Array
+        (
+            [0] => 14/1
+            [1] => 50/1
+            [2] => 409/10
+        )
+
+    [GPSSatellites] => 04
+    [GPSImgDirectionRef] => 
+    [GPSMapDatum] => WGS-84   
+    [GPSDateStamp] => 2008:10:23
+    [InterOperabilityIndex] => R98
+    [InterOperabilityVersion] => 0100
+)
+

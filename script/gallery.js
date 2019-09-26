@@ -44,6 +44,7 @@ function getSearchedImages(id, indexPage)
     let body = new FormData();
     let tagsInserted = getWordsSplittedBySpace('#taginput');
     if (tagsInserted[0] == ""){
+      $('#sharelink').val('');
       fetchSelectedPage(1);
       return;
     }
@@ -193,5 +194,5 @@ function validateDate()
     return false;
   }
   choosenDate.setHours(choosenDate.getHours()-2);
-  return choosenDate;
+  return choosenDate.getTime();
 }

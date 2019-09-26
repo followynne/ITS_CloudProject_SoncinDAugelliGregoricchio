@@ -1,0 +1,71 @@
+Array
+(
+    [FileName] => phpYVRL8N
+    [FileDateTime] => 1568471803
+    [FileSize] => 3565
+    [FileType] => 2
+    [MimeType] => image/jpeg
+    [SectionsFound] => ANY_TAG, IFD0, THUMBNAIL, EXIF, INTEROP
+    [COMPUTED] => Array
+        (
+            [html] => width="100" height="64"
+            [Height] => 64
+            [Width] => 100
+            [IsColor] => 1
+            [ByteOrderMotorola] => 0
+            [ApertureFNumber] => f/4.0
+            [Thumbnail.FileType] => 2
+            [Thumbnail.MimeType] => image/jpeg
+        )
+
+    [Make] => SONY
+    [Model] => HDR-HC3
+    [Orientation] => 1
+    [XResolution] => 72/1
+    [YResolution] => 72/1
+    [ResolutionUnit] => 2
+    [DateTime] => 2008:07:31 17:20:21
+    [YCbCrPositioning] => 2
+    [Exif_IFD_Pointer] => 172
+    [THUMBNAIL] => Array
+        (
+            [Compression] => 6
+            [Make] => SONY
+            [Model] => HDR-HC3
+            [Orientation] => 1
+            [XResolution] => 72/1
+            [YResolution] => 72/1
+            [ResolutionUnit] => 2
+            [JPEGInterchangeFormat] => 752
+            [JPEGInterchangeFormatLength] => 1232
+            [YCbCrPositioning] => 2
+        )
+
+    [ExposureTime] => 1/60
+    [FNumber] => 400/100
+    [ExposureProgram] => 2
+    [ExifVersion] => 0220
+    [DateTimeOriginal] => 2007:06:15 04:42:32
+    [DateTimeDigitized] => 2007:06:15 04:42:32
+    [ComponentsConfiguration] => 
+    [CompressedBitsPerPixel] => 2/1
+    [ExposureBiasValue] => 0/100
+    [MaxApertureValue] => 170/100
+    [MeteringMode] => 5
+    [LightSource] => 0
+    [Flash] => 9
+    [FocalLength] => 51/10
+    [FlashPixVersion] => 0100
+    [ColorSpace] => 1
+    [ExifImageWidth] => 100
+    [ExifImageLength] => 64
+    [InteroperabilityOffset] => 566
+    [FileSource] => 
+    [SceneType] => 
+    [CustomRendered] => 0
+    [ExposureMode] => 0
+    [WhiteBalance] => 0
+    [SceneCaptureType] => 0
+    [InterOperabilityIndex] => R98
+    [InterOperabilityVersion] => 0100
+)

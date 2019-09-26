@@ -51,7 +51,7 @@ class AzureInteractionContainer
     if ($blobs==null){
       return;
     }
-    $blob = $blobs->getblobsperpage();
+    $blob = $blobs->getBlobs();
     usort($blob, function ($a, $b){
       return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
     });
@@ -78,7 +78,7 @@ class AzureInteractionContainer
     }
     $maxBlobsPerSubPage = 12;
     $startingBlobIndex = 0 + $maxBlobsPerSubPage*$indexPageRequested;
-    $blob = $blobs->getblobsperpage();
+    $blob = $blobs->getBlobs();
 
     //sorting the blobs for last modified date, DESC; usort sort and return original array modified
     usort($blob, function ($a, $b){
@@ -87,7 +87,7 @@ class AzureInteractionContainer
 
     $blobList = '{
       "pageData":{
-        "totalBlobsCount":"' . count($blobs->getblobsperpage()).'",
+        "totalBlobsCount":"' . count($blobs->getBlobs()).'",
         "maxBlobsPerSubPage":'. $maxBlobsPerSubPage.',
         "tempToken": "' . $this->SASToken . '",
         "blobs":[';

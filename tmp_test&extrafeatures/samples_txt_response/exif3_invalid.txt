@@ -1,0 +1,17 @@
+Array
+(
+    [FileName] => phpDIDM5D
+    [FileDateTime] => 1568472013
+    [FileSize] => 14574
+    [FileType] => 2
+    [MimeType] => image/jpeg
+    [SectionsFound] => 
+    [COMPUTED] => Array
+        (
+            [html] => width="65" height="65"
+            [Height] => 65
+            [Width] => 65
+            [IsColor] => 1
+        )
+
+)

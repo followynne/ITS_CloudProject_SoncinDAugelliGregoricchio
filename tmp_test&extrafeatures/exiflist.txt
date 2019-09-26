@@ -1,0 +1,43 @@
+https://sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
+
+- [filename] => not correct with upload retrieval
+
+- [filesize]
+- [fileType]
+
+- array: width, height
+
+- make
+- model
+
+- orientation? -> è da comprendere la risposta che dovrebbe essere data
+ 	
+1 = Horizontal (normal)
+2 = Mirror horizontal
+3 = Rotate 180
+4 = Mirror vertical
+5 = Mirror horizontal and rotate 270 CW
+6 = Rotate 90 CW
+7 = Mirror horizontal and rotate 90 CW
+8 = Rotate 270 CW
+
+- Datetime
+- DateTimeOriginal ( For a digital still camera, this is the date and time the picture was taken or recorded. The format is "YYYY:MM:DD HH:MM:SS" with time shown in 24-hour format, and the date and time separated by one blank character (hex 20). )
+
+GPS LAtitude Ref
+GPS LAtitude (Array 0,1,2)
+GPS Longitude Ref
+GPS LAtitude (Array 0,1,2)
+GPSTimestamp (Array 0,1,2)
+[[[GPSSatellites ? GPSMapDatum ? GPSDateStamp?]]]
+
+Owner Name (check _more files)
+
+
+/*************
+
+Exif Invalid Data: returns only Filename, filesize, filetype, height, width
+
+
+
+*************/

@@ -66,13 +66,20 @@ function getWordsSplittedBySpace(id)
 
 function fetchSearchedPage(index, postPar)
 {
-  fetch('/../php/GetSearchedByTagBlobs.php', postPar).then((result) => (result.json())).then((data) => {
-    func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
+  fetch('/../php/GetSearchedByTagBlobs.php', postPar).then((result) => (result.text())).then((data) => {
+    let json;
+    try{
+      json = JSON.parse(data);
+    } catch (err) {
+      console.log('Nessun risultato per la ricerca effettuata.');
+      return;
+    }
+    func.displayImagesForSubPage(json.pageData.blobs, json.pageData.tempToken);
     if (!(window.location.pathname === '/getallblobs.php')){
-      startPaginationCreationForSearch(data.pageData, index-1);
+      startPaginationCreationForSearch(json.pageData, index-1);
     }
     enableDeleteOneIfNoneAreSelected();
-    enableDeleteForSingleImage(data.pageData, index-1);
+    enableDeleteForSingleImage(json.pageData, index-1);
   })
 };
 

@@ -1,5 +1,6 @@
 {
     "require": {
+		"php": ">=7.2",
         "league/plates": "^3.3",
         "microsoft/azure-storage-blob": "*",
         "microsoft/azure-storage-table": "*",

@@ -40,7 +40,7 @@ class AzureInteractionBlob
       if (empty($names[$i]['Name'])){
         continue;
       }
-      $blobList .= '{"name":"'.$names[$i]['Name'] .'","url":"'. $url . $this->resource . '/' . $names[$i]['Name'] .'"},';
+      $blobList .= '{"name":"'.$names[$i]['Name'] .'","url":"'. $url . $this->container . '/' . $names[$i]['Name'] .'"},';
     }
     return substr($blobList,0, strlen($blobList)-1).']}}';
   }

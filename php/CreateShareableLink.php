@@ -10,8 +10,9 @@ use AzureClasses\AzureInteractionBlob;
 $value = [];
 $jsonimgs = json_decode($_POST['imgname']);
 
-$UTCdate = new DateTime();
-$UTCdate->setTimestamp($_POST['expirydate']);
+
+$ts = $_POST['expirydate']/1000;
+$UTCdate = new DateTime("@$ts");
 $UTCdateformatted = $UTCdate->format("Y-m-d").'T'. $UTCdate->format("H:i:s") .'Z';
 
 foreach($jsonimgs as $url){

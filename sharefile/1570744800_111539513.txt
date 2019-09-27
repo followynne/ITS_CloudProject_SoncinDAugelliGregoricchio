@@ -1,1 +1,0 @@
-a:2:{i:0;s:172:"https://imagestorageforcloudprj.blob.core.windows.net/prova1/Cane.jpeg?sv=2017-11-09&sr=b&se=51744-12-02T17:00:00Z&sp=r&sig=YrOxcA6QVwaQMJNrTEbIA6aOTzprspJ59K%2FIQtIPR0U%3D";i:1;s:171:"https://imagestorageforcloudprj.blob.core.windows.net/prova1/Marco.jpeg?sv=2017-11-09&sr=b&se=51744-12-02T17:00:00Z&sp=r&sig=l2jnXtXw8QQtA2yviEl1kCkiVxWf6dWsa0z8eUkQ6iA%3D";}

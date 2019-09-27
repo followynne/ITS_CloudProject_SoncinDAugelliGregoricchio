@@ -1,1 +1,0 @@
-a:1:{i:0;s:172:"https://imagestorageforcloudprj.blob.core.windows.net/prova1/image8.jpeg?sv=2017-11-09&sr=b&se=51706-08-04T17:00:00Z&sp=r&sig=Aj5wWITs2aSnobWsdYDdVRPCUdqIbwLxwcnj1sPGR9c%3D";}

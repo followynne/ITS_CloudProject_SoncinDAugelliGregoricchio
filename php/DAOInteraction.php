@@ -1,5 +1,4 @@
 <?php
-// for databases datas
 declare(strict_types=1);
 
 namespace AzureClasses;
@@ -7,10 +6,18 @@ namespace AzureClasses;
 use Dotenv\Dotenv;
 use \PDO;
 
+/**
+ * This class opens connection with Microsoft SQL Server and interacts
+ * for CRUD operations.
+ */
 class DAOInteraction {
 
   private $conn;
 
+  /**
+   * The constructor gets the .env credential file and use them credentials
+   * to create a PDO Connection.
+   */
   function __construct(){
     $dotenv = Dotenv::create(__DIR__.'/../');
     $dotenv->load();
@@ -24,12 +31,32 @@ class DAOInteraction {
     }
   }
 
+  /**
+   * Given a @SQLQuery, the func prepare a query
+   * on the PDO object (created on object construction),
+   * execute and fetch all matches.
+   */
   function prepareAndExecuteQuery($sqlQuery){
     $query = $this->conn->prepare($sqlQuery);
     $query->execute();
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }
+  /*WIP
+  function userRegistrationInDatabase($dataarray){
+    do {
+      $containername = substr($dataarray['username'], 0, 8) . '_' . rand();
+    } while (checkIfContainerNameAlreadyExists($containername));
 
+  }
+
+  function checkIfContainerNameAlreadyExists($containername){
+    $sql = "select * from";
+  }*/
+
+  /**
+   * Given an array of @tags, the func returns a SQL query
+   * to: search for all results that match with ALL tags given.
+   */
   function searchBlobsByTag(array $tags){
     $querypar = "";
     foreach($tags as $tag){
@@ -44,7 +71,4 @@ class DAOInteraction {
             ') group by Photo.Name having count(*) =' . count($tags);
     return $this->prepareAndExecuteQuery($sql);
   }
-
 }
-
- ?>

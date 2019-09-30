@@ -1,6 +1,4 @@
-<?php $this->layout('gallery', ['title' => 'Photo:'])
-//TODO: add the Photo Name in the Title from render datas.
-?>
+<?php $this->layout('gallery', ['title' => 'Photo:' . $this->e($name)])?>
 
 <div class="container-fluid p-5" style="width:90%">
   <div class="row">

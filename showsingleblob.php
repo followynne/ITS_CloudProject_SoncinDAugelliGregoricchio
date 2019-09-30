@@ -5,19 +5,20 @@ require "vendor/autoload.php";
 use League\Plates\Engine;
 use AzureClasses\AzureInteractionBlob;
 
-// check for Login
+$_SESSION['username'] = 'prova';
+if (!isset($_SESSION['username'])){
+  echo "Unauthorized. You'll be soon redirected to login.";
+  header ('HTTP/1.1 401 Unauthorized');
+  header('Refresh:3; url= ./start');
+  die();
+}
 
 if ($_SESSION['requestSingleImage'] == 'active' ){
-
-  $blob = new AzureInteractionBlob('prova1' . '/' . $_GET['name']);
-  $blobUrlWithSA = $blob->getShareableBlob();
-
+  $blob = new AzureInteractionBlob('prova1');
+  $blobUrlWithSA = $blob->getShareableBlob($_GET['name']);
 } else {
   return;
 }
-//TODO: extract from DB photoDatas, get them as render values.
-// model: variables(...); if (ex != NULL**) then variable = ...
-// NULL** : the value that gets returned from DB Request if this value is set at null on db.
 
 $templates = new Engine('templates/');
-echo $templates->render('_imagedetail', ['url' => $blobUrlWithSA]);
+echo $templates->render('_imagedetail', ['url' => $blobUrlWithSA, 'name' => $_GET['name']]);

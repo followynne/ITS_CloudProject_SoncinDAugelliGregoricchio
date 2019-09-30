@@ -1,16 +1,17 @@
-- controllare che una persona sia loggata altrimenti "redirect page 404"
+- controllare che una persona sia loggata altrimenti "redirect"
+- reindirizzare per pagina non trovata / non accessibile a 404
 
-- inserire il container corretto della persona ($_SESSION)
+- check for login data:
+  tutti gli startingTemplates
+- inserire il container corretto della persona ($_SESSION):
+  createShareableLink.php, DeleteBlobs.php, GetjsonBlobs.php, GetSearchedby...php
+- valutare come gestire l'HTTP_ORIGIN del Server in GetjsonBlobs.php
+- sistemare il server host dopo aver settato il server in createShareableLink.php
+- vedere come gestire la chiamata tags della cpvision per img multiple caricate in RetriveTags...php
 
-- .env: va tolta da git tramite git ignore, spostata in root altra x farla rimuovere, usare 2*key per modificare la conn string rispetto a quelle salvata in vecchi commit
+- valutrare la gestione delle exception
 
-- aggiungere tutte le operazioni di rapport ocn il Database!
-
-- link condivisibile per le foto button
-azure storage select blob and make them shareable via token
-
-
-- mostrare dettagli exif nella pagina della foto singola (cfr DB request)
-
-
-- in ottica ricerca tag, pensare a implementare ricerca tramite tag (che tag?!).
+- .env: va tolta da git tramite git ignore,
+  spostata in root altra x farla rimuovere,
+  usare 2*key per modificare la conn string rispetto a quelle salvata in vecchi commit
+- documentazione: per windows e linux localhost, per linux Server

@@ -2,8 +2,6 @@
 session_start();
 require_once __DIR__. "/../vendor/autoload.php";
 
-// check for Login
-
 $data = $_GET['url'];
 $indexPageRequested = $_GET['indexpage'];
 

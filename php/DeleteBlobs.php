@@ -5,9 +5,7 @@ require_once __DIR__. "/../vendor/autoload.php";
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use AzureClasses\AzureInteractionContainer;
 
-// check for Login
-
-//TODO: containername needs to be taken from $_SESSION
+//TODO: containername needs to be taken from $_SESSION['usercontainer']
 
 $blobClient = new AzureInteractionContainer('prova1');
 

@@ -5,7 +5,6 @@ namespace AzureClasses;
 
 use Dotenv\Dotenv;
 use \PDO;
-
 /**
  * This class opens connection with Microsoft SQL Server and interacts
  * for CRUD operations.
@@ -70,5 +69,29 @@ class DAOInteraction {
             . substr($querypar, 0, strlen($querypar)-1) .
             ') group by Photo.Name having count(*) =' . count($tags);
     return $this->prepareAndExecuteQuery($sql);
+  }
+
+  function checkUser($mail, $password){
+    //$pwd = password_hash($post['pwd'], PASSWORD_DEFAULT);
+    $sqlQuery = "SELECT mail, pwd FROM utente WHERE mail=:mail AND pwd=:password;";
+    $query = $this->conn->prepare($sqlQuery);
+    $query->execute([':mail' => ''.$mail.'', ':password' => ''.$password.'']);
+    $result = $query->fetchAll();
+    print_r($result);
+
+    // password_verify($post['pwd'], $dataToCheck['pwd'];
+    if ($mail == $result[0]['mail'] && $password == $result[0]['pwd']){
+       if (isset($mail)){
+    return  $mail;
+       }else{
+        return "";
+       }
+    return $mail;
+        }
+    else {
+    //$templates->render('_homepage',$_SESSION['mail']);
+    //return $templates->render('start',$_SESSION['start']);
+    //echo "sessione non compiuta";
+    }
   }
 }

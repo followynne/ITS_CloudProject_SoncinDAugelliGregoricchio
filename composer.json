@@ -6,7 +6,8 @@
         "microsoft/azure-storage-table": "*",
         "microsoft/azure-storage-queue": "*",
         "microsoft/azure-storage-file": "*",
-        "pear/http_request2": "^2.3"
+        "pear/http_request2": "^2.3",
+        "monolog/monolog": "^2.0"
     },
     "autoload": {
         "psr-4":

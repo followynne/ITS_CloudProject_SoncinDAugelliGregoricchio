@@ -40,17 +40,6 @@ class DAOInteraction {
     $query->execute();
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }
-  /*WIP
-  function userRegistrationInDatabase($dataarray){
-    do {
-      $containername = substr($dataarray['username'], 0, 8) . '_' . rand();
-    } while (checkIfContainerNameAlreadyExists($containername));
-
-  }
-
-  function checkIfContainerNameAlreadyExists($containername){
-    $sql = "select * from";
-  }*/
 
   /**
    * Given an array of @tags, the func returns a SQL query
@@ -92,6 +81,34 @@ class DAOInteraction {
     //$templates->render('_homepage',$_SESSION['mail']);
     //return $templates->render('start',$_SESSION['start']);
     //echo "sessione non compiuta";
+  }
+  }
+
+  /**
+   * Given a PhotoId and an exif array, the function updates the
+   * Photo DBTable with the proper exif information related to the photo.
+   */
+  function insertExifData($idPhoto, array $data){
+    try {
+      $sqlQuery = 'update Photo set MB = :filesize, FileType = :filetype, Height = :height, Width = :width,
+      Brand = :brand, Model = :model, Orientation = :orientation, Date = :date, Latitude = :latitude, Longitude = :longitude where Id = :id;';
+      $query = $this->conn->prepare($sqlQuery);
+      $null = null;
+      $query->bindParam(':id', $idPhoto);
+      $data['filesize'] != 'NULL' ? $query->bindParam(':filesize', $data['filesize']) : $query->bindParam(':filesize', $null, PDO::PARAM_NULL);
+      $data['filetype'] != 'NULL' ? $query->bindParam(':filetype', $data['filetype'], PDO::PARAM_STR) : $query->bindParam(':filetype', $null, PDO::PARAM_NULL);
+      $data['height'] != 'NULL' ? $query->bindParam(':height', $data['height']) : $query->bindParam(':height', $null, PDO::PARAM_NULL);
+      $data['width'] != 'NULL' ? $query->bindParam(':width', $data['width']) : $query->bindParam(':width', $null, PDO::PARAM_NULL);
+      $data['brand'] != 'NULL' ? $query->bindParam(':brand', $data['brand'], PDO::PARAM_STR) : $query->bindParam(':brand', $null, PDO::PARAM_NULL);
+      $data['model'] != 'NULL' ? $query->bindParam(':model', $data['model'], PDO::PARAM_STR) : $query->bindParam(':model', $null, PDO::PARAM_NULL);
+      $data['orientation'] != 'NULL' ? $query->bindParam(':orientation', $data['orientation'], PDO::PARAM_STR) : $query->bindParam(':orientation', $null, PDO::PARAM_NULL);
+      $data['date'] != 'NULL' ? $query->bindParam(':date', $data['date'], PDO::PARAM_STR) : $query->bindParam(':date', $null, PDO::PARAM_NULL);
+      $data['latitude'] != 'NULL' ? $query->bindParam(':latitude', $data['latitude']) : $query->bindParam(':latitude', $null, PDO::PARAM_NULL);
+      $data['longitude'] != 'NULL' ? $query->bindParam(':longitude', $data['longitude']) : $query->bindParam(':longitude', $null, PDO::PARAM_NULL);
+      $result = $query->execute();
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
     }
   }
 }

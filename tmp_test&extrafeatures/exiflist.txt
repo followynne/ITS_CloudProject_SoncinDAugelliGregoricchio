@@ -11,7 +11,7 @@ https://sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
 - model
 
 - orientation? -> è da comprendere la risposta che dovrebbe essere data
- 	
+
 1 = Horizontal (normal)
 2 = Mirror horizontal
 3 = Rotate 180
@@ -30,9 +30,6 @@ GPS Longitude Ref
 GPS LAtitude (Array 0,1,2)
 GPSTimestamp (Array 0,1,2)
 [[[GPSSatellites ? GPSMapDatum ? GPSDateStamp?]]]
-
-Owner Name (check _more files)
-
 
 /*************
 

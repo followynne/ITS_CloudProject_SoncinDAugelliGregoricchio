@@ -15,3 +15,13 @@
   spostata in root altra x farla rimuovere,
   usare 2*key per modificare la conn string rispetto a quelle salvata in vecchi commit
 - documentazione: per windows e linux localhost, per linux Server
+
+
+
+/*
+checked my phpinfo() and found that upload_max_filesize was only set to 2M. I added php.ini to the directory of the offending file and included:
+
+upload_max_filesize = 250M
+post_max_size = 250M
+max_execution_time = 300
+*/

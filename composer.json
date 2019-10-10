@@ -10,9 +10,10 @@
         "monolog/monolog": "^2.0"
     },
     "autoload": {
+	"files": ["php/ExifProcessing.php"],
         "psr-4":
 		{
-		"AzureClasses\\": "php/"
+		"AzureClasses\\": "php/"		
 		}
     },
     "require-dev": {

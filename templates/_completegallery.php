@@ -10,9 +10,23 @@
     <button type="button" class="btn btn-danger" id="deleteselected">Delete Selected</button>
   </div>
   <div class="row justify-content-end"  style="margin-top:4px">
-    <span>Inserisci i tag in inglese separati da spazi. I tag con più di una parola van scritti uniti.</span>
-    <input type="text" name="tags" id="taginput" style="width:500px">
+    <span>Inserisci le keyword separate da spazi. Per keyword composte da più termini, separare ogni parola con un - ex: word1-word2-word3.</span>
+    <input type="button" name="allsearch" id="btnsearchall" value="Search By All Data Specified">
+  </div>
+  <div class="row justify-content-end"  style="margin-top:4px">
+    <span>Tags</span>
+    <input type="text" name="tags" class="inputdata" id="taginput" style="width:500px">
     <input type="button" name="tagsearch" id="btnsearchfortags" value="Search By Tags">
+  </div>
+  <div class="row justify-content-end" style="margin-top:4px">
+    <span>Brands</span>
+    <input type="text" name="brand" class="inputdata" id="brandinput" style="width:500px">
+    <input type="button" name="brandsearch" id="btnsearchforbrands" value="Search By Brand">
+  </div>
+  <div class="row justify-content-end"  style="margin-top:4px">
+    <span>Date (inserire secondo sintassi: yyyy-mm-dd)</span>
+    <input type="text" name="dates" class="inputdata" id="datesinput" style="width:500px">
+    <input type="button" name="datesearch" id="btnsearchfordates" value="Search By Dates">
   </div>
   <div class="row justify-content-end"  style="margin-top:4px">
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">

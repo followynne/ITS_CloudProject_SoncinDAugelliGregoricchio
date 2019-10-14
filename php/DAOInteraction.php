@@ -23,6 +23,7 @@ class DAOInteraction {
     try {
       $this->conn = new PDO($_ENV['DB_STRING'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->conn->setAttribute (PDO::ATTR_ORACLE_NULLS, PDO::NULL_TO_STRING);
     }
     catch (PDOException $e) {
       print("Error connecting to SQL Server.");
@@ -36,27 +37,39 @@ class DAOInteraction {
    * execute and fetch all matches.
    */
   function prepareAndExecuteQuery($sqlQuery){
-    $query = $this->conn->prepare($sqlQuery);
-    $query->execute();
-    return $query->fetchAll(PDO::FETCH_ASSOC);
+    try {
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute();
+      return $query->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      print("Error executing query, please check your data input.");
+      die(print_r($e));
+    }
   }
 
   /**
-   * Given an array of @tags, the func returns a SQL query
-   * to: search for all results that match with ALL tags given.
+   * Given an array of @data, the func returns a SQL query
+   * to: search for all results that match with ALL tags (AND logic), if given, and
+   * optional exif specs (OR Logic).
    */
-  function searchBlobsByTag(array $tags){
-    $querypar = "";
-    foreach($tags as $tag){
-        $querypar .= "'" . $tag . "',";
+  function searchBlobsByColumn(array $data, $idcontainer){
+    $sql = 'select Photo.ReferenceName from Photo ';
+    if (isset($data['Tag.Name'])){
+      $sql .= 'inner join PhotoTag on Photo.Id=PhotoTag.IdPhoto
+              inner join Tag on PhotoTag.IdTag = Tag.Id ';
     }
-    $sql = 'select Photo.Name from Photo
-            inner join Container on Photo.IdContainer = Container.IdContainer
-            inner join PhotoTag on Photo.Id=PhotoTag.IdPhoto
-            inner join Tag on PhotoTag.IdTag = Tag.Id
-            where ContainerName = \'test\' and Tag.Name in ('
-            . substr($querypar, 0, strlen($querypar)-1) .
-            ') group by Photo.Name having count(*) =' . count($tags);
+    $sql .= 'where IdContainer = '. $idcontainer;
+    foreach($data as $key=>$values){
+      $querypar = $values;
+      $sql .= ' and '. $key .' in (\''
+            . $querypar .
+            '\') ';
+    }
+    $sql .= 'group by Photo.ReferenceName ';
+    if (isset($data['Tag.Name'])){
+      $sql .= 'having count(Tag.Name) = '. count(explode(', ', $data['Tag.Name']));
+    }
+    print_r($sql);
     return $this->prepareAndExecuteQuery($sql);
   }
 
@@ -110,5 +123,57 @@ class DAOInteraction {
       print("Error sending image data.");
       die(print_r($e));
     }
+  }
+
+  /**
+   * Given a Photo Reference Name, the function retrieve from the
+   * Photo DBTable the tags related to it.
+   */
+  function getTagsofBlob($blobname, $idcontainer){
+    $sqlQuery = "select t.Name from Tag as t
+                inner join PhotoTag as p on t.Id = p.IdTag
+                inner join Photo as ph on p.IdPhoto = ph.Id
+                where ph.ReferenceName = :name and ph.IdContainer = :idContainer";
+    $query = $this->conn->prepare($sqlQuery);
+    $query->bindParam(':name', $blobname);
+    $query->bindParam(':idContainer', $idcontainer);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_COLUMN, 0);
+    return implode(', ', $result);
+  }
+
+  /**
+   * Given a Photo Reference Name, the function retrieve from the
+   * Photo DBTable the exif information related to it.
+   */
+  function getExifForBlob($blobname, $idcontainer){
+    try {
+      $sqlQuery = 'select Name, MB, FileType, Height, Width, Brand, Model, Orientation,
+      Date, Latitude, Longitude from Photo where ReferenceName = :name and IdContainer = :idContainer';
+      $query = $this->conn->prepare($sqlQuery);
+      $query->bindParam(':name', $blobname);
+      $query->bindParam(':idContainer', $idcontainer);
+      $query->execute();
+      $result = $query->fetchAll(PDO::FETCH_ASSOC);
+      foreach($result[0] as $key=>$value){
+        if ($value == ""){
+          unset($result[0][$key]);
+        }
+      }
+      return $result;
+    } catch (PDOException $e) {
+      print("Error getting image data.");
+      die(print_r($e));
+    }
+  }
+
+  /**
+  * Retrieve all Photos with Lat&Lon (set previously from Exif Data Upload)
+  * to create list for markers creation in map page.
+  */
+  function retrieveDataForMapMarkers(){
+    $sqlQuery = 'select Name, Latitude, Longitude from Photo where Latitude is not null and Longitude is not null';
+    $result = $this->prepareAndExecuteQuery($sqlQuery);
+    return $result;
   }
 }

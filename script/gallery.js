@@ -4,7 +4,10 @@ $(document).ready(() =>
 {
 
   fetchSelectedPage(1);
+  getSearchedImagesByMultipleData('#btnsearchall');
   getSearchedImages('#btnsearchfortags');
+  getSearchedImages('#btnsearchforbrands');
+  getSearchedImages('#btnsearchfordates');
   confirmPageOpen('#fetchall');
   selectOrDeselectAllImagesInPage('#selectall',true);
   selectOrDeselectAllImagesInPage('#deselectall',false);
@@ -22,7 +25,7 @@ function fetchSelectedPage(index)
     }
     enableDeleteOneIfNoneAreSelected();
     enableDeleteForSingleImage(data.pageData, index-1);
-  })
+  }).catch((err) => {console.log('Non hai foto al momento.');})
 };
 
 function startPaginationCreation(dataJson, indexPage)
@@ -42,54 +45,90 @@ function getSearchedImages(id, indexPage)
 {
   $(id).on('click', (event) => {
     let body = new FormData();
-    let tagsInserted = getWordsSplittedBySpace('#taginput');
-    if (tagsInserted[0] == ""){
+    let inputId = $(id).siblings('input').attr('id');
+    let elName = $(id).siblings('input').attr('name');
+    let dataInserted = getWordsSplittedBySpace('#'+inputId);
+    if (dataInserted[0] == ""){
       $('#sharelink').val('');
       fetchSelectedPage(1);
       return;
     }
-    let tags = JSON.stringify(tagsInserted);
-    body.append('tags', tags);
+    let data = JSON.stringify(dataInserted);
+    console.log(data)
+    console.log(dataInserted)
+    body.append(elName, data);
     body.append('indexpage', indexPage = 0);
     var myInit = { method: 'POST',
                 body: body,
                 };
-    fetchSearchedPage(1, myInit);
+    fetchSearchedPage(1, myInit, id);
+  })
+}
+
+function getSearchedImagesByMultipleData(id, indexPage){
+  $(id).on('click', (event) => {
+    let body = new FormData();
+    let arrayInput = $.map($('.inputdata'), (value, index) => {
+      return [value];
+    })
+    let arrToAppend = {};
+    $.each(arrayInput, (index, value) => {
+      let inputId = $(value).attr('id');
+      let elName = $(value).attr('name');
+      let dataInserted = getWordsSplittedBySpace('#'+inputId);
+      if (dataInserted[0] == ""){
+        return;
+      }
+      arrToAppend[elName] = dataInserted;
+    })
+    let data2 = JSON.stringify(arrToAppend);
+    body.append('data', data2);
+    body.append('indexpage', indexPage = 0);
+    var myInit = { method: 'POST',
+                body: body,
+                };
+    fetchSearchedPage(1, myInit, id);
   })
 }
 
 function getWordsSplittedBySpace(id)
 {
   let tags = $(id).val().trim();
-  return tags.split(" ");
+  let tags_splitted = tags.split(" ");
+  let tagsfinal = [];
+  $.each(tags_splitted, (index, value) => {
+    let val = '';
+    if (id == '#datesinput'){
+      val = value.replace(/-/g, '');
+    } else {
+      val = value.replace(/-/g, ' ');
+    }
+    tagsfinal.push(val.trim());
+  })
+  return tagsfinal;
 }
 
-function fetchSearchedPage(index, postPar)
+function fetchSearchedPage(index, postPar, id)
 {
   fetch('/../php/GetSearchedByTagBlobs.php', postPar).then((result) => (result.text())).then((data) => {
-    let json;
-    try{
-      json = JSON.parse(data);
-    } catch (err) {
-      console.log('Nessun risultato per la ricerca effettuata.');
-      return;
-    }
+    json = JSON.parse(data);
     func.displayImagesForSubPage(json.pageData.blobs, json.pageData.tempToken);
     if (!(window.location.pathname === '/getallblobs.php')){
-      startPaginationCreationForSearch(json.pageData, index-1);
+      startPaginationCreationForSearch(json.pageData, index-1, id);
     }
     enableDeleteOneIfNoneAreSelected();
     enableDeleteForSingleImage(json.pageData, index-1);
-  })
+  }).catch((err) => {console.log('Nessun risultato per la ricerca effettuata.');})
 };
 
-function startPaginationCreationForSearch(dataJson, indexPage)
+function startPaginationCreationForSearch(dataJson, indexPage, id)
 {
   let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
   func.createPagination(pagesToRender, indexPage);
 
   $('.fetchSelectedPage').on('click', (event) => {
-    getSearchedImages('#btnsearchfortags', $(event.target).attr('value'));
+    console.log(id)
+    getSearchedImages(id, $(event.target).attr('value'));
   })
   $('.fetchPagination').on('click', (event) => {
     startPaginationCreationForSearch(dataJson, $(event.target).attr('value')-1);
@@ -174,7 +213,7 @@ function getShareableLink(id)
                 };
     fetch('/../php/CreateShareableLink.php', myInit).then((result) => (result.text())).then((data) => {
       $('#sharelink').val(data);
-    })
+    }).catch((err) => {console.log('Sono sorti problemi con la creazione del link.');})
   })
 }
 

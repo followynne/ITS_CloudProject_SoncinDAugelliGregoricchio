@@ -11,5 +11,5 @@
 </div>
 
 <?php $this->start('js') ?>
-<script type="module" src="../script/sharedgallery.js"></script>
+<script type="module" src="/script/sharedgallery.js"></script>
 <?php $this->stop() ?>

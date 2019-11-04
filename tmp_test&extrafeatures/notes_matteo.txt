@@ -19,3 +19,9 @@ DOCUMENTAZIONE E AFFINI
   usare 2*key per modificare la conn string rispetto a quelle salvata in vecchi commit
 - Per linux Server
   Va aggiunta la gestione di HTTP_ORIGIN e server host nei vari...
+
+
+*************************
+Ragionandoci, il .env va messo un livello sopra e dal php richiamato come già scritto. il dato è recuperato
+e inserito senza problemi di path/accesso root.
+*************************

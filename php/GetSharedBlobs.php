@@ -1,11 +1,12 @@
 <?php
 session_start();
-require_once __DIR__. "/../vendor/autoload.php";
+chdir(dirname(__DIR__));
+require_once 'vendor/autoload.php';
 
 $data = $_GET['url'];
 $indexPageRequested = $_GET['indexpage'];
 
-$filedata =  file_get_contents('../sharefile/' . $data);
+$filedata =  file_get_contents('sharefile/' . $data);
 
 $dataavailable = unserialize($filedata);
 $maxBlobsPerSubPage = 12;

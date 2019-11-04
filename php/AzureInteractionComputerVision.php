@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 namespace AzureClasses;
+chdir(dirname(__DIR__));
 
-require_once __DIR__. "/../vendor/autoload.php";
+require_once 'vendor/autoload.php';
 require_once 'HTTP/Request2.php';
 
 use Dotenv\Dotenv;
@@ -14,8 +15,10 @@ class AzureInteractionComputerVision {
 
   private $ocpApimSubscriptionKey;
 
-  function __construct(){
-    $dotenv = Dotenv::create(__DIR__.'/../');
+  /**
+   * Constructor made via PHP-DI configuration.
+   */
+  function __construct(Dotenv $dotenv){
     $dotenv->load();
     $this->ocpApimSubscriptionKey = $_ENV['COMPUTERVISION_KEY'];
   }

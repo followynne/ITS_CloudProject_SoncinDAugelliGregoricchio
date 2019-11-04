@@ -3,9 +3,8 @@ declare(strict_types=1);
 namespace AzureClasses;
 
 session_start();
-
+chdir(dirname(__DIR__));
 require "vendor/autoload.php";
-//require_once "./php/DAOInteraction.php";
 
 use League\Plates\Engine;
 use AzureClasses\DAOInteraction;
@@ -16,7 +15,7 @@ $templates = new Engine('templates/');
 //$name = $_POST['name'];
 $mail = $_POST['mail'];
 $password = $_POST['pwd'];
-$x = new DAOInteraction(); 
+$x = new DAOInteraction();
 $r = $x->checkUser($mail,$password);
 
   /*function prepareAndExecuteQuery($sqlQuery){
@@ -25,7 +24,7 @@ $r = $x->checkUser($mail,$password);
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }*/
 
-  
+
 
 echo $templates->render('_homepage', ['mail' => $r]);
 

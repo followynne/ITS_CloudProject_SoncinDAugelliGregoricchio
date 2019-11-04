@@ -1,7 +1,7 @@
 <?php $this->layout('home', ['title' => 'HomePage']) ?>
 
 <div class="text-right">
-<button type="button" class="btn btn-dark btn-lg" onclick="window.location.href='./start.php'">Log-out</button>
+<button type="button" class="btn btn-dark btn-lg" onclick="window.location.href='/public/start.php'">Log-out</button>
 </div>
 
 <div class="jumbotron">
@@ -24,7 +24,7 @@
   <p>Cose a caso</p>
   <p class="lead">
   <div class="container-fluid" style="width:40%">
-    <button type="button" class="btn btn-success btn-lg gallery" onclick="window.location.href='./getblobsperpage.php'">Gallery</button>
+    <button type="button" class="btn btn-success btn-lg gallery" onclick="window.location.href='/public/getblobsperpage.php'">Gallery</button>
     <button type="button" class="btn btn-danger btn-lg upPhotos">Upload Photos</button>
     <button type="button" class="btn btn-warning btn-lg mp">Go To Maps Photo Location Page</button>
     </div>

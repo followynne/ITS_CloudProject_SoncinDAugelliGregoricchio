@@ -18,14 +18,16 @@ $(document).ready(() =>
 
 function fetchSelectedPage(index)
 {
-    fetch('/../php/GetJsonBlobs.php?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
+    fetch('/php/GetJsonBlobs.php?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
     func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
-    if (!(window.location.pathname === '/getallblobs.php')){
+    if (!(window.location.pathname === '/public/getallblobs.php')){
       startPaginationCreation(data.pageData, index-1);
     }
     enableDeleteOneIfNoneAreSelected();
     enableDeleteForSingleImage(data.pageData, index-1);
-  }).catch((err) => {console.log('Non hai foto al momento.');})
+  }).catch((err) => {
+      console.log('Potresti non aver foto al momento o aver eliminato l\'ultima pagina di foto.');
+      alert('If you have photos, refresh page please. Check log if info needed.')})
 };
 
 function startPaginationCreation(dataJson, indexPage)
@@ -54,8 +56,6 @@ function getSearchedImages(id, indexPage)
       return;
     }
     let data = JSON.stringify(dataInserted);
-    console.log(data)
-    console.log(dataInserted)
     body.append(elName, data);
     body.append('indexpage', indexPage = 0);
     var myInit = { method: 'POST',
@@ -110,24 +110,22 @@ function getWordsSplittedBySpace(id)
 
 function fetchSearchedPage(index, postPar, id)
 {
-  fetch('/../php/GetSearchedByTagBlobs.php', postPar).then((result) => (result.text())).then((data) => {
-    json = JSON.parse(data);
-    func.displayImagesForSubPage(json.pageData.blobs, json.pageData.tempToken);
-    if (!(window.location.pathname === '/getallblobs.php')){
-      startPaginationCreationForSearch(json.pageData, index-1, id);
+  fetch('/php/GetSearchedBlobs.php', postPar).then((result) => (result.json())).then((data) => {
+    func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
+    if (!(window.location.pathname === '/public/getallblobs.php')){
+      startPaginationCreationForSearch(data.pageData, index-1, id);
     }
     enableDeleteOneIfNoneAreSelected();
-    enableDeleteForSingleImage(json.pageData, index-1);
-  }).catch((err) => {console.log('Nessun risultato per la ricerca effettuata.');})
+    enableDeleteForSingleImage(data.pageData, index-1);
+  }).catch((err) => {console.log(err + ' Nessun risultato per la ricerca effettuata.');})
 };
 
 function startPaginationCreationForSearch(dataJson, indexPage, id)
 {
   let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
-  func.createPagination(pagesToRender, indexPage);
+  func.createPagination(pagesToRender-1, indexPage);
 
   $('.fetchSelectedPage').on('click', (event) => {
-    console.log(id)
     getSearchedImages(id, $(event.target).attr('value'));
   })
   $('.fetchPagination').on('click', (event) => {
@@ -157,8 +155,8 @@ function enableDeleteForSingleImage(dataJson, indexPage)
 {
   $('.btnDeleteOne').on('click', (event) => {
     var myInit = { method: 'DELETE'};
-    fetch('/../php/DeleteBlobs.php?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
-      if (data!= 'Delete successful'){
+    fetch('/php/DeleteBlobs.php?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
+      if (data!= 'successful delete'){
         alert("Delete not successful.");
         return;
       }
@@ -183,8 +181,8 @@ function deleteSelectedImages(id)
       return;
     }
     var myInit = { method: 'DELETE'};
-    fetch('/../php/DeleteBlobs.php?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
-      if (data!= 'Delete successful'){
+    fetch('/php/DeleteBlobs.php?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
+      if (data!= 'successful delete'){
         alert("Some deletes were not successful. Please check after page reload.");
       }
       fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
@@ -211,7 +209,7 @@ function getShareableLink(id)
     var myInit = { method: 'POST',
                 body: body,
                 };
-    fetch('/../php/CreateShareableLink.php', myInit).then((result) => (result.text())).then((data) => {
+    fetch('/php/CreateShareableLink.php', myInit).then((result) => (result.text())).then((data) => {
       $('#sharelink').val(data);
     }).catch((err) => {console.log('Sono sorti problemi con la creazione del link.');})
   })
@@ -223,8 +221,8 @@ function prepareShareUsage()
   let d2 = new Date();
   d.setHours(d.getHours()+2);
   d2.setMonth(d.getMonth()+6);
-  $('#datetimepicker').attr('min', d.getFullYear() + '-0' + (d.getMonth()+1) + '-' + d.getDate());
-  $('#datetimepicker').attr('max', d2.getFullYear() + '-0' + (d2.getMonth()+1) + '-' + d2.getDate());
+  let x = $('#datetimepicker').attr('min', d.getFullYear()  + '-' + ('0' + (d.getMonth()+1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2));
+  let x2 = $('#datetimepicker').attr('max', d2.getFullYear() + '-' + ('0' + (d2.getMonth()+1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2));
   $('[data-toggle="popover"]').popover()
   let clipboard = new ClipboardJS('.copy');
 }

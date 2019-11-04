@@ -8,7 +8,7 @@ function fetchSelectedPage(index)
 {
     let searchParams = new URLSearchParams(window.location.search);
     let url = searchParams.get('url');
-    fetch('/../php/GetSharedBlobs.php?url=' + url + '&indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
+    fetch('/php/GetSharedBlobs.php?url=' + url + '&indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
     displayImagesForSubPage(data.pageData.blobs);
     startPaginationCreation(data.pageData, index-1);
     })

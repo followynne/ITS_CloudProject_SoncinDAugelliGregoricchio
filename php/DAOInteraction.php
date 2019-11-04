@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
-
 namespace AzureClasses;
+chdir(dirname(__DIR__));
 
-use Dotenv\Dotenv;
 use \PDO;
+use PDOException;
+
 /**
  * This class opens connection with Microsoft SQL Server and interacts
  * for CRUD operations.
@@ -12,38 +13,36 @@ use \PDO;
 class DAOInteraction {
 
   private $conn;
+  private $idContainer;
 
   /**
-   * The constructor gets the .env credential file and use them credentials
-   * to create a PDO Connection.
+   * The constructor gets a PDO Instance.
    */
-  function __construct(){
-    $dotenv = Dotenv::create(__DIR__.'/../');
-    $dotenv->load();
-    try {
-      $this->conn = new PDO($_ENV['DB_STRING'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->conn->setAttribute (PDO::ATTR_ORACLE_NULLS, PDO::NULL_TO_STRING);
-    }
-    catch (PDOException $e) {
-      print("Error connecting to SQL Server.");
-      die(print_r($e));
-    }
+  function __construct(PDO $pdo){
+    $this->conn = $pdo;
+    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $this->conn->setAttribute (PDO::ATTR_ORACLE_NULLS, PDO::NULL_TO_STRING);
+  }
+
+  /*
+  * Set the ID Container for the user operations.
+  */
+  function setIdContainer($id){
+    $this->idContainer = $id;
   }
 
   /**
-   * Given a @SQLQuery, the func prepare a query
-   * on the PDO object (created on object construction),
-   * execute and fetch all matches.
+   * Given a @SQLQuery without parameters, the func prepare a query
+   * on the PDO object, execute and fetch all matches.
    */
-  function prepareAndExecuteQuery($sqlQuery){
+  function prepareAndExecuteQuery(string $sqlQuery){
     try {
       $query = $this->conn->prepare($sqlQuery);
       $query->execute();
       return $query->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
       print("Error executing query, please check your data input.");
-      die(print_r($e));
+      die();
     }
   }
 
@@ -52,24 +51,24 @@ class DAOInteraction {
    * to: search for all results that match with ALL tags (AND logic), if given, and
    * optional exif specs (OR Logic).
    */
-  function searchBlobsByColumn(array $data, $idcontainer){
-    $sql = 'select Photo.ReferenceName from Photo ';
+  function searchBlobsByColumn(array $data){
+    $sql = 'SELECT Photo.ReferenceName FROM Photo';
     if (isset($data['Tag.Name'])){
-      $sql .= 'inner join PhotoTag on Photo.Id=PhotoTag.IdPhoto
-              inner join Tag on PhotoTag.IdTag = Tag.Id ';
+      $sql .= ' INNER JOIN PhotoTag ON Photo.Id=PhotoTag.IdPhoto
+               INNER JOIN Tag ON PhotoTag.IdTag = Tag.Id
+               WHERE IdContainer = ' . $this->idContainer . ' AND ';
+    } else {
+      $sql .= ' WHERE ';
     }
-    $sql .= 'where IdContainer = '. $idcontainer;
     foreach($data as $key=>$values){
       $querypar = $values;
-      $sql .= ' and '. $key .' in (\''
-            . $querypar .
-            '\') ';
+      $sql .= $key .' IN (\''
+           . $querypar . '\') AND ';
     }
-    $sql .= 'group by Photo.ReferenceName ';
+    $sql = substr($sql, 0, (strlen($sql)-4)) . 'GROUP BY Photo.ReferenceName ';
     if (isset($data['Tag.Name'])){
-      $sql .= 'having count(Tag.Name) = '. count(explode(', ', $data['Tag.Name']));
+      $sql .= 'HAVING COUNT(Tag.Name) = '. count(explode(', ', $data['Tag.Name']));
     }
-    print_r($sql);
     return $this->prepareAndExecuteQuery($sql);
   }
 
@@ -129,14 +128,14 @@ class DAOInteraction {
    * Given a Photo Reference Name, the function retrieve from the
    * Photo DBTable the tags related to it.
    */
-  function getTagsofBlob($blobname, $idcontainer){
+   function getBlobTags($blobname){
     $sqlQuery = "select t.Name from Tag as t
                 inner join PhotoTag as p on t.Id = p.IdTag
                 inner join Photo as ph on p.IdPhoto = ph.Id
                 where ph.ReferenceName = :name and ph.IdContainer = :idContainer";
     $query = $this->conn->prepare($sqlQuery);
     $query->bindParam(':name', $blobname);
-    $query->bindParam(':idContainer', $idcontainer);
+    $query->bindParam(':idContainer', $this->idContainer);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_COLUMN, 0);
     return implode(', ', $result);
@@ -146,13 +145,13 @@ class DAOInteraction {
    * Given a Photo Reference Name, the function retrieve from the
    * Photo DBTable the exif information related to it.
    */
-  function getExifForBlob($blobname, $idcontainer){
+  function getBlobExif($blobname){
     try {
-      $sqlQuery = 'select Name, MB, FileType, Height, Width, Brand, Model, Orientation,
+      $sqlQuery = 'SELECT Name, MB, FileType, Height, Width, Brand, Model, Orientation,
       Date, Latitude, Longitude from Photo where ReferenceName = :name and IdContainer = :idContainer';
       $query = $this->conn->prepare($sqlQuery);
       $query->bindParam(':name', $blobname);
-      $query->bindParam(':idContainer', $idcontainer);
+      $query->bindParam(':idContainer', $this->idContainer);
       $query->execute();
       $result = $query->fetchAll(PDO::FETCH_ASSOC);
       foreach($result[0] as $key=>$value){
@@ -163,7 +162,41 @@ class DAOInteraction {
       return $result;
     } catch (PDOException $e) {
       print("Error getting image data.");
-      die(print_r($e));
+    }
+  }
+
+  /*
+  * Given a Reference Name, deletes a Blob Information from the DB.
+  */
+  function deleteBlob(string $name){
+    try {
+      $res = $this->deleteBlobTags($name);
+      $sqlQuery = 'DELETE Photo FROM Photo
+                  WHERE ReferenceName = :name AND IdContainer = :idContainer';
+      $query = $this->conn->prepare($sqlQuery);
+      $query->bindParam(':name', $name);
+      $query->bindParam(':idContainer', $this->idContainer);
+      $query->execute();
+      return 'successful delete';
+    } catch (PDOException $e) {
+      throw new PDOException;
+    }
+  }
+
+  /*
+  * Given a Reference Name, deletes all Blob specific-tags from the DB.
+  */
+  function deleteBlobTags(string $name){
+    try {
+      $sqlQuery = 'DELETE PhotoTag FROM PhotoTag pt inner join Photo p on p.Id = pt.IdPhoto
+                  where p.ReferenceName = :name and p.IdContainer = :idContainer';
+      $query = $this->conn->prepare($sqlQuery);
+      $query->bindParam(':name', $name);
+      $query->bindParam(':idContainer', $this->idContainer);
+      $s = $query->execute();
+      return 'done';
+    } catch (PDOException $e){
+      throw new PDOException;
     }
   }
 

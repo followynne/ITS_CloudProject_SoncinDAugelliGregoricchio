@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-
 namespace AzureClasses;
+chdir(dirname(__DIR__));
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Common\Internal\StorageServiceSettings;
@@ -23,10 +23,9 @@ class AzureStorageSASOperations {
 
   /**
    * The constructor loads .env file to get Azure Storage
-   * owner data (used to create SAS).
+   * owner data (used to create SAS) via PHP-DI configuration.
    */
-  function __construct(){
-    $dotenv = Dotenv::create(__DIR__.'/../');
+  function __construct(Dotenv $dotenv){
     $dotenv->load();
   }
 
@@ -41,21 +40,13 @@ class AzureStorageSASOperations {
   }
 
   /**
-   * Given a @resource and an optional @date, it calls the SAS creation.
-   */
-  function createSAS(string $resource, string $date = null ){
-    return $this->CreateSharedAccessRetrieve($resource, $date);
-  }
-
-  /**
    * Given a @resource and an optional @date, the function calls Azure API
    * to make a SAS connection string. SAS can be made for 3 resource-type:
    * - container,
    * - blob,
    * - blob with expiry date specified for the SAS.
    */
-  private function CreateSharedAccessRetrieve(string $resource, string $date = null){
-
+  function createSAS(string $resource, string $date = null ){
     $connectionString = $_ENV['CONNECTION_STRING'];
     $settings = StorageServiceSettings::createFromConnectionString($connectionString);
     $accountName = $settings->getName();

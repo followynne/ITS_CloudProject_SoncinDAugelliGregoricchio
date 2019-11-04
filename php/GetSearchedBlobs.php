@@ -1,17 +1,31 @@
 <?php
 session_start();
-
-require_once __DIR__. "/../vendor/autoload.php";
+chdir(dirname(__DIR__));
+require_once 'vendor/autoload.php';
 
 use AzureClasses\DAOInteraction;
 use AzureClasses\AzureInteractionBlob;
 
+//TODO: containername needs to be taken from $_SESSION['usercontainer']
 $idContainer = $_SESSION['idContainer'];
 $containername = $_SESSION['containerName'];
 $idContainer = 1;
 $containername = 'prova1';
+//TODO
 
-//TODO: containername needs to be taken from $_SESSION['usercontainer']
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions('config/config.php');
+$cont = $builder->build();
+
+try{
+  $dao = $cont->get(DAOInteraction::class);
+  $dao->setIdContainer($idContainer);
+  $azureblob = $cont->get(AzureInteractionBlob::class);
+  $azureblob->setContainer($containername);
+} catch (Exception $e){
+  echo "Error establishing connection.";
+  die();
+}
 
 $data = [];
 if (isset($_POST['data'])){
@@ -25,8 +39,6 @@ if (isset($_POST['data'])){
     ( isset($_POST['brand']) ? $data = ['Brand' => implode('\', \'', json_decode($_POST['brand']))] :
     ($data = ['Date' => implode('\', \'', json_decode($_POST['dates']))]));
 }
-$dao = new DAOInteraction();
-$blobnames = $dao->searchBlobsByColumn($data, $idContainer);
-print_r($blobnames);
-$azureblob = new AzureInteractionBlob($containername);
-echo $azureblob->createBlobJsonWithBlobNames($blobnames, $_POST['indexpage']);
+
+$blobnames = $dao->searchBlobsByColumn($data);
+echo $azureblob->createBlobJsonWithBlobNames($blobnames, $_POST['indexpage'] ?? 0);

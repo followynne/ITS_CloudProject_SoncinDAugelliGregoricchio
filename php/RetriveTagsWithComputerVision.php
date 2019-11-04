@@ -1,9 +1,12 @@
 <?php
-require_once __DIR__. "/../vendor/autoload.php";
-
+chdir(dirname(__DIR__));
+require_once 'vendor/autoload.php';
 use AzureClasses\AzureInteractionComputerVision;
 
-$prova = new AzureInteractionComputerVision();
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions('config/config.php');
+$cont = $builder->build();
+$cpobj = $cont->get(AzureInteractionComputerVision::class);
 
 $imagepath = ($_FILES['photo']['tmp_name']);
 
@@ -12,7 +15,7 @@ $size=filesize ($imagepath);
 $contents= fread ($data, $size);
 fclose ($data);
 
-$result = $prova->getTagsFromComputerVisionAnalysis($contents);
+$result = $cpobj->getTagsFromComputerVisionAnalysis($contents);
 $print;
 foreach($result->tags as $tag){
   $print .= $tag->name . ', ';

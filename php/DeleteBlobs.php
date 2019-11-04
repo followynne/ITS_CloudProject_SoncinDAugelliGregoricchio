@@ -1,17 +1,50 @@
 <?php
 session_start();
-require_once __DIR__. "/../vendor/autoload.php";
+chdir(dirname(__DIR__));
+require_once 'vendor/autoload.php';
 
-use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use AzureClasses\DAOInteraction;
 use AzureClasses\AzureInteractionContainer;
+use AzureClasses\AzureStorageDeleteAdapter;
+use AzureClasses\DatabaseDeleteAdapter;
 
 //TODO: containername needs to be taken from $_SESSION['usercontainer']
+$_SESSION['idContainer'] = 1;
+$container = $_SESSION['idContainer'];
+//TODO
 
-$blobClient = new AzureInteractionContainer('prova1');
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions('config/config.php');
+$cont = $builder->build();
 
-if (is_array($_GET['name'])){
-  $result = $blobClient->deleteBlobs($_GET['name']);
-} else {
-  $result = $blobClient->deleteBlob($_GET['name']);
+try {
+  $dao = $cont->get(DAOInteraction::class);
+  $dao->setIdContainer($container);
+  $blobClient = $cont->get(AzureInteractionContainer::class);
+  $blobClient -> setContainer('prova1');
+} catch (Exception $e){
+  echo $e;
+  echo "Error establishing connection to remote services.";
+  die();
 }
-echo $result;
+$azureadapter = new AzureStorageDeleteAdapter($blobClient);
+$dbadapter = new DatabaseDeleteAdapter($dao);
+
+$data = !is_array($_GET['name']) ? array($_GET['name']) : $_GET['name'];
+
+foreach($data as $name){
+  $azuredel = $azureadapter->deleteFrom($name);
+  if ($azuredel == 'successful'){
+    try {
+      $dbdel = $dbadapter->deleteFrom($name);
+    } catch (PDOException $ex) {
+      $azureadapter->rollbackDelete($name);
+      print("Some deletes unsuccessful. Please check after refresh.");
+      return;
+    }
+  } else {
+    echo 'Some deletes unsuccessful. Please check after refresh.';
+    return;
+  }
+}
+echo $dbdel;

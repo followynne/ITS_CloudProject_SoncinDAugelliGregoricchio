@@ -2,7 +2,7 @@
 
 <div class="container-fluid" style="width:85%">
   <div class="row justify-content-end">
-    <a href="/../getallblobs.php" target="_blank">
+    <a href="/public/getallblobs.php" target="_blank">
       <button type="button" class="btn btn-dark" id="fetchall" style="<?=$this->e($display)?>">Show All Images</button>
     </a>
     <button type="button" class="btn btn-light" id="selectall">Select All</button>
@@ -44,7 +44,7 @@
         <span>
           <input id="sharelink" readonly>
           <button class="btn copy" data-clipboard-target="#sharelink">
-            <img src="img/clippy.svg" alt="Copy to clipboard">
+            <img src="/img/clippy.svg" alt="Copy to clipboard">
           </button>
         </span>
     </div>
@@ -62,5 +62,5 @@
 </div>
 
 <?php $this->start('js') ?>
-<script type="module" src="../script/gallery.js"></script>
+<script type="module" src="/script/gallery.js"></script>
 <?php $this->stop() ?>

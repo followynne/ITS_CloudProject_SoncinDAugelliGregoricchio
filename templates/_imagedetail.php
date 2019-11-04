@@ -14,7 +14,9 @@
       <?php foreach($exif[0] as $key=>$value): ?>
           <li class="list-group-item"><?= $this->e($key)?>: <?= $this->e($value)?></li>
       <?php endforeach ?>
-      <li class="list-group-item">Tags: <?= $this->e($tags)?></li>
+      <?php if ($this->e($tags) != "") : ?>
+            <li class="list-group-item">Tags: <?=$this->e($tags)?></li>
+      <?php endif ?>
     </ul>
     </div>
   </div>

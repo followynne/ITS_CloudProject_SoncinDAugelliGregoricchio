@@ -6,7 +6,7 @@
   </head>
   <body>
     <form name="invio_file"
- action="testexif.php"
+ action="/php/RetriveTagsWithComputerVision.php"
  method="POST"
  enctype="multipart/form-data">
  <input type="file" name="photo" />

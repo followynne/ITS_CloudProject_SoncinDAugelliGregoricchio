@@ -1,5 +1,6 @@
 <?php
 session_start();
+chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
 use League\Plates\Engine;

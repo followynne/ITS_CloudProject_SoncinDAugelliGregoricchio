@@ -44,7 +44,7 @@
         <span>
           <input id="sharelink" readonly>
           <button class="btn copy" data-clipboard-target="#sharelink">
-            <img src="/img/clippy.svg" alt="Copy to clipboard">
+            <img src="/images/clippy.svg" alt="Copy to clipboard">
           </button>
         </span>
     </div>

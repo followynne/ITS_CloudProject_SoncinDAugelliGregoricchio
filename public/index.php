@@ -7,25 +7,15 @@ chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
 use League\Plates\Engine;
-use AzureClasses\DAOInteraction;
-use \PDO;
-// check for Login
+
 $templates = new Engine('templates/');
 
-//$name = $_POST['name'];
-$mail = $_POST['mail'];
-$password = $_POST['pwd'];
-$x = new DAOInteraction();
-$r = $x->checkUser($mail,$password);
-
-  /*function prepareAndExecuteQuery($sqlQuery){
-    $query = $this->conn->prepare($sqlQuery);
-    $query->execute();
-    return $query->fetchAll(PDO::FETCH_ASSOC);
-  }*/
-
-
-
-echo $templates->render('_homepage', ['mail' => $r]);
-
-?>
+if (isset($_SESSION['mail'])) {
+  $mail = $_SESSION['mail'];
+  echo $templates->render('_homepage', ['mail'=> $mail]);
+} else {
+  echo '<script type="text/javascript">
+          alert("Credentials wrong");
+        </script>';
+  header('Location: start.php');
+}

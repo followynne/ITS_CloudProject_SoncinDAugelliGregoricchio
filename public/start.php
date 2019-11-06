@@ -4,25 +4,32 @@ chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
 use League\Plates\Engine;
+use AzureClasses\DAOInteraction;
 
-//here goes the login/signup login, if exist render _login->home else render signup[...] and come back here
 $templates = new Engine('templates/');
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions('config/config.php');
+$cont = $builder->build();
 
-if (true){
-  //person logged in session
-  echo $templates->render('_login', []);
-} else {
-  //redirect to index.php with login data in session
-  if (true){
-    //login exist, must be tested if logged
-    echo $templates->render('_login', []);
-  } else if (false){
-    /* <?=$this->e($start)?>
-    //login not exist, click on signup
-    //redirect to signup.php with login data in session*/
-
-  }
+try{
+  $dao = $cont->get(DAOInteraction::class);
+} catch (Exception $e){
+  echo "Error establishing connection.";
+  die();
 }
 
-
-?>
+if (isset($_SESSION['mail'])) {
+  header ('Location: index.php');
+} else if (!isset($_POST)) {
+  echo $templates->render('_login', []);
+} else {
+  $mail = $_POST['mail'];
+  $password = $_POST['pwd'];
+  $user = $dao->checkUser($mail, $password);
+  if ($user) {
+    $_SESSION['mail'];
+    header('Location: index.php');
+  } else {
+    echo $templates->render('_login', []);
+  }
+}

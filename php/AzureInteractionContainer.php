@@ -56,6 +56,31 @@ class AzureInteractionContainer
   }
 
   /**
+   * Upload a blob in the Azure Container, setting an unique reference name for the blob.
+   */
+  function uploadBlob(string $name, $contents)
+  {
+    try {
+      $this->blobClient->createBlockBlob($this->resource, $name, $contents);
+      $msg = 'Added successful';
+    } catch (ServiceException $e){
+      $msg = $e->getMessage();
+    }
+    return $msg;
+  }
+
+  /**
+   * TODO: WIP
+   */
+  function getLastsFiveBlobs($containerName, $blob)
+  {
+    for ($i=0; $i<6; $i++){
+      $blob = $this->blobClient->getBlob($containerName, $blob);
+      return fpassthru($blob->getContentStream());
+    }
+  }
+
+  /**
    * Given a container name and a ListBlobsOptions object, the function returns
    * the blob list (with properties) for that container.
    */

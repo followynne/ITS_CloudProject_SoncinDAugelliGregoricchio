@@ -47,55 +47,137 @@ class DAOInteraction {
   }
 
   /**
-   * Given an array of @data, the func returns a SQL query
-   * to: search for all results that match with ALL tags (AND logic), if given, and
-   * optional exif specs (OR Logic).
+   * Given mail and password, check
+   * 1) if user already exist
+   * 2) if password sent is equal to the one stored in DB.
    */
-  function searchBlobsByColumn(array $data){
-    $sql = 'SELECT Photo.ReferenceName FROM Photo';
-    if (isset($data['Tag.Name'])){
-      $sql .= ' INNER JOIN PhotoTag ON Photo.Id=PhotoTag.IdPhoto
-               INNER JOIN Tag ON PhotoTag.IdTag = Tag.Id
-               WHERE IdContainer = ' . $this->idContainer . ' AND ';
-    } else {
-      $sql .= ' WHERE ';
-    }
-    foreach($data as $key=>$values){
-      $querypar = $values;
-      $sql .= $key .' IN (\''
-           . $querypar . '\') AND ';
-    }
-    $sql = substr($sql, 0, (strlen($sql)-4)) . 'GROUP BY Photo.ReferenceName ';
-    if (isset($data['Tag.Name'])){
-      $sql .= 'HAVING COUNT(Tag.Name) = '. count(explode(', ', $data['Tag.Name']));
-    }
-    return $this->prepareAndExecuteQuery($sql);
-  }
-
   function checkUser($mail, $password){
     //$pwd = password_hash($post['pwd'], PASSWORD_DEFAULT);
-    $sqlQuery = "SELECT mail, pwd FROM utente WHERE mail=:mail AND pwd=:password;";
-    $query = $this->conn->prepare($sqlQuery);
-    $query->execute([':mail' => ''.$mail.'', ':password' => ''.$password.'']);
-    $result = $query->fetchAll();
-    print_r($result);
+    try {
+      $sqlQuery = "SELECT name, mail, pwd FROM utente WHERE mail=:mail AND pwd=:password;";
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute([':mail' => ''.$mail.'', ':password' => ''.$password.'']);
+      $result = $query->fetchAll();
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
+    }
 
     // password_verify($post['pwd'], $dataToCheck['pwd'];
-    if ($mail == $result[0]['mail'] && $password == $result[0]['pwd']){
-       if (isset($mail)){
-    return  $mail;
-       }else{
-        return "";
-       }
-    return $mail;
-        }
-    else {
-    //$templates->render('_homepage',$_SESSION['mail']);
-    //return $templates->render('start',$_SESSION['start']);
-    //echo "sessione non compiuta";
-  }
+    if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+      if ($mail == $result[0]['mail'] && $password == $result[0]['pwd']){
+          $_SESSION['mail'] = $result[0]['name'];
+          return true;
+      } else {
+          return false;
+      }
+    } else {
+      return false;
+    }
   }
 
+  /**
+   * Given an UserID, returns all informations associated from the Container table.
+   */
+  function selectContainerInfoForUser($idU){
+    try {
+      $sqlQuery = "SELECT * from Container WHERE IdUtente = :idU";
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute([':idU' => $idU]);
+      $result = $query->fetchAll();
+      return $result;
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
+    }
+  }
+
+  /**
+   * WIP
+   */
+  function addDataContainer($idC, $idU, $name){
+    $idU = idUser();
+    $sqlQuery = "Insert INTO Container(IdContainer, IdUtente, ContainerName) VALUES (:idC, :idU, :name);";
+    $query = $this->conn->prepare($sqlQuery);
+    $query->execute([':idC' => $idC,':idU' => ''.$idU.'',':name' => ''.$name.'']);
+    return $id = $this->conn->lastInsertId();
+    return printf("Query avvenuta con successo");
+  }
+
+  /**
+   * WIP
+   */
+  function idUser(){
+    if(checkUser($mail, $password)){
+      $id = $this->conn->lastInsertId();
+      return $id;
+    } else {
+      return printf("Qualcosa è andato storto!");
+    }
+  }
+
+  /**
+   * Given a @par blob ReferenceName and the actual blob Name,
+   * it adds blob information on the Database.
+   */
+  function addDataPhotos($refName, $name){
+    try {
+      $sqlQuery = "Insert INTO Photo(IdContainer, ReferenceName, Name) VALUES (:idC, :refName, :name);";
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute([':idC' => $this->idContainer,':refName' => ''.$refName.'',':name' => ''.$name.'']);
+      return $id = $this->conn->lastInsertId();
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
+    }
+  }
+
+  /**
+   * Given a @par PhotoId and PhotoTag, insert a new record N:N in the table PhotoTag.
+   */
+  function addDataPhotoTag($idP,$idT){
+    try{
+      $sqlQuery = " Insert INTO PhotoTag(IdPhoto, IdTag) VALUES (:idP, :idT);";
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute([':idP' => $idP,':idT' => $idT]);
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
+    }
+  }
+  
+  /**
+   * Given a @par tag, check if it's already in the table Tag.
+   * If the tag is not there, it adds the tag and return its id, otherwise it searches the tag and returns
+   * its current id.
+   */
+  function addDataTag($tag){
+    $sqlQuery = "BEGIN
+                 IF NOT EXISTS (SELECT * FROM Tag 
+                 WHERE Name =:name)
+                   BEGIN
+                   INSERT INTO Tag (Name)
+                   VALUES (:name2)
+                   END
+                 END";
+    try{
+      $query = $this->conn->prepare($sqlQuery);
+      $result = $query->execute([':name' => ''.$tag.'',':name2' => ''.$tag.'']);
+      if ($result===true){
+        $sqlQuery2 = "SELECT Id FROM Tag WHERE Name =:name3;";
+        $query2 = $this->conn->prepare($sqlQuery2);
+        $query2->execute([':name3' => ''.$tag.'']);
+        $result2 = $query2->fetch();
+        return $result2[0];
+      } else {
+        return $id = $this->conn->lastInsertId();
+      }
+    } catch (PDOException $e) {
+      print("Error sending image data.");
+      die(print_r($e));
+    }
+  }
+ 
   /**
    * Given a PhotoId and an exif array, the function updates the
    * Photo DBTable with the proper exif information related to the photo.
@@ -103,7 +185,7 @@ class DAOInteraction {
   function insertExifData($idPhoto, array $data){
     try {
       $sqlQuery = 'update Photo set MB = :filesize, FileType = :filetype, Height = :height, Width = :width,
-      Brand = :brand, Model = :model, Orientation = :orientation, Date = :date, Latitude = :latitude, Longitude = :longitude where Id = :id;';
+      Brand = :brand, Model = :model, Orientation = :orientation, Date = :date, Latitude = :latitude, Longitude = :longitude WHERE Id = :id;';
       $query = $this->conn->prepare($sqlQuery);
       $null = null;
       $query->bindParam(':id', $idPhoto);
@@ -132,7 +214,7 @@ class DAOInteraction {
     $sqlQuery = "select t.Name from Tag as t
                 inner join PhotoTag as p on t.Id = p.IdTag
                 inner join Photo as ph on p.IdPhoto = ph.Id
-                where ph.ReferenceName = :name and ph.IdContainer = :idContainer";
+                WHERE ph.ReferenceName = :name and ph.IdContainer = :idContainer";
     $query = $this->conn->prepare($sqlQuery);
     $query->bindParam(':name', $blobname);
     $query->bindParam(':idContainer', $this->idContainer);
@@ -148,7 +230,7 @@ class DAOInteraction {
   function getBlobExif($blobname){
     try {
       $sqlQuery = 'SELECT Name, MB, FileType, Height, Width, Brand, Model, Orientation,
-      Date, Latitude, Longitude from Photo where ReferenceName = :name and IdContainer = :idContainer';
+      Date, Latitude, Longitude from Photo WHERE ReferenceName = :name and IdContainer = :idContainer';
       $query = $this->conn->prepare($sqlQuery);
       $query->bindParam(':name', $blobname);
       $query->bindParam(':idContainer', $this->idContainer);
@@ -189,7 +271,7 @@ class DAOInteraction {
   function deleteBlobTags(string $name){
     try {
       $sqlQuery = 'DELETE PhotoTag FROM PhotoTag pt inner join Photo p on p.Id = pt.IdPhoto
-                  where p.ReferenceName = :name and p.IdContainer = :idContainer';
+                  WHERE p.ReferenceName = :name and p.IdContainer = :idContainer';
       $query = $this->conn->prepare($sqlQuery);
       $query->bindParam(':name', $name);
       $query->bindParam(':idContainer', $this->idContainer);
@@ -201,11 +283,37 @@ class DAOInteraction {
   }
 
   /**
+   * Given an array of @data, the func returns a SQL query
+   * to: search for all results that match with ALL tags (AND logic), if given, and
+   * optional exif specs (OR Logic).
+   */
+  function searchBlobsByColumn(array $data){
+    $sql = 'SELECT Photo.ReferenceName FROM Photo';
+    if (isset($data['Tag.Name'])){
+      $sql .= ' INNER JOIN PhotoTag ON Photo.Id=PhotoTag.IdPhoto
+               INNER JOIN Tag ON PhotoTag.IdTag = Tag.Id
+               WHERE IdContainer = ' . $this->idContainer . ' AND ';
+    } else {
+      $sql .= ' WHERE ';
+    }
+    foreach($data as $key=>$values){
+      $querypar = $values;
+      $sql .= $key .' IN (\''
+           . $querypar . '\') AND ';
+    }
+    $sql = substr($sql, 0, (strlen($sql)-4)) . 'GROUP BY Photo.ReferenceName ';
+    if (isset($data['Tag.Name'])){
+      $sql .= 'HAVING COUNT(Tag.Name) = '. count(explode(', ', $data['Tag.Name']));
+    }
+    return $this->prepareAndExecuteQuery($sql);
+  }
+
+  /**
   * Retrieve all Photos with Lat&Lon (set previously from Exif Data Upload)
   * to create list for markers creation in map page.
   */
   function retrieveDataForMapMarkers(){
-    $sqlQuery = 'select Name, Latitude, Longitude from Photo where Latitude is not null and Longitude is not null';
+    $sqlQuery = 'select Name, Latitude, Longitude from Photo WHERE Latitude is not null and Longitude is not null';
     $result = $this->prepareAndExecuteQuery($sqlQuery);
     return $result;
   }

@@ -1,0 +1,5 @@
+# WIP
+
+Order deny, allow
+Deny from all
+Allow from localhost

@@ -1,0 +1,82 @@
+Array
+(
+    [FileName] => phpcQrkWV
+    [FileDateTime] => 1568471943
+    [FileSize] => 7068
+    [FileType] => 2
+    [MimeType] => image/jpeg
+    [SectionsFound] => ANY_TAG, IFD0, THUMBNAIL, EXIF, INTEROP, MAKERNOTE
+    [COMPUTED] => Array
+        (
+            [html] => width="100" height="75"
+            [Height] => 75
+            [Width] => 100
+            [IsColor] => 1
+            [ByteOrderMotorola] => 0
+            [ApertureFNumber] => f/6.0
+            [UserComment] =>                                                                                                                      
+            [UserCommentEncoding] => ASCII
+            [Thumbnail.FileType] => 2
+            [Thumbnail.MimeType] => image/jpeg
+        )
+
+    [ImageDescription] =>           
+    [Make] => NIKON
+    [Model] => COOLPIX P1
+    [Orientation] => 1
+    [XResolution] => 72/1
+    [YResolution] => 72/1
+    [ResolutionUnit] => 2
+    [Software] => GIMP 2.4.5
+    [DateTime] => 2008:07:31 17:43:03
+    [YCbCrPositioning] => 2
+    [Exif_IFD_Pointer] => 224
+    [THUMBNAIL] => Array
+        (
+            [Compression] => 6
+            [XResolution] => 300/1
+            [YResolution] => 300/1
+            [ResolutionUnit] => 2
+            [JPEGInterchangeFormat] => 3148
+            [JPEGInterchangeFormatLength] => 1639
+        )
+
+    [ExposureTime] => 10/2187
+    [FNumber] => 60/10
+    [ExposureProgram] => 2
+    [ISOSpeedRatings] => 50
+    [ExifVersion] => 0220
+    [DateTimeOriginal] => 2008:03:07 09:55:46
+    [DateTimeDigitized] => 2008:03:07 09:55:46
+    [ComponentsConfiguration] => 
+    [CompressedBitsPerPixel] => 2/1
+    [ExposureBiasValue] => 0/10
+    [MaxApertureValue] => 29/10
+    [MeteringMode] => 5
+    [LightSource] => 0
+    [Flash] => 24
+    [FocalLength] => 75/10
+    [MakerNote] => Nikon
+    [UserComment] => ASCII                                                                                                                     
+    [FlashPixVersion] => 0100
+    [ColorSpace] => 1
+    [ExifImageWidth] => 100
+    [ExifImageLength] => 75
+    [InteroperabilityOffset] => 3024
+    [FileSource] => 
+    [SceneType] => 
+    [CustomRendered] => 0
+    [ExposureMode] => 0
+    [WhiteBalance] => 0
+    [DigitalZoomRatio] => 0/100
+    [FocalLengthIn35mmFilm] => 36
+    [SceneCaptureType] => 0
+    [GainControl] => 0
+    [Contrast] => 0
+    [Saturation] => 0
+    [Sharpness] => 0
+    [SubjectDistanceRange] => 0
+    [InterOperabilityIndex] => R98
+    [InterOperabilityVersion] => 0100
+)
+

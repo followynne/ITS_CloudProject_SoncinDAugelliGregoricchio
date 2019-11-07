@@ -1,0 +1,122 @@
+Array
+(
+    [FileName] => phpwd9HrZ
+    [FileDateTime] => 1569527463
+    [FileSize] => 1557606
+    [FileType] => 2
+    [MimeType] => image/jpeg
+    [SectionsFound] => ANY_TAG, IFD0, THUMBNAIL, EXIF, GPS
+    [COMPUTED] => Array
+        (
+            [html] => width="4032" height="3024"
+            [Height] => 3024
+            [Width] => 4032
+            [IsColor] => 1
+            [ByteOrderMotorola] => 1
+            [ApertureFNumber] => f/2.2
+            [Thumbnail.FileType] => 2
+            [Thumbnail.MimeType] => image/jpeg
+        )
+
+    [Make] => Apple
+    [Model] => iPhone 6s
+    [Orientation] => 1
+    [XResolution] => 72/1
+    [YResolution] => 72/1
+    [ResolutionUnit] => 2
+    [Software] => 12.4.1
+    [DateTime] => 2019:09:18 09:53:22
+    [YCbCrPositioning] => 1
+    [Exif_IFD_Pointer] => 206
+    [GPS_IFD_Pointer] => 1700
+    [THUMBNAIL] => Array
+        (
+            [Compression] => 6
+            [XResolution] => 72/1
+            [YResolution] => 72/1
+            [ResolutionUnit] => 2
+            [JPEGInterchangeFormat] => 2104
+            [JPEGInterchangeFormatLength] => 6634
+        )
+
+    [ExposureTime] => 1/1374
+    [FNumber] => 11/5
+    [ExposureProgram] => 2
+    [ISOSpeedRatings] => 25
+    [ExifVersion] => 0221
+    [DateTimeOriginal] => 2019:09:18 09:53:22
+    [DateTimeDigitized] => 2019:09:18 09:53:22
+    [ComponentsConfiguration] => 
+    [ShutterSpeedValue] => 82254/7891
+    [ApertureValue] => 193685/85136
+    [BrightnessValue] => 152596/14775
+    [ExposureBiasValue] => 0/1
+    [MeteringMode] => 5
+    [Flash] => 16
+    [FocalLength] => 83/20
+    [SubjectLocation] => Array
+        (
+            [0] => 2014
+            [1] => 1510
+            [2] => 2217
+            [3] => 1331
+        )
+
+    [MakerNote] => Apple iOS
+    [SubSecTimeOriginal] => 287
+    [SubSecTimeDigitized] => 287
+    [FlashPixVersion] => 0100
+    [ColorSpace] => 1
+    [ExifImageWidth] => 4032
+    [ExifImageLength] => 3024
+    [SensingMethod] => 2
+    [SceneType] => 
+    [ExposureMode] => 0
+    [WhiteBalance] => 0
+    [DigitalZoomRatio] => 756/467
+    [FocalLengthIn35mmFilm] => 47
+    [SceneCaptureType] => 0
+    [UndefinedTag:0xA432] => Array
+        (
+            [0] => 83/20
+            [1] => 83/20
+            [2] => 11/5
+            [3] => 11/5
+        )
+
+    [UndefinedTag:0xA433] => Apple
+    [UndefinedTag:0xA434] => iPhone 6s back camera 4.15mm f/2.2
+    [GPSLatitudeRef] => N
+    [GPSLatitude] => Array
+        (
+            [0] => 43/1
+            [1] => 46/1
+            [2] => 953/100
+        )
+
+    [GPSLongitudeRef] => E
+    [GPSLongitude] => Array
+        (
+            [0] => 11/1
+            [1] => 15/1
+            [2] => 161/100
+        )
+
+    [GPSAltitudeRef] => 
+    [GPSAltitude] => 192503/4096
+    [GPSTimeStamp] => Array
+        (
+            [0] => 7/1
+            [1] => 53/1
+            [2] => 2200/100
+        )
+
+    [GPSSpeedRef] => K
+    [GPSSpeed] => 0/1
+    [GPSImgDirectionRef] => T
+    [GPSImgDirection] => 331529/1129
+    [GPSDestBearingRef] => T
+    [GPSDestBearing] => 331529/1129
+    [GPSDateStamp] => 2019:09:18
+    [UndefinedTag:0x001F] => 10/1
+)

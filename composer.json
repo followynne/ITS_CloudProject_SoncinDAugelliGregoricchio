@@ -1,0 +1,22 @@
+{
+  "require": {
+    "php": ">=7.2",
+    "league/plates": "^3.3",
+    "microsoft/azure-storage-blob": "*",
+    "microsoft/azure-storage-table": "*",
+    "microsoft/azure-storage-queue": "*",
+    "microsoft/azure-storage-file": "*",
+    "pear/http_request2": "^2.3",
+    "monolog/monolog": "^2.0",
+    "vlucas/phpdotenv": "^3.5",
+    "php-di/php-di": "^6.0"
+  },
+  "autoload": {
+    "files": ["php/ExifProcessing.php"],
+    "psr-4":
+    {
+      "AzureClasses\\": "php/",
+      "Interfaces\\": "php/"
+    }
+  }
+}

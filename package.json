@@ -1,0 +1,28 @@
+{
+  "name": "its_cloudproject_soncindaugelligregoricchio",
+  "version": "1.0.0",
+  "description": "Final Project for Cloud Service course ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio/issues"
+  },
+  "homepage": "https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#readme",
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "bootstrap": "^4.3.1",
+    "clipboard": "^2.0.4",
+    "hamburgers": "^1.1.3",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "select2": "^4.0.12"
+  }
+}

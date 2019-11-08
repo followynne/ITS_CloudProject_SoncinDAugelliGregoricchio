@@ -61,7 +61,7 @@ function getSearchedImages(id, indexPage)
     var myInit = { method: 'POST',
                 body: body,
                 };
-    fetchSearchedPage(1, myInit, id);
+    fetchSearchedPage(indexPage = 1, myInit, id);
   })
 }
 
@@ -87,7 +87,7 @@ function getSearchedImagesByMultipleData(id, indexPage){
     var myInit = { method: 'POST',
                 body: body,
                 };
-    fetchSearchedPage(1, myInit, id);
+    fetchSearchedPage(indexPage = 1, myInit, id);
   })
 }
 
@@ -108,25 +108,33 @@ function getWordsSplittedBySpace(id)
   return tagsfinal;
 }
 
-function fetchSearchedPage(index, postPar, id)
+function fetchSearchedPage(index, postPar)
 {
   fetch('/php/GetSearchedBlobs.php', postPar).then((result) => (result.json())).then((data) => {
     func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
     if (!(window.location.pathname === '/public/getallblobs.php')){
-      startPaginationCreationForSearch(data.pageData, index-1, id);
+      startPaginationCreationForSearch(data.pageData, index-1, postPar);
     }
     enableDeleteOneIfNoneAreSelected();
     enableDeleteForSingleImage(data.pageData, index-1);
-  }).catch((err) => {console.log(err + ' Nessun risultato per la ricerca effettuata.');})
+  }).catch((err) => {
+    console.log(' Nessun risultato per la ricerca effettuata su: ');
+    for(var pair of postPar.body.entries()){
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+    alert(' Nessun risultato per la ricerca effettuata. Verrà ricaricata la prima pagina delle immagini.');
+    fetchSelectedPage(1);
+  })
 };
 
-function startPaginationCreationForSearch(dataJson, indexPage, id)
+function startPaginationCreationForSearch(dataJson, indexPage, postPar)
 {
   let pagesToRender = Math.ceil(dataJson.totalBlobsCount/dataJson.maxBlobsPerSubPage);
-  func.createPagination(pagesToRender-1, indexPage);
+  func.createPagination(pagesToRender, indexPage);
 
   $('.fetchSelectedPage').on('click', (event) => {
-    getSearchedImages(id, $(event.target).attr('value'));
+    postPar.body.set('indexpage', $(event.target).attr('value')-1);
+    fetchSearchedPage($(event.target).attr('value'), postPar);
   })
   $('.fetchPagination').on('click', (event) => {
     startPaginationCreationForSearch(dataJson, $(event.target).attr('value')-1);

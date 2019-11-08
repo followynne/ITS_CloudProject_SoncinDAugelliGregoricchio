@@ -32,5 +32,5 @@ do {
 file_put_contents('sharefile/' . $filename, serialize($value));
 
 // inserire e controllare il serverhost
-// echo $_SERVER['HTTP_HOST'] . 'public/sharedfolder.php?url=' . 'test.txt';
-echo 'localhost:9999/public/sharedfolder.php?url=' . $filename;
+$referer = parse_url($_SERVER['HTTP_REFERER']);
+echo $referer['scheme'] . '://' .$referer['host'] . ':' . $referer['port'] .  '/public/sharedfolder.php?url=' . $filename;

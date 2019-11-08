@@ -12,11 +12,11 @@ function initMap() {
   });
   <?php foreach($data as $el): ?>
   var myLatLng = {lat: <?= $this->e($el['Latitude']) ?>, lng:  <?= $this->e($el['Longitude']) ?>};
-  var photoName = ' <?= (string)$this->e($el['Name']) ?>';
+  var photoName = ' <?= (string)$this->e($el['ReferenceName']) ?>';
   var marker = new google.maps.Marker({
     position: myLatLng,
     title: photoName,
-    url : '/public/showsingleblob.php?name=<?= (string)$this->e($el['Name']) ?>'
+    url : '/public/showsingleblob.php?name=<?= (string)$this->e($el['ReferenceName']) ?>'
   });
   marker.setMap(map);
   google.maps.event.addListener(marker, 'click', function() {

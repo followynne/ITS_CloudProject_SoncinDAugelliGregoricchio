@@ -329,7 +329,7 @@ class DAOInteraction {
   * to create list for markers creation in map page.
   */
   function retrieveDataForMapMarkers(){
-    $sqlQuery = 'select Name, Latitude, Longitude from Photo WHERE Latitude is not null and Longitude is not null';
+    $sqlQuery = 'select ReferenceName, Latitude, Longitude from Photo WHERE Latitude is not null and Longitude is not null';
     $result = $this->prepareAndExecuteQuery($sqlQuery);
     return $result;
   }

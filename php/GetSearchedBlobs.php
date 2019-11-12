@@ -40,5 +40,14 @@ if (isset($_POST['data'])){
     ($data = ['Date' => implode('\', \'', json_decode($_POST['dates']))]));
 }
 
+$referer = parse_url($_SERVER['HTTP_REFERER']);
 $blobnames = $dao->searchBlobsByColumn($data);
-echo $azureblob->createBlobJsonWithBlobNames($blobnames, $_POST['indexpage'] ?? 0);
+
+if ($blobnames[0] == null){
+  return;
+}
+if ($referer['path']=='/public/getallblobs.php'){
+  echo $azureblob->createBlobJsonWithBlobNames($blobnames, -1);
+} else {
+  echo $azureblob->createBlobJsonWithBlobNames($blobnames, $_POST['indexpage'] ?? 0);
+}

@@ -57,15 +57,18 @@ class AzureInteractionBlob
   function createBlobJsonWithBlobNames(array $names, int $indexPageRequested){
     $arr = $this->getSASTokenAndBlobUrl($this->container);
     $maxBlobsPerSubPage = 12;
-    $startingBlobIndex = 0 + $maxBlobsPerSubPage*$indexPageRequested;
+    $startingBlobIndex =  $indexPageRequested != -1 ? 0 + $maxBlobsPerSubPage*$indexPageRequested : 0;
+    $finalIndexBlobForCycle = $indexPageRequested != -1 ? $startingBlobIndex+$maxBlobsPerSubPage : count($names);
     $blobList = '{
       "pageData":{
-        "totalBlobsCount":"' . count($names).'",
-        "maxBlobsPerSubPage":'. $maxBlobsPerSubPage.',
-        "tempToken": "' . $arr[0] . '",
-        "blobs":[';
+        "totalBlobsCount":' . count($names);
+    if ($indexPageRequested != -1){
+      $blobList .= ', "maxBlobsPerSubPage":"'. $maxBlobsPerSubPage . '"';
+    }
+    $blobList .= ', "tempToken": "' . $arr[0] . '",
+                 "blobs":[';
 
-    for ($i = $startingBlobIndex; $i < $startingBlobIndex+$maxBlobsPerSubPage; $i++)
+    for ($i = $startingBlobIndex; $i < $finalIndexBlobForCycle; $i++)
     {
       if (empty($names[$i]['ReferenceName'])){
         continue;

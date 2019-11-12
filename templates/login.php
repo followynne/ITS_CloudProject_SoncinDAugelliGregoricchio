@@ -21,8 +21,6 @@
     <link rel="stylesheet" type="text/css" href="/node_modules/select2/dist/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/util.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-    
-
     <!-- <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css"> -->   
     <!-- <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css"> -->
 </body>

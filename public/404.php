@@ -8,8 +8,8 @@
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/clipboard/dist/clipboard.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"></link>
-    <link rel="stylesheet" href="/css/main.css"></link>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
 
 </head>
 <body>
@@ -20,7 +20,7 @@
   Ricontrolla il percorso o di aver effettuato l'accesso.
 </p>
 <p>
-  <a href="start.php"><input type="button" value="Torna alla pagina iniziale."</a>
+  <a href="start.php"><input type="button" value="Torna alla pagina iniziale.">
 </p>
 </body>
 </html>

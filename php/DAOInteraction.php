@@ -91,7 +91,23 @@ class DAOInteraction {
       die(print_r($e));
     }
   }
-
+    //if randomName photo exists, creates a new randomName
+  function checkRandNameImage($namePhoto){
+    try{
+      $sqlQuery = "SELECT ReferenceName FROM Photo WHERE ReferenceName =:namePhoto;";
+      $query = $this->conn->prepare($sqlQuery);
+      $query->execute([':namePhoto' => ''.$namePhoto.'']);
+      $result = $query->fetch();
+      if ($result){
+        return true;
+      }else{
+        return $namePhoto;
+      }
+    }catch (PDOException $e) {
+      print("Error");
+      die(print_r($e));
+    }
+  }
   /**
    * WIP
    */

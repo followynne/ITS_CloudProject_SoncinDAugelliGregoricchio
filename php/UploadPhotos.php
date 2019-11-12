@@ -68,7 +68,10 @@ if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpe
 
 // Check: if $uploadOk was set to 0 by an error stop the processing.
 if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
+    echo '<script type="text/javascript">
+                alert("Image is not uploaded!");
+                window.location.href = "/public/index.php";
+              </script>';
 } else {
     $stream = fopen($_FILES["image"]["tmp_name"], 'r');
     $size=filesize ($_FILES["image"]["tmp_name"]);
@@ -78,7 +81,7 @@ if ($uploadOk == 0) {
     $randString = generateRandomString(15);
     $originalfilename = $fileName;
     $fileName = $randString;
-    $referenceName = checkRandNameImage($fileName);
+    $referenceName = $onDb->checkRandNameImage($fileName);
     
     $blob->uploadBlob($referenceName, $contents);
     $idPhotoonDb = $onDb->addDataPhotos($referenceName,$originalfilename);
@@ -118,7 +121,7 @@ function generateRandomString($length) {
 }
 
 //if randomName photo exists, creates a new randomName
-function checkRandNameImage($namePhoto){
+/*function checkRandNameImage($namePhoto){
     $container = [];
     for ($i = 0; $i < strlen($namePhoto); $i++){//sizeof
         $container[] = $namePhoto;
@@ -129,7 +132,7 @@ function checkRandNameImage($namePhoto){
             } 
     return $namePhoto;
     }
-}
+}*/
 
 // check MAX image size for Computer Vision 
 function sizeMaxForComputerVision($size) {

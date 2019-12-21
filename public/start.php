@@ -20,6 +20,7 @@ try{
 
 if (isset($_SESSION['mail'])) {
   header ('Location: index.php');
+  return;
 } else if (!isset($_POST)) {
   echo $templates->render('_login', []);
 } else {

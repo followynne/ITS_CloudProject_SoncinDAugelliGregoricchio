@@ -1,5 +1,21 @@
-<?php $this->layout('layout', ['title' => 'Home SimpleMVC']) ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?= $this->e($title) ?></title>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/home.css">
 
-<h1>Home page</h1>
-<p>Welcome to <a href="">Simple MVC</a> mini framework.</p>
-<p><strong>Simple MVC</strong> is a tutorial project for introducing the usage of <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> architectural pattern in modern PHP applications.</p>
+</head>
+<body>
+
+  <?= $this->section('content')?>
+  <?= $this->section('javascript')?>
+
+</body>
+</html>

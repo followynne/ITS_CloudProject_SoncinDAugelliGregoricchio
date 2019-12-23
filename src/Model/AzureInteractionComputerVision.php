@@ -1,11 +1,14 @@
 <?php
 
 declare(strict_types=1);
-namespace AzureClasses;
+namespace SimpleMVC\Model;
 chdir(dirname(__DIR__));
 
 require_once 'vendor/autoload.php';
-require_once 'HTTP/Request2.php';
+//require_once 'HTTP/Request2.php';
+
+use HTTP_Request2;
+use HTTP_Request2_Exception;
 
 use Dotenv\Dotenv;
 /**
@@ -35,7 +38,7 @@ function getTagsFromComputerVisionAnalysis($binaryimage){
     $uriBase = 'https://francecentral.api.cognitive.microsoft.com/vision/v2.0/';
     $imagebinarydata = $binaryimage;
 
-    $request = new \Http_Request2($uriBase . '/analyze');
+    $request = new Http_Request2($uriBase . '/analyze');
 
     $url = $request->getUrl();
     $headers = array(
@@ -49,7 +52,7 @@ function getTagsFromComputerVisionAnalysis($binaryimage){
         'language' => 'en'
     );
     $url->setQueryVariables($parameters);
-    $request->setMethod(\HTTP_Request2::METHOD_POST);
+    $request->setMethod(HTTP_Request2::METHOD_POST);
     $request->setBody($imagebinarydata);
 
     try
@@ -57,7 +60,7 @@ function getTagsFromComputerVisionAnalysis($binaryimage){
         $response = $request->send();
         return json_decode($response->getBody());
     }
-    catch (HttpException $ex)
+    catch (HTTP_Request2_Exception $ex)
     {
         echo "<pre>" . $ex . "</pre>";
     }

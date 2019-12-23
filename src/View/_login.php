@@ -1,15 +1,16 @@
 <?php $this->layout('login', ['title' => 'Start']) ?>
+
 <body>
-	
+
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/images/bg-01.jpg');">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
 					Login
 				</span>
-				<form class="login100-form validate-form p-b-33 p-t-5" action="/public/start.php" method="POST">
+				<form class="login100-form validate-form p-b-33 p-t-5" action="/login" method="POST">
 
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+					<div class="wrap-input100 validate-input" data-validate="Enter username">
 						<input class="input100" type="text" id="mail" name="mail" placeholder="User name">
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
@@ -23,7 +24,7 @@
 						<button class="login100-form-btn" type="submit">
 							Login
 						</button>
-						<button class="login100-form-btn" type="button" onclick="window.location.href='/public/signup.php'">
+						<button class="login100-form-btn" type="button" onclick="window.location.href='/register'">
 							Sign up
 						</button>
 					</div>
@@ -32,10 +33,6 @@
 			</div>
 		</div>
 	</div>
-	
-  <div id="dropDownSelect1">
-  </div>
 
-<?php $this->start('js') ?>
-  <!-- <script type="module" src="../script/???"></script> -->
-<?php $this->stop() ?>
+	<div id="dropDownSelect1">
+	</div>

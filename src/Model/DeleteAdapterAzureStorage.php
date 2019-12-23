@@ -1,19 +1,24 @@
 <?php
 declare(strict_types=1);
-namespace AzureClasses;
+namespace SimpleMVC\Model;
 chdir(dirname(__DIR__));
+
 require_once 'vendor/autoload.php';
 
-use Interfaces\DeleteAdapterInterface;
-use AzureClasses\AzureInteractionContainer;
+use SimpleMVC\Model\Interfaces\DeleteAdapterInterface;
 
-class AzureStorageDeleteAdapter implements DeleteAdapterInterface
+class DeleteAdapterAzureStorage implements DeleteAdapterInterface
 {
 
   private $aic;
 
   function __construct(AzureInteractionContainer $aic){
     $this->aic = $aic;
+  }
+
+  function setDependencyService(AzureInteractionContainer $service)
+  {
+    $this->aic = $service;
   }
 
   function deleteFrom($name){

@@ -1,26 +1,9 @@
 <?php
+
 declare(strict_types=1);
-namespace AzureClasses;
-
+chdir(dirname(__DIR__));
 session_start();
-chdir(dirname(__DIR__));
-require "vendor/autoload.php";
 
-use League\Plates\Engine;
-
-$templates = new Engine('templates/');
-
-if (isset($_SESSION['mail'])) {
-  $mail = $_SESSION['mail'];
-  echo $templates->render('_homepage', ['mail'=> $mail]);
-} else {
-  echo '<script type="text/javascript">
-          alert("Credentials wrong");
-        </script>';
-  header('Location: start.php');
-}
-
-chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 use DI\ContainerBuilder;
@@ -28,15 +11,15 @@ use SimpleMVC\Controller\Error404;
 use Zend\Diactoros\ServerRequestFactory;
 
 $builder = new ContainerBuilder();
-$builder->addDefinitions('config/container.php');
+$builder->addDefinitions('config/config.php');
 $container = $builder->build();
 
 $request = ServerRequestFactory::fromGlobals(
-    $_SERVER,
-    $_GET,
-    $_POST,
-    $_COOKIE,
-    $_FILES
+  $_SERVER,
+  $_GET,
+  $_POST,
+  $_COOKIE,
+  $_FILES
 );
 
 // Routing

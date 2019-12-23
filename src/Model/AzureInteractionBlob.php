@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace AzureClasses;
+namespace SimpleMVC\Model;
 chdir(dirname(__DIR__));
-
-use AzureClasses\AzureStorageSASOperations;
 
 /**
  * This class access and works on Azure Storage

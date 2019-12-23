@@ -16,7 +16,7 @@ function initMap() {
   var marker = new google.maps.Marker({
     position: myLatLng,
     title: photoName,
-    url : '/public/showsingleblob.php?name=<?= (string)$this->e($el['ReferenceName']) ?>'
+    url : '/showone?name=<?= (string)$this->e($el['ReferenceName']) ?>'
   });
   marker.setMap(map);
   google.maps.event.addListener(marker, 'click', function() {

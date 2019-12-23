@@ -1,14 +1,13 @@
 <?php
-//chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 use Psr\Container\ContainerInterface;
 use League\Plates\Engine;
 use Dotenv\Dotenv;
-use AzureClasses\AzureInteractionComputerVision;
-use AzureClasses\AzureInteractionContainer;
-use AzureClasses\AzureStorageSASOperations;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
+use SimpleMVC\Model\AzureInteractionComputerVision;
+use SimpleMVC\Model\AzureInteractionContainer;
+use SimpleMVC\Model\AzureStorageSASOperations;
 
 return [
   'view_path' => 'src/View',
@@ -17,7 +16,7 @@ return [
   },
   'Dotenv' => function(ContainerInterface $c){
     try {
-      return DotEnv::create('../');
+      return Dotenv::create(__DIR__);
     } catch (InvalidArgumentException $ex){
       print("Error retrieving personal information.");
       die(print_r($ex));

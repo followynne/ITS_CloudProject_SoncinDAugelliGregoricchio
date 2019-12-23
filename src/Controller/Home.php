@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SimpleMVC\Controller;
@@ -17,6 +18,15 @@ class Home implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
+        if (isset($_SESSION['mail'])) {
+            $mail = $_SESSION['mail'];
+            echo $this->plates->render('_homepage', ['mail' => $mail]);
+        } else {
+            echo '<script type="text/javascript">
+            alert("Credentials wrong");
+            </script>';
+            header('Location: start.php');
+        }
         echo $this->plates->render('home');
     }
 }

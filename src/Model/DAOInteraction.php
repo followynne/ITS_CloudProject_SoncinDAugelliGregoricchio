@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace AzureClasses;
+namespace SimpleMVC\Model;
 chdir(dirname(__DIR__));
 
 use \PDO;
@@ -95,26 +95,26 @@ class DAOInteraction {
   /**
    * WIP
    */
-  function addDataContainer($idC, $idU, $name){
-    $idU = idUser();
-    $sqlQuery = "Insert INTO Container(IdContainer, IdUtente, ContainerName) VALUES (:idC, :idU, :name);";
-    $query = $this->conn->prepare($sqlQuery);
-    $query->execute([':idC' => $idC,':idU' => ''.$idU.'',':name' => ''.$name.'']);
-    return $id = $this->conn->lastInsertId();
-    return printf("Query avvenuta con successo");
-  }
+  // function addDataContainer($idC, $idU, $name){
+  //   $idU = idUser();
+  //   $sqlQuery = "Insert INTO Container(IdContainer, IdUtente, ContainerName) VALUES (:idC, :idU, :name);";
+  //   $query = $this->conn->prepare($sqlQuery);
+  //   $query->execute([':idC' => $idC,':idU' => ''.$idU.'',':name' => ''.$name.'']);
+  //   return $id = $this->conn->lastInsertId();
+  //   return printf("Query avvenuta con successo");
+  // }
 
-  /**
-   * WIP
-   */
-  function idUser(){
-    if(checkUser($mail, $password)){
-      $id = $this->conn->lastInsertId();
-      return $id;
-    } else {
-      return printf("Qualcosa è andato storto!");
-    }
-  }
+  // /**
+  //  * WIP
+  //  */
+  // function idUser(){
+  //   if(checkUser($mail, $password)){
+  //     $id = $this->conn->lastInsertId();
+  //     return $id;
+  //   } else {
+  //     return printf("Qualcosa è andato storto!");
+  //   }
+  // }
 
   /**
    * Given a @par blob ReferenceName and the actual blob Name,

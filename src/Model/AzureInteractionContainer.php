@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
-namespace AzureClasses;
+namespace SimpleMVC\Model;
 chdir(dirname(__DIR__));
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
-use AzureClasses\AzureStorageSASOperations;
 
 /**
  * This class access and works on Azure Storage
@@ -43,7 +42,7 @@ class AzureInteractionContainer
       $sakey = $this->saconnection->createSAS($this->resource);
       $this->SASToken = $this->saconnection->getSASTokenValue($sakey);
       $this->blobClient = BlobRestProxy::createBlobService($sakey);
-    } catch (Exception $e){
+    } catch (ServiceException $e){
       throw $e;
     }
   }

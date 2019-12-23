@@ -18,8 +18,6 @@
     "files": ["php/ExifProcessing.php"],
     "psr-4":
     {
-      "AzureClasses\\": "php/",
-      "Interfaces\\": "php/",
       "SimpleMVC\\": "src/"
     },
     "autoload-dev": {

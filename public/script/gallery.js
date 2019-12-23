@@ -1,4 +1,5 @@
 import * as func from './galleryGetBlobsFunc.js';
+import $ from 'jquery';
 
 $(document).ready(() =>
 {

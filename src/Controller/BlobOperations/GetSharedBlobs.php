@@ -16,8 +16,8 @@ class GetSharedBlobs implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    $data = $_GET['url'];
-    $indexPageRequested = $_GET['indexpage'];
+    $data = $request->getQueryParams()['url'];
+    $indexPageRequested = $request->getQueryParams()['indexpage'];
 
     $filedata =  file_get_contents('sharefile/' . $data);
 

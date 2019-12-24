@@ -11,7 +11,7 @@ function initMap() {
     zoom: 4
   });
   <?php foreach($data as $el): ?>
-  var myLatLng = {lat: "<?= $this->e($el['Latitude']) ?>", lng:  "<?= $this->e($el['Longitude']) ?>"};
+  var myLatLng = {lat: <?= $this->e($el['Latitude']) ?>, lng:  <?= $this->e($el['Longitude']) ?>};
   var photoName = ' <?= (string)$this->e($el['ReferenceName']) ?>';
   var marker = new google.maps.Marker({
     position: myLatLng,

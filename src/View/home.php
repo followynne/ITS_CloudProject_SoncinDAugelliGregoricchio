@@ -13,6 +13,7 @@
   <?= $this->section('content') ?>
 
   <script src="/dist/assets/jquery.min.js"></script>
+  <script src="/dist/assets/popper.js"></script>
   <script src="/dist/assets/bootstrap.js"></script>
   <script src="/dist/assets/clipboard.min.js"></script>
   <link rel="stylesheet" href="/dist/assets/bootstrap.min.css">

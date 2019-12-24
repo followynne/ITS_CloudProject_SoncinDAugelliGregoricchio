@@ -28,8 +28,8 @@ class CreateShareableLink implements ControllerInterface
     $this->bloblink->setContainer($container);
 
     $value = [];
-    $jsonimgs = json_decode($_POST['imgname']);
-    $timestamp = $_POST['expirydate'] / 1000;
+    $jsonimgs = json_decode($request->getParsedBody()['imgname']);
+    $timestamp = $request->getParsedBody()['expirydate'] / 1000;
     $UTCdate = new DateTime("@$timestamp");
     $UTCdateformatted = $UTCdate->format("Y-m-d") . 'T' . $UTCdate->format("H:i:s") . 'Z';
 
@@ -42,8 +42,7 @@ class CreateShareableLink implements ControllerInterface
     } while (file_exists('sharefile/' . $filename));
     file_put_contents('sharefile/' . $filename, serialize($value));
 
-    // inserire e controllare il serverhost
-    $referer = parse_url($_SERVER['HTTP_REFERER']);
-    echo $referer['scheme'] . '://' . $referer['host'] . ':' . $referer['port'] .  '/public/sharedfolder.php?url=' . $filename;
+    $referer = parse_url($request->getServerParams()['HTTP_REFERER']);
+    echo $referer['scheme'] . '://' . $referer['host'] . ':' . $referer['port'] .  '/share?url=' . $filename;
   }
 }

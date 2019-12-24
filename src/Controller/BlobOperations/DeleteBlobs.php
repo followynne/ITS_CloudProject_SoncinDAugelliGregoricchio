@@ -41,18 +41,13 @@ class DeleteBlobs implements ControllerInterface
 
 
 
-    try {
       $this->dao->setIdContainer($container);
       $this->blobClient->setContainer('prova1');
-    } catch (Exception $e) {
-      echo $e;
-      echo "Error establishing connection to remote services.";
-      die();
-    }
+
     $this->azureadapter->setDependencyService($this->blobClient);
     $this->dbadapter->setDependencyService($this->dao);
 
-    $data = !is_array($_GET['name']) ? array($_GET['name']) : $_GET['name'];
+    $data = !is_array($request->getQueryParams()['name']) ? array($request->getQueryParams()['name']) : $request->getQueryParams()['name'];
 
     foreach ($data as $name) {
       $azuredel = $$this->azureadapter->deleteFrom($name);

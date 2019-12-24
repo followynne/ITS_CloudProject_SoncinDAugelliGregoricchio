@@ -18,17 +18,16 @@ class Shared implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    if (!isset($_GET['url'])) {
+    if (!isset($request->getQueryParams()['url'])) {
       echo "<div>
-              You shouldn't be there. Well - you'll be soon redirected to login.
-              </div>";
+            You shouldn't be there. Well - you'll be soon redirected to login.
+            </div>";
       header('HTTP/1.1 401 Unauthorized');
-      header('Refresh:3; url=start.php');
+      header('Refresh:3; url= /login');
       die();
     }
-
-    if (!file_exists('sharefile/' . $_GET['url'])) {
-      header("Location: 404.php", 404);
+    if (!file_exists('sharefile/' . $request->getQueryParams()['url'])) {
+      header("Location: /wrongfilemate");
       die();
     }
 

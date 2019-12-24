@@ -24,6 +24,10 @@ class Upload implements ControllerInterface
         $this->onDb = $onDb;
         $this->blob = $blob;
         $this->interaction = $interaction;
+        // } catch (Exception $e) {
+        //     echo "Error establishing connection.";
+        //     die();
+        // }
     }
 
     public function execute(ServerRequestInterface $request)
@@ -36,13 +40,9 @@ class Upload implements ControllerInterface
         //TODO
 
 
-        try {
-            $this->onDb->setIdContainer($idContainer);
-            $this->blob->setContainer($containername);
-        } catch (Exception $e) {
-            echo "Error establishing connection.";
-            die();
-        }
+        $this->onDb->setIdContainer($idContainer);
+        $this->blob->setContainer($containername);
+
 
         $currentDir = getcwd();
         $uploadDirectory = "uploads/";
@@ -54,7 +54,7 @@ class Upload implements ControllerInterface
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
         // Check if image file is an actual image or a fake image
-        if (isset($_POST["upload"])) {
+        if (isset($request->getParsedBody()["upload"])) {
             $check = getimagesize($_FILES["image"]["tmp_name"]);
             if ($check !== false) {
                 echo "File is an image - " . $check["mime"] . ".";
@@ -104,23 +104,20 @@ class Upload implements ControllerInterface
             if ($this->sizeMaxForComputerVision($size)) {
                 $result = $this->interaction->getTagsFromComputerVisionAnalysis($contents);
                 foreach ($result->tags as $tag) {
-                    $arrayTags = $tag->name;
                     $idTag = $this->onDb->addDataTag($tag->name);
                     $this->onDb->addDataPhotoTag($idPhotoonDb, $idTag);
                 }
                 echo '<script type="text/javascript">
                         alert("Image uploaded!");
-                        window.location.href = "/public/index.php";
+                        window.location.href = "/home";
                       </script>';
             } else {
                 echo '<script type="text/javascript">
                         alert("Image uploaded! Image is not valid for return tags")
-                        window.location.href = "/public/index.php"
-                        </script>';
+                        window.location.href = "/home"
+                      </script>';
             }
         }
-
-        echo $this->plates->render('_register', []);
     }
     function generateRandomString($length)
     {

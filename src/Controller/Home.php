@@ -20,13 +20,12 @@ class Home implements ControllerInterface
     {
         if (isset($_SESSION['mail'])) {
             $mail = $_SESSION['mail'];
+            // add method to get first 5 photos in DB
             echo $this->plates->render('_homepage', ['mail' => $mail]);
+            exit;
         } else {
-            echo '<script type="text/javascript">
-            alert("Credentials wrong");
-            </script>';
-            header('Location: login');
+            echo '<script type="text/javascript">alert("Credentials wrong");</script>';
+            echo $this->plates->render('_login', []);
         }
-        echo $this->plates->render('home');
     }
 }

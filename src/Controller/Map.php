@@ -21,19 +21,16 @@ class Map implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    $_SESSION['username'] = 'prova';
-    if (!isset($_SESSION['username'])){
+    //$_SESSION['mail'] = 'prova';
+    unset($_SESSION['mail']);
+    if (!isset($_SESSION['mail'])){
       echo "Unauthorized. You'll be soon redirected to login.";
       header ('HTTP/1.1 401 Unauthorized');
-      header('Refresh:3; url= start.php');
+      header('Refresh:3; url= /login');
       die();
     }
-    
-    
-    
     $data = $this->dao->retrieveDataForMapMarkers();
-    
-    echo $this->templates->render('_map', ['data' => $data]);
+    echo $this->plates->render('_map', ['data' => $data]);
   }
 }
 

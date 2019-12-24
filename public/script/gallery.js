@@ -1,5 +1,4 @@
 import * as func from './galleryGetBlobsFunc.js';
-import $ from 'jquery';
 
 $(document).ready(() =>
 {
@@ -19,9 +18,9 @@ $(document).ready(() =>
 
 function fetchSelectedPage(index)
 {
-    fetch('/php/GetJsonBlobs.php?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
+    fetch('/getblobs?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
     func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
-    if (!(window.location.pathname === '/public/getallblobs.php')){
+    if (!(window.location.pathname === '/completegallery.php')){
       startPaginationCreation(data.pageData, index-1);
     }
     enableDeleteOneIfNoneAreSelected();
@@ -111,9 +110,9 @@ function getWordsSplittedBySpace(id)
 
 function fetchSearchedPage(index, postPar)
 {
-  fetch('/php/GetSearchedBlobs.php', postPar).then((result) => (result.json())).then((data) => {
+  fetch('/search', postPar).then((result) => (result.json())).then((data) => {
     func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
-    if (!(window.location.pathname === '/public/getallblobs.php')){
+    if (!(window.location.pathname === '/completegallery')){
       startPaginationCreationForSearch(data.pageData, index-1, postPar);
     }
     enableDeleteOneIfNoneAreSelected();
@@ -164,7 +163,7 @@ function enableDeleteForSingleImage(dataJson, indexPage)
 {
   $('.btnDeleteOne').on('click', (event) => {
     var myInit = { method: 'DELETE'};
-    fetch('/php/DeleteBlobs.php?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
+    fetch('/deleteblobs?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
       if (data!= 'successful delete'){
         alert("Delete not successful.");
         return;
@@ -190,7 +189,7 @@ function deleteSelectedImages(id)
       return;
     }
     var myInit = { method: 'DELETE'};
-    fetch('/php/DeleteBlobs.php?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
+    fetch('/deleteblobs?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
       if (data!= 'successful delete'){
         alert("Some deletes were not successful. Please check after page reload.");
       }
@@ -218,7 +217,7 @@ function getShareableLink(id)
     var myInit = { method: 'POST',
                 body: body,
                 };
-    fetch('/php/CreateShareableLink.php', myInit).then((result) => (result.text())).then((data) => {
+    fetch('/shareablelink', myInit).then((result) => (result.text())).then((data) => {
       $('#sharelink').val(data);
     }).catch((err) => {console.log('Sono sorti problemi con la creazione del link.');})
   })

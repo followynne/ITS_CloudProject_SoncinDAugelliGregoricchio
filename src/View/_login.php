@@ -1,4 +1,4 @@
-<?php $this->layout('login', ['title' => 'Start']) ?>
+<?php $this->layout('home', ['title' => 'Start']) ?>
 
 <body>
 

@@ -1,4 +1,4 @@
-<?php $this->layout('gallery', ['title' => 'Photo:' . $this->e($name)]) ?>
+<?php $this->layout('home', ['title' => 'Photo:' . $this->e($name)]) ?>
 
 <div class="container-fluid p-5" style="width:90%">
   <div class="row">

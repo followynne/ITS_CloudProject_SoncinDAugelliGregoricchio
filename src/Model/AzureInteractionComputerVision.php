@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 namespace SimpleMVC\Model;
-chdir(dirname(__DIR__));
+//chdir(dirname(__DIR__));
 
 require_once 'vendor/autoload.php';
 //require_once 'HTTP/Request2.php';

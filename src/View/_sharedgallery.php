@@ -1,4 +1,4 @@
-<?php $this->layout('gallery', ['title' => 'Shared Gallery']) ?>
+<?php $this->layout('home', ['title' => 'Shared Gallery']) ?>
 
 <div class="container-fluid p-4" style="width:85%;">
   <div class="row divForImagesShowing justify-content-center">

@@ -1,5 +1,5 @@
 <?php
-chdir(dirname(__DIR__));
+//chdir(dirname(__DIR__));
 require_once 'vendor/autoload.php';
 use AzureClasses\AzureInteractionComputerVision;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace SimpleMVC\Model;
-chdir(dirname(__DIR__));
+//chdir(dirname(__DIR__));
 
 /**
  * This class access and works on Azure Storage

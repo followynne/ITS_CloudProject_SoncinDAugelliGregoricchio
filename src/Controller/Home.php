@@ -25,7 +25,7 @@ class Home implements ControllerInterface
             echo '<script type="text/javascript">
             alert("Credentials wrong");
             </script>';
-            header('Location: start.php');
+            header('Location: login');
         }
         echo $this->plates->render('home');
     }

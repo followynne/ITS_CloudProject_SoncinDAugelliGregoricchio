@@ -40,7 +40,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="/Upload" method="POST" enctype="multipart/form-data">
+          <form action="/upload" method="POST" enctype="multipart/form-data">
               Select image to upload:
               <input type="file" name="image" id="image">
               <button type="submit" class="btn btn-primary btn-round" name="upload">Upload</button>          

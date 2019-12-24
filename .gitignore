@@ -1,9 +1,9 @@
 composer.phar
 vendor/
-
 .phpunit.result.cache
 
 node_modules/
+public/dist/*
 
 .env
 /sharefile/*.txt

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Model;
 
-chdir(dirname(__DIR__));
 require_once 'vendor/autoload.php';
 
 use SimpleMVC\Model\Interfaces\DeleteAdapterInterface;

@@ -1,4 +1,4 @@
-<?php $this->layout('gallery', ['title' => 'Your Gallery']) ?>
+<?php $this->layout('home', ['title' => 'Your Gallery']) ?>
 
 <div class="container-fluid" style="width:85%">
   <div class="row justify-content-end">

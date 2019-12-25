@@ -32,18 +32,16 @@ class Upload implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
-        //TODO
-        $idContainer = $_SESSION['idContainer'];
+        if (!isset($_SESSION['mail'])) {
+            echo "Unauthorized. You'll be soon redirected to login.";
+            header('HTTP/1.1 401 Unauthorized');
+            header('Refresh:3; url= /login');
+            die();
+        }
+        $idContainer = $_SESSION['idcontainer'];
         $containername = $_SESSION['container'];
-        $idContainer = 1;
-        $containername = 'prova1';
-        //TODO
-
-
         $this->onDb->setIdContainer($idContainer);
         $this->blob->setContainer($containername);
-
-
         $currentDir = getcwd();
         $uploadDirectory = "uploads/";
         $dir = "\uploads\\";

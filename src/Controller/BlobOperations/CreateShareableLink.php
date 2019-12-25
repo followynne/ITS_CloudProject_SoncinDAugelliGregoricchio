@@ -20,11 +20,13 @@ class CreateShareableLink implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    //TODO
+    if (!isset($_SESSION['mail'])) {
+      echo "Unauthorized. You'll be soon redirected to login.";
+      header('HTTP/1.1 401 Unauthorized');
+      header('Refresh:3; url= /login');
+      die();
+    }
     $container = $_SESSION['container'];
-    $container = 'prova1';
-    //TODO
-
     $this->bloblink->setContainer($container);
 
     $value = [];

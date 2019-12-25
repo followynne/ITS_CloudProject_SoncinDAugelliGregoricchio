@@ -21,8 +21,14 @@ class GetJsonBlobs implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-
-    $this->blobClient->setContainer('prova1');
+    if (!isset($_SESSION['mail'])) {
+      echo "Unauthorized. You'll be soon redirected to login.";
+      header('HTTP/1.1 401 Unauthorized');
+      header('Refresh:3; url= /login');
+      die();
+    }
+    $containername = $_SESSION['container'];
+    $this->blobClient->setContainer($containername);
 
     // $referer = str_replace($_SERVER['HTTP_ORIGIN'], '',  $_SERVER['HTTP_REFERER']);
     // HTTP_ORIGIN dà problemi con Chrome e non è affidabile

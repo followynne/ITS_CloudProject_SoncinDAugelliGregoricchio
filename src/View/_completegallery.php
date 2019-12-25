@@ -2,6 +2,7 @@
 
 <div class="container-fluid" style="width:85%">
   <div class="row justify-content-end">
+    <button type="button" class="btn btn-success btn-lg gallery" onclick="window.location.href='/'">Homepage</button>
     <a href="/completegallery" target="_blank">
       <button type="button" class="btn btn-dark" id="fetchall" style="<?= $this->e($display) ?>">Show All Images</button>
     </a>

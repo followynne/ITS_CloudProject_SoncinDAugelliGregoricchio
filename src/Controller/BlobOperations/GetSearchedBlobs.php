@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Controller\BlobOperations;
 
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Controller\ControllerInterface;
 use SimpleMVC\Model\AzureInteractionBlob;
@@ -22,17 +21,18 @@ class GetSearchedBlobs implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    
-    //TODO: containername needs to be taken from $_SESSION['usercontainer']
-    $idContainer = $_SESSION['idContainer'];
-    $containername = $_SESSION['containerName'];
-    $idContainer = 1;
-    $containername = 'prova1';
-    //TODO
+    if (!isset($_SESSION['mail'])) {
+      echo "Unauthorized. You'll be soon redirected to login.";
+      header('HTTP/1.1 401 Unauthorized');
+      header('Refresh:3; url= /login');
+      die();
+    }
 
+    $idcontainer = $_SESSION['idcontainer'];
+    $containername = $_SESSION['container'];
 
-      $this->dao->setIdContainer($idContainer);
-      $this->azureblob->setContainer($containername);
+    $this->dao->setIdContainer($idcontainer);
+    $this->azureblob->setContainer($containername);
 
 
     $data = [];
@@ -52,7 +52,7 @@ class GetSearchedBlobs implements ControllerInterface
     if ($blobnames[0] == null) {
       return;
     }
-    if ($referer['path'] == '/completegallery') {
+    if ($referer == '/completegallery') {
       echo $this->azureblob->createBlobJsonWithBlobNames($blobnames, -1);
     } else {
       echo $this->azureblob->createBlobJsonWithBlobNames($blobnames, $request->getParsedBody()['indexpage'] ?? 0);

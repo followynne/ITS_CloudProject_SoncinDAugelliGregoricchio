@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace SimpleMVC\Model;
 //chdir(dirname(__DIR__));
 
@@ -7,6 +9,10 @@ use MicrosoftAzure\Storage\Common\Internal\StorageServiceSettings;
 use MicrosoftAzure\Storage\Blob\BlobSharedAccessSignatureHelper;
 use MicrosoftAzure\Storage\Common\Internal\Resources;
 use Dotenv\Dotenv;
+use Exception;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 
 /**  refer to:
  *    https://docs.microsoft.com/it-it/rest/api/storageservices/create-service-sas
@@ -18,24 +24,40 @@ use Dotenv\Dotenv;
  *    keys (and tokens), used to enable user access to own storage resources.
  */
 
-class AzureStorageSASOperations {
+class AzureStorageSASOperations
+{
 
   /**
    * The constructor loads .env file to get Azure Storage
    * owner data (used to create SAS) via PHP-DI configuration.
    */
-  function __construct(Dotenv $dotenv){
+  function __construct(Dotenv $dotenv)
+  {
     $dotenv->load();
   }
 
   /**
    * It creates the Base Storage Url for each of the storage resources.
    */
-  function createBaseAccountStorageUrl(){
+  function createBaseAccountStorageUrl()
+  {
     $connectionString = $_ENV['CONNECTION_STRING'];
     $settings = StorageServiceSettings::createFromConnectionString($connectionString);
     $accountName = $settings->getName();
-    return 'https://'. $accountName . '.blob.core.windows.net/';
+    return 'https://' . $accountName . '.blob.core.windows.net/';
+  }
+
+  function createContainer($name)
+  {
+    $createContainerOptions = new CreateContainerOptions();
+    $connectionString = $_ENV['CONNECTION_STRING'];
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
+    try {
+      $blobClient->createContainer($name, $createContainerOptions);
+      return true;
+    } catch (ServiceException $e) {
+      return false;
+    }
   }
 
   /**
@@ -45,7 +67,8 @@ class AzureStorageSASOperations {
    * - blob,
    * - blob with expiry date specified for the SAS.
    */
-  function createSAS(string $resource, string $date = null ){
+  function createSAS(string $resource, string $date = null)
+  {
     $connectionString = $_ENV['CONNECTION_STRING'];
     $settings = StorageServiceSettings::createFromConnectionString($connectionString);
     $accountName = $settings->getName();
@@ -58,7 +81,7 @@ class AzureStorageSASOperations {
 
     // isset($date) = SAS for Blob with ExpiryDate Specified
     // otherwise: if resource contains / is a SAS Blob else is a SAS Container
-    if (!($date == null)){
+    if (!($date == null)) {
       $sas = $sharedAccessUrl->generateBlobServiceSharedAccessSignatureToken(
         Resources::RESOURCE_TYPE_BLOB,
         $resource,
@@ -66,7 +89,7 @@ class AzureStorageSASOperations {
         $date
       );
     } else {
-      if (strstr($resource, '/')){
+      if (strstr($resource, '/')) {
         $sas = $sharedAccessUrl->generateBlobServiceSharedAccessSignatureToken(
           Resources::RESOURCE_TYPE_BLOB,
           $resource,
@@ -83,34 +106,35 @@ class AzureStorageSASOperations {
       }
     }
     return $connectionStringWithSAS = Resources::BLOB_ENDPOINT_NAME .
-    '='.
-    'https://' .
-    $accountName .
-    '.' .
-    Resources::BLOB_BASE_DNS_NAME .
-    ';' .
-    Resources::SAS_TOKEN_NAME .
-    '=' .
-    $sas;
+      '=' .
+      'https://' .
+      $accountName .
+      '.' .
+      Resources::BLOB_BASE_DNS_NAME .
+      ';' .
+      Resources::SAS_TOKEN_NAME .
+      '=' .
+      $sas;
   }
 
   /**
    * This function returns a DateTime obj 3 minutes in the future from the
    * current date.
    */
-  private function getExpiryTime(){
+  function getExpiryTime()
+  {
     $date_utc = new \DateTime("now + 3 minutes", new \DateTimeZone("UTC"));
-    return $date_utc->format("Y-m-d").'T'. $date_utc->format("H:i:s") .'Z';
+    return $date_utc->format("Y-m-d") . 'T' . $date_utc->format("H:i:s") . 'Z';
   }
 
   /**
    * Given an SAS connection string, it returns only the SAS Token Value
    * (without account url and resource data).
    */
-  function getSASTokenValue($SAScompleteskey){
+  function getSASTokenValue($SAScompleteskey)
+  {
     $SASQueryKey = 'SharedAccessSignature=';
     $offsetWhereSASQueryKeyStart = strpos($SAScompleteskey, $SASQueryKey);
-    return substr($SAScompleteskey, $offsetWhereSASQueryKeyStart+strlen($SASQueryKey));
+    return substr($SAScompleteskey, $offsetWhereSASQueryKeyStart + strlen($SASQueryKey));
   }
-
 }

@@ -27,7 +27,7 @@ class Shared implements ControllerInterface
       die();
     }
     if (!file_exists('sharefile/' . $request->getQueryParams()['url'])) {
-      header("Location: /wrongfilemate");
+      echo $this->templates->render(404);
       die();
     }
 

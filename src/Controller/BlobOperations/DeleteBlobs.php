@@ -34,15 +34,17 @@ class DeleteBlobs implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    //TODO: containername needs to be taken from $_SESSION['usercontainer']
-    $_SESSION['idContainer'] = 1;
-    $container = $_SESSION['idContainer'];
-    //TODO
+    if (!isset($_SESSION['mail'])) {
+      echo "Unauthorized. You'll be soon redirected to login.";
+      header('HTTP/1.1 401 Unauthorized');
+      header('Refresh:3; url= /login');
+      die();
+    }
 
-
-
-      $this->dao->setIdContainer($container);
-      $this->blobClient->setContainer('prova1');
+    $idcontainer = $_SESSION['idcontainer'];
+    $containername = $_SESSION['container'];
+    $this->dao->setIdContainer($idcontainer);
+    $this->blobClient->setContainer($containername);
 
     $this->azureadapter->setDependencyService($this->blobClient);
     $this->dbadapter->setDependencyService($this->dao);
@@ -50,12 +52,12 @@ class DeleteBlobs implements ControllerInterface
     $data = !is_array($request->getQueryParams()['name']) ? array($request->getQueryParams()['name']) : $request->getQueryParams()['name'];
 
     foreach ($data as $name) {
-      $azuredel = $$this->azureadapter->deleteFrom($name);
+      $azuredel = $this->azureadapter->deleteFrom($name);
       if ($azuredel == 'successful') {
         try {
-          $dbdel = $$this->dbadapter->deleteFrom($name);
+          $dbdel = $this->dbadapter->deleteFrom($name);
         } catch (PDOException $ex) {
-          $$this->azureadapter->rollbackDelete($name);
+          $this->azureadapter->rollbackDelete($name);
           print("Some deletes unsuccessful. Please check after refresh.");
           return;
         }

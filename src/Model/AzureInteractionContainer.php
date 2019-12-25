@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace SimpleMVC\Model;
 //chdir(dirname(__DIR__));
 
@@ -28,21 +30,23 @@ class AzureInteractionContainer
   }
 
   /**
-  * Set the ContainerName. After that, it creates a SAS (Refer to Proper Class for more)
-  * to instantiate a Blob Service Access Object + store in a private variable the SASToken
-  * value, used for internal class logic.
-  */
-  function setContainer(string $container){
-    $this->resource=$container;
+   * Set the ContainerName. After that, it creates a SAS (Refer to Proper Class for more)
+   * to instantiate a Blob Service Access Object + store in a private variable the SASToken
+   * value, used for internal class logic.
+   */
+  function setContainer(string $container)
+  {
+    $this->resource = $container;
     $this->createBlobClientAndToken();
   }
 
-  private function createBlobClientAndToken(){
+  private function createBlobClientAndToken()
+  {
     try {
       $sakey = $this->saconnection->createSAS($this->resource);
       $this->SASToken = $this->saconnection->getSASTokenValue($sakey);
       $this->blobClient = BlobRestProxy::createBlobService($sakey);
-    } catch (ServiceException $e){
+    } catch (ServiceException $e) {
       throw $e;
     }
   }
@@ -50,7 +54,8 @@ class AzureInteractionContainer
   /**
    * Set the ListBlobOptions (via PHP-DI configuration, btw).
    */
-  function setListBlobOptions(ListBlobsOptions $lbo){
+  function setListBlobOptions(ListBlobsOptions $lbo)
+  {
     $this->lbo = $lbo;
   }
 
@@ -62,7 +67,7 @@ class AzureInteractionContainer
     try {
       $this->blobClient->createBlockBlob($this->resource, $name, $contents);
       $msg = 'Added successful';
-    } catch (ServiceException $e){
+    } catch (ServiceException $e) {
       $msg = $e->getMessage();
     }
     return $msg;
@@ -71,11 +76,22 @@ class AzureInteractionContainer
   /**
    * TODO: WIP
    */
-  function getLastsFiveBlobs($containerName, $blob)
+  function getLastBlobs()
   {
-    for ($i=0; $i<6; $i++){
-      $blob = $this->blobClient->getBlob($containerName, $blob);
-      return fpassthru($blob->getContentStream());
+    try {
+      $blob = $this->getBlobsListfromContainer()->getBlobs();
+      if (empty($blob)) return;
+      usort($blob, function ($a, $b) {
+        return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
+      });
+      $res = [];
+      for ($i = 0; $i < 6; $i++) {
+        $res[] = $blob[$i]->getUrl() . $this->SASToken;
+      }
+      return $res;
+      //return fpassthru($blob->getContentStream());
+    } catch (ServiceException $ex) {
+      return;
     }
   }
 
@@ -98,7 +114,7 @@ class AzureInteractionContainer
    */
   function getBlobJson(int $indexPageRequested)
   {
-    if ($indexPageRequested==-1){
+    if ($indexPageRequested == -1) {
       $blobJson = $this->createAllBlobJson();
     } else {
       $blobJson = $this->createBlobJson($indexPageRequested);
@@ -116,13 +132,13 @@ class AzureInteractionContainer
   private function createAllBlobJson()
   {
     $blobs = $this->getBlobsListfromContainer();
-    if ($blobs==null){
+    if ($blobs == null) {
       return;
     }
     $blob = $blobs->getBlobs();
 
     //sorting the blobs for last modified date, DESC; usort sort and return original array modified
-    usort($blob, function ($a, $b){
+    usort($blob, function ($a, $b) {
       return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
     });
 
@@ -132,13 +148,13 @@ class AzureInteractionContainer
         "blobs":[';
 
     do {
-      foreach ($blob as $bb){
-        $blobList .= '{"name":"'.$bb->getName().'","url":"'.$bb->getUrl() . '"},';
+      foreach ($blob as $bb) {
+        $blobList .= '{"name":"' . $bb->getName() . '","url":"' . $bb->getUrl() . '"},';
       }
       $this->lbo->setContinuationToken($blobs->getContinuationToken());
     } while ($blobs->getContinuationToken());
 
-    return substr($blobList,0, strlen($blobList)-1).']}}';
+    return substr($blobList, 0, strlen($blobList) - 1) . ']}}';
   }
 
   /**
@@ -155,33 +171,32 @@ class AzureInteractionContainer
   private function createBlobJson(int $indexPageRequested)
   {
     $blobs = $this->getBlobsListfromContainer();
-    if ($blobs==null){
+    if ($blobs == null) {
       return;
     }
     $maxBlobsPerSubPage = 12;
-    $startingBlobIndex = 0 + $maxBlobsPerSubPage*$indexPageRequested;
+    $startingBlobIndex = 0 + $maxBlobsPerSubPage * $indexPageRequested;
     $blob = $blobs->getBlobs();
 
     //sorting the blobs for last modified date, DESC; usort sort and return original array modified
-    usort($blob, function ($a, $b){
+    usort($blob, function ($a, $b) {
       return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
     });
 
     $blobList = '{
       "pageData":{
-        "totalBlobsCount":"' . count($blobs->getBlobs()).'",
-        "maxBlobsPerSubPage":'. $maxBlobsPerSubPage.',
+        "totalBlobsCount":"' . count($blobs->getBlobs()) . '",
+        "maxBlobsPerSubPage":' . $maxBlobsPerSubPage . ',
         "tempToken": "' . $this->SASToken . '",
         "blobs":[';
 
-    for ($i = $startingBlobIndex; $i < $startingBlobIndex+$maxBlobsPerSubPage; $i++)
-    {
-      if (empty($blob[$i])){
+    for ($i = $startingBlobIndex; $i < $startingBlobIndex + $maxBlobsPerSubPage; $i++) {
+      if (empty($blob[$i])) {
         continue;
       }
-      $blobList .= '{"name":"'.$blob[$i]->getName().'","url":"'.$blob[$i]->getUrl() .'"},';
+      $blobList .= '{"name":"' . $blob[$i]->getName() . '","url":"' . $blob[$i]->getUrl() . '"},';
     }
-    return substr($blobList,0, strlen($blobList)-1).']}}';
+    return substr($blobList, 0, strlen($blobList) - 1) . ']}}';
   }
 
   /**
@@ -193,7 +208,7 @@ class AzureInteractionContainer
     try {
       $this->blobClient->deleteBlob($this->resource, $name);
       $res = 'successful';
-    } catch (ServiceException $e){
+    } catch (ServiceException $e) {
       $res = $e->getMessage();
     }
     return $res;
@@ -203,10 +218,11 @@ class AzureInteractionContainer
    * Given a blob $name, it makes a PUT request to Azure Undelete API
    * to undelete a blob in the container. cUrl library.
    */
-  function rollbackDelete($name){
+  function rollbackDelete($name)
+  {
     $apiurltocall = $this->saconnection->createBaseAccountStorageUrl()
-              . $this->resource . '/' . $name . '?comp=undelete&'
-              . $this->saconnection->getSASTokenValue($this->saconnection->createSAS($this->resource));
+      . $this->resource . '/' . $name . '?comp=undelete&'
+      . $this->saconnection->getSASTokenValue($this->saconnection->createSAS($this->resource));
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $apiurltocall);
     curl_setopt($ch, CURLOPT_PUT, true);

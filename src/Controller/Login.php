@@ -22,41 +22,43 @@ class Login implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    if ($request->getUri()->getPath() == '/logout'){
+    if ($request->getUri()->getPath() == '/logout') {
       $this->logout();
       exit;
     }
     if (isset($_SESSION['mail'])) {
       header('Location: /');
-      return;
+      die;
     } else if ($request->getMethod() != 'POST') {
-      echo $this->plates->render('_login', []);
+      echo $this->plates->render('_login', ['msg' => '']);
     } else {
       $mail = $request->getParsedBody()['mail'];
       $password = $request->getParsedBody()['pwd'];
       try {
-        $user = $this->dao->checkUser($mail, $password);
-      } catch (PDOException $ex){
+        $user = $this->dao->validateLogin($mail, $password);
+      } catch (PDOException $ex) {
         $user = false;
-      } 
-      if ($user) {
-        $_SESSION['mail'] == $mail;
-        header('Location: /');
+      }
+      if (!$user) {
+        echo $this->plates->render('_login', ['msg' => 'Login Error.']);
         exit;
       } else {
-        echo $this->plates->render('_login', []); exit;
+        $_SESSION['mail'] == $user['mail'];
+        $_SESSION['user'] == $user['name'];
+        $_SESSION['idcontainer'] == $user['IdContainer'];
+        $_SESSION['container'] == $user['ContainerName'];
+        echo $this->plates->render('_homepage', ['user' => $user['name']]);
+        exit;
       }
     }
   }
 
-  public function logout()
+  private function logout()
   {
     unset($_SESSION);
     session_unset();
     session_destroy();
 
-    session_start();
-    session_regenerate_id(true);
-    header('Location: /login');
+    header('Location: /');
   }
 }

@@ -21,8 +21,6 @@ class Map implements ControllerInterface
 
   public function execute(ServerRequestInterface $request)
   {
-    //$_SESSION['mail'] = 'prova';
-    unset($_SESSION['mail']);
     if (!isset($_SESSION['mail'])){
       echo "Unauthorized. You'll be soon redirected to login.";
       header ('HTTP/1.1 401 Unauthorized');

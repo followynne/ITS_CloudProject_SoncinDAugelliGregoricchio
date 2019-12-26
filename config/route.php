@@ -16,7 +16,7 @@ return [
     'GET /map' => Controller\Map::class,
     /*================================================*/
     'GET /getblobs' => Controller\BlobOperations\GetJsonBlobs::class,
-    'POST /deleteblobs' => Controller\BlobOperations\DeleteBlobs::class,
+    'DELETE /deleteblobs' => Controller\BlobOperations\DeleteBlobs::class,
     'POST /search' => Controller\BlobOperations\GetSearchedBlobs::class,
     'POST /shareablelink' => Controller\BlobOperations\CreateShareableLink::class,
     'GET /sharedblobslist' => Controller\BlobOperations\GetSharedBlobs::class,

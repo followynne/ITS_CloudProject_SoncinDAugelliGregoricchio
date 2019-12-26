@@ -13,13 +13,13 @@ class DeleteAdapterDatabase implements DeleteAdapterInterface
 
   private $dao;
 
-  function __construct(DAOInteraction $dao)
+  function __construct()
   {
-    $this->dao = $dao;
   }
 
-  function setDependencyService(DAOInteraction $service)
+  function setDependencyService($service)
   {
+    if (!$service instanceof DAOInteraction) return 'ecco';
     $this->dao = $service;
   }
 

@@ -6,6 +6,7 @@ gulp.task('default', function () {
         'node_modules/bootstrap/dist/js/bootstrap.js.map',
         'node_modules/select2/dist/css/select2.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
+        'node_modules/bootstrap/dist/css/bootstrap.min.css.map',
         'node_modules/animate.css/animate.min.css',
         'node_modules/hamburgers/dist/hamburgers.min.css',
         'node_modules/clipboard/dist/clipboard.min.js',

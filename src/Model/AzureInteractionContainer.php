@@ -85,7 +85,7 @@ class AzureInteractionContainer
         return strcmp(((array) ($b->getProperties()->getLastModified()))['date'], ((array) ($a->getProperties()->getLastModified()))['date']);
       });
       $res = [];
-      for ($i = 0; $i < 6; $i++) {
+      for ($i = 0; $i < 5; $i++) {
         if (empty($blob[$i])) continue;
         $res[] = $blob[$i]->getUrl() . '?' . $this->SASToken;
       }

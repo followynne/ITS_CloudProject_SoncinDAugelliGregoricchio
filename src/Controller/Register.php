@@ -35,6 +35,7 @@ class Register implements ControllerInterface
             exit;
         } else if (filter_var($post['mail'], FILTER_VALIDATE_EMAIL) && strlen($post['pwd']) > 6) {
             $dati['email'] = $post["mail"];
+            $dati['user'] = $post["user"];
             $pwd = password_hash($post['pwd'], PASSWORD_DEFAULT);
             $dati['pwd'] = $pwd;
             

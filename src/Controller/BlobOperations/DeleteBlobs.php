@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SimpleMVC\Controller\BlobOperations;
 
 use SimpleMVC\Controller\ControllerInterface;
-use Exception;
 use PDOException;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\AzureInteractionContainer;
@@ -54,7 +53,9 @@ class DeleteBlobs implements ControllerInterface
     foreach ($data as $name) {
       $azuredel = $this->azureadapter->deleteFrom($name);
       if ($azuredel == 'successful') {
+        
         try {
+        //  echo ('qua');return;
           $dbdel = $this->dbadapter->deleteFrom($name);
         } catch (PDOException $ex) {
           $this->azureadapter->rollbackDelete($name);

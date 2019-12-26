@@ -97,10 +97,11 @@ class DAOInteraction
   function insertUser(array $arr)
   {
     try {
-      $sql = 'insert into Utente (Name, Mail, Pwd) values (\'test\', :user, :pwd);';
+      $sql = 'insert into Utente (Name, Mail, Pwd) values (:user,  :mail, :pwd);';
       $set = $this->conn->prepare($sql);
-      $set->bindValue(':user', $arr['email']);
-      $set->bindValue(':pwd', $arr['pwd']);
+      $set->bindParam(':user', $arr['user']);
+      $set->bindParam(':mail', $arr['email']);
+      $set->bindParam(':pwd', $arr['pwd']);
       $set->execute();
       return $this->conn->lastInsertId();
     } catch (PDOException $e) {

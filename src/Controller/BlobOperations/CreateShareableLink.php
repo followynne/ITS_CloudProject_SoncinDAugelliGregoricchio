@@ -38,11 +38,10 @@ class CreateShareableLink implements ControllerInterface
     foreach ($jsonimgs as $url) {
       $value[] = $this->bloblink->getShareableBlob($url, $UTCdateformatted);
     }
-
     do {
       $filename = substr($UTCdateformatted, 0, 10) . '_' . rand() . '.txt';
-    } while (file_exists('sharefile/' . $filename));
-    file_put_contents('sharefile/' . $filename, serialize($value));
+    } while (file_exists('public/sharefile/' . $filename));
+    file_put_contents('public/sharefile/' . $filename, serialize($value));
 
     $referer = parse_url($request->getServerParams()['HTTP_REFERER']);
     echo $referer['scheme'] . '://' . $referer['host'] . ':' . $referer['port'] .  '/share?url=' . $filename;

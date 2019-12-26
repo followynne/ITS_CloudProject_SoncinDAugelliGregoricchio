@@ -18,8 +18,8 @@ class GetSharedBlobs implements ControllerInterface
   {
     $data = $request->getQueryParams()['url'];
     $indexPageRequested = $request->getQueryParams()['indexpage'];
-
-    $filedata =  file_get_contents('sharefile/' . $data);
+    
+    $filedata =  file_get_contents('public/sharefile/' . $data);
 
     $dataavailable = unserialize($filedata);
     $maxBlobsPerSubPage = 12;

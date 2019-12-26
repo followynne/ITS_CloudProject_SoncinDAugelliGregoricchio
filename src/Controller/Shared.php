@@ -26,7 +26,7 @@ class Shared implements ControllerInterface
       header('Refresh:3; url= /login');
       die();
     }
-    if (!file_exists('sharefile/' . $request->getQueryParams()['url'])) {
+    if (!file_exists('public/sharefile/' . $request->getQueryParams()['url'])) {
       echo $this->plates->render(404);
       die();
     }

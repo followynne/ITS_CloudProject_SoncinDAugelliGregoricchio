@@ -10,8 +10,8 @@
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <?php foreach ($data as $img) : ?>
-      <div class="carousel-item active">
-        <img class="d-block w-50" src="<?= $this->e($img) ?>" alt="First slide">
+      <div class="carousel-item">
+        <img class="d-block w-50" src="<?= $this->e($img) ?>" alt="slide">
       </div>
       <?php endforeach ?>
     </div>
@@ -52,3 +52,7 @@
     </div>
   </div>
 </p>
+
+<?php $this->start('js') ?>
+<script type="module" src="/script/index.js"></script>
+<?php $this->stop() ?>

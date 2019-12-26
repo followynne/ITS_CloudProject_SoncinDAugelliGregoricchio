@@ -27,10 +27,10 @@ class Shared implements ControllerInterface
       die();
     }
     if (!file_exists('sharefile/' . $request->getQueryParams()['url'])) {
-      echo $this->templates->render(404);
+      echo $this->plates->render(404);
       die();
     }
 
-    echo $this->templates->render('_sharedgallery', []);
+    echo $this->plates->render('_sharedgallery', []);
   }
 }

@@ -35,10 +35,10 @@ class ShowOne implements ControllerInterface
     $contname = $_SESSION['container'];
     $this->dao->setIdContainer($idcont);
     $this->blob->setContainer($contname);
-    $blobUrlWithSA = $this->blob->getShareableBlob($request->getUri()->getPath()['name']);
-    $exifBlobArray = $this->dao->getBlobExif($request->getUri()->getPath()['name']);
-    $tagsBlob = $this->dao->getBlobTags($request->getUri()->getPath()['name']);
+    $blobUrlWithSA = $this->blob->getShareableBlob($request->getQueryParams()['name']);
+    $exifBlobArray = $this->dao->getBlobExif($request->getQueryParams()['name']);
+    $tagsBlob = $this->dao->getBlobTags($request->getQueryParams()['name']);
 
-    echo $this->templates->render('_imagedetail', ['url' => $blobUrlWithSA, 'name' => $request->getUri()->getPath()['name'], 'exif' => $exifBlobArray, 'tags' => $tagsBlob]);
+    echo $this->plates->render('_imagedetail', ['url' => $blobUrlWithSA, 'name' => $request->getQueryParams()['name'], 'exif' => $exifBlobArray, 'tags' => $tagsBlob]);
   }
 }

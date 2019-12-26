@@ -36,6 +36,7 @@ class Home implements ControllerInterface
             exit;
         } else {
             echo $this->plates->render('_login', ['msg' => '']);
+            exit;
         }
     }
 }

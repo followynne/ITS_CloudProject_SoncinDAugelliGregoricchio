@@ -55,7 +55,7 @@ class GetSearchedBlobs implements ControllerInterface
     if ($referer == '/completegallery') {
       echo $this->azureblob->createBlobJsonWithBlobNames($blobnames, -1);
     } else {
-      echo $this->azureblob->createBlobJsonWithBlobNames($blobnames, $request->getParsedBody()['indexpage'] ?? 0);
+      echo $this->azureblob->createBlobJsonWithBlobNames($blobnames, (int)$request->getParsedBody()['indexpage'] ?? 0);
     }
   }
 }

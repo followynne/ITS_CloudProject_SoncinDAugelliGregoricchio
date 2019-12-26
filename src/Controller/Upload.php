@@ -107,12 +107,12 @@ class Upload implements ControllerInterface
                 }
                 echo '<script type="text/javascript">
                         alert("Image uploaded!");
-                        window.location.href = "/home";
+                        window.location.href = "/";
                       </script>';
             } else {
                 echo '<script type="text/javascript">
                         alert("Image uploaded! Image is not valid for return tags")
-                        window.location.href = "/home"
+                        window.location.href = "/"
                       </script>';
             }
         }

@@ -82,14 +82,14 @@ class AzureInteractionContainer
       $blob = $this->getBlobsListfromContainer()->getBlobs();
       if (empty($blob)) return;
       usort($blob, function ($a, $b) {
-        return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
+        return strcmp(((array) ($b->getProperties()->getLastModified()))['date'], ((array) ($a->getProperties()->getLastModified()))['date']);
       });
       $res = [];
       for ($i = 0; $i < 6; $i++) {
-        $res[] = $blob[$i]->getUrl() . $this->SASToken;
+        if (empty($blob[$i])) continue;
+        $res[] = $blob[$i]->getUrl() . '?' . $this->SASToken;
       }
       return $res;
-      //return fpassthru($blob->getContentStream());
     } catch (ServiceException $ex) {
       return;
     }
@@ -102,7 +102,7 @@ class AzureInteractionContainer
   private function getBlobsListfromContainer()
   {
     try {
-      return $listBlobsAndProperties = $this->blobClient->listBlobs($this->resource);
+      return $this->blobClient->listBlobs($this->resource);
     } catch (ServiceException $e) {
       return;
     }
@@ -139,7 +139,8 @@ class AzureInteractionContainer
 
     //sorting the blobs for last modified date, DESC; usort sort and return original array modified
     usort($blob, function ($a, $b) {
-      return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
+      return strcmp(((array)($b->getProperties()->getLastModified()))['date'], ((array)($a->getProperties()->getLastModified()))['date']);
+
     });
 
     $blobList = '{
@@ -180,7 +181,7 @@ class AzureInteractionContainer
 
     //sorting the blobs for last modified date, DESC; usort sort and return original array modified
     usort($blob, function ($a, $b) {
-      return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
+      return strcmp(((array)($b->getProperties()->getLastModified()))['date'], ((array)($a->getProperties()->getLastModified()))['date']);
     });
 
     $blobList = '{

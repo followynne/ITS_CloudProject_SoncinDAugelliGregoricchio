@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 namespace SimpleMVC\Controller;
 
 use League\Plates\Engine;
@@ -27,7 +26,7 @@ class Login implements ControllerInterface
       exit;
     }
     if (isset($_SESSION['mail'])) {
-      header('Location: /');
+      echo $this->plates->render('_homepage', ['user' => $_SESSION['name']]);
       die;
     } else if ($request->getMethod() != 'POST') {
       echo $this->plates->render('_login', ['msg' => '']);
@@ -43,11 +42,11 @@ class Login implements ControllerInterface
         echo $this->plates->render('_login', ['msg' => 'Login Error.']);
         exit;
       } else {
-        $_SESSION['mail'] == $user['mail'];
-        $_SESSION['user'] == $user['name'];
-        $_SESSION['idcontainer'] == $user['IdContainer'];
-        $_SESSION['container'] == $user['ContainerName'];
-        echo $this->plates->render('_homepage', ['user' => $user['name']]);
+        $_SESSION['mail'] = $user['mail'];
+        $_SESSION['user'] = $user['name'];
+        $_SESSION['idcontainer'] = $user['IdContainer'];
+        $_SESSION['container'] = $user['ContainerName'];
+        header('Location: /');
         exit;
       }
     }

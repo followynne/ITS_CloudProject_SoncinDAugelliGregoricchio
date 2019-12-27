@@ -11,7 +11,7 @@ This is a cloud-based photo management website. An user can register to the serv
 Site access is available only to registered user. Every user container is private - each user gets access to their unique container by Azure SAS Token. The reason for this architectural choice is to preserve photo privacy.\
 If a container or blob access level is set to Public:
 - a malicious user could try retrieving blobs by a simple brute-force attack, known a single blob url;
-- every user could access and read a blob, if it gets its unique url.
+- every user could access and read a blob, if it gets its unique url.\
 In this site, Azure SAS Token are created on every Resource Request, with an expiration date set to 3 minutes in the future and parameters related to each user. This way 1. blobs and containers aren't accessible from external users 2. only the logged user can access its own photos 3 if a blob/container link with token is stolen, it will expiry soon and won't be useable for long for further container crawl.\
 Photos are uploaded on two cloud services, the first being Azure Cloud Storage (photo and data hosting) and the latter a SQL SERVER Database (photo information and tags hosting).\
 On photo upload, Azure Computer Vision service is used to analyze the photo and retrieve a tags list of it; tags are used for image search, along with photo information (retrieved from EXIF information analysis).\
@@ -123,8 +123,8 @@ Go to http://localhost:9999 and have fun :+1:!
 
 # Help Needed?
 If you have doubts or requests, feel write to at:\
-[erika](<erika.soncin@edu.itspiemonte.it>)\
-[mario](<mario.daugelli@edu.itspiemonte.it>)\
-[matteo](<matteo.gregoricchio@edu.itspiemonte.it>)\
+[erika](mailto:erika.soncin@edu.itspiemonte.it)\
+[mario](mailto:mario.daugelli@edu.itspiemonte.it)\
+[matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it)
 
 This software is released under the [Apache License](/LICENSE), Version 2.0.

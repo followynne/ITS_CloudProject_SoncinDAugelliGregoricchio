@@ -24,10 +24,7 @@ class Upload implements ControllerInterface
         $this->onDb = $onDb;
         $this->blob = $blob;
         $this->interaction = $interaction;
-        // } catch (Exception $e) {
-        //     echo "Error establishing connection.";
-        //     die();
-        // }
+
     }
 
     public function execute(ServerRequestInterface $request)
@@ -92,6 +89,7 @@ class Upload implements ControllerInterface
             $fileName = $randString;
             $referenceName = $this->checkRandNameImage($fileName);
 
+            $referenceName .= '.' . $imageFileType;
             $this->blob->uploadBlob($referenceName, $contents);
             $idPhotoonDb = $this->onDb->addDataPhotos($referenceName, $originalfilename);
 

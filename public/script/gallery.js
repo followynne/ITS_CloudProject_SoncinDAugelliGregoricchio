@@ -2,7 +2,6 @@ import * as func from './galleryGetBlobsFunc.js';
 
 $(document).ready(() =>
 {
-
   fetchSelectedPage(1);
   getSearchedImagesByMultipleData('#btnsearchall');
   getSearchedImages('#btnsearchfortags');
@@ -20,7 +19,7 @@ function fetchSelectedPage(index)
 {
     fetch('/getblobs?indexpage='+(index-1)).then((result) => (result.json())).then((data) => {
     func.displayImagesForSubPage(data.pageData.blobs, data.pageData.tempToken);
-    if (!(window.location.pathname === '/completegallery.php')){
+    if (!(window.location.pathname === '/completegallery')){
       startPaginationCreation(data.pageData, index-1);
     }
     enableDeleteOneIfNoneAreSelected();

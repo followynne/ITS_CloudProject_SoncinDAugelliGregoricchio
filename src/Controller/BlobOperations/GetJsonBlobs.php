@@ -30,12 +30,8 @@ class GetJsonBlobs implements ControllerInterface
     $containername = $_SESSION['container'];
     $this->blobClient->setContainer($containername);
 
-    // $referer = str_replace($_SERVER['HTTP_ORIGIN'], '',  $_SERVER['HTTP_REFERER']);
-    // HTTP_ORIGIN dà problemi con Chrome e non è affidabile
-    //$referer = str_replace('http://localhost:9999/public', '',  $_SERVER['HTTP_REFERER']);
-
-    $referer = ($request->getUri()->getPath());
-    if ($referer == '/completegallery') {
+    $referer = parse_url($request->getServerParams()['HTTP_REFERER']);
+    if ($referer['path'] == '/completegallery') {
       $htmlBlobsList = $this->blobClient->getBlobJson(-1);
     } else {
       $htmlBlobsList = $this->blobClient->getBlobJson((int)$request->getQueryParams()['indexpage'] ?? 0);

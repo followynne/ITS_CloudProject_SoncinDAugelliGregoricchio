@@ -55,7 +55,6 @@ class DeleteBlobs implements ControllerInterface
       if ($azuredel == 'successful') {
         
         try {
-        //  echo ('qua');return;
           $dbdel = $this->dbadapter->deleteFrom($name);
         } catch (PDOException $ex) {
           $this->azureadapter->rollbackDelete($name);

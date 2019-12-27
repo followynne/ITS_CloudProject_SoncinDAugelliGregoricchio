@@ -3,19 +3,20 @@
 ### Made by [E.Soncin](https://github.com/erikasoncin), [M.D'Augelli](https://github.com/MariodAugelli97), [M.Gregoricchio](https://www.matteogregoricchio.com/)
 
 **You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
+
 Final Project for Cloud Service course at ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
 
 ## DESCRIPTION
-This is a cloud-based photo management website. An user can register to the service and upload its photos, to host and manage them remotely.
-Site access is available only to registered user. Every user container is private - each user gets access to their unique container by Azure SAS Token. The reason for this architectural choice is to preserve photo privacy.
+This is a cloud-based photo management website. An user can register to the service and upload its photos, to host and manage them remotely.\
+Site access is available only to registered user. Every user container is private - each user gets access to their unique container by Azure SAS Token. The reason for this architectural choice is to preserve photo privacy.\
 If a container or blob access level is set to Public:
 - a malicious user could try retrieving blobs by a simple brute-force attack, known a single blob url;
 - every user could access and read a blob, if it gets its unique url.
-In this site, Azure SAS Token are created on every Resource Request, with an expiration date set to 3 minutes in the future and parameters related to each user. This way 1. blobs and containers aren't accessible from external users 2. only the logged user can access its own photos 3 if a blob/container link with token is stolen, it will expiry soon and won't be useable for long for further container crawl.
-Photos are uploaded on two cloud services, the first being Azure Cloud Storage (photo and data hosting) and the latter a SQL SERVER Database (photo information and tags hosting).
-On photo upload, Azure Computer Vision service is used to analyze the photo and retrieve a tags list of it; tags are used for image search, along with photo information (retrieved from EXIF information analysis). 
-If a photo contains geo-localization information, those gets used to create photo markers on a Google Maps.
-An user can share a selection of his photos on the Net by creating a custom URL. The share system is based on Azure SAS Token - every shared photo goes with its unique access token which provides Read permissions to it, set with an user-defined expiration date.
+In this site, Azure SAS Token are created on every Resource Request, with an expiration date set to 3 minutes in the future and parameters related to each user. This way 1. blobs and containers aren't accessible from external users 2. only the logged user can access its own photos 3 if a blob/container link with token is stolen, it will expiry soon and won't be useable for long for further container crawl.\
+Photos are uploaded on two cloud services, the first being Azure Cloud Storage (photo and data hosting) and the latter a SQL SERVER Database (photo information and tags hosting).\
+On photo upload, Azure Computer Vision service is used to analyze the photo and retrieve a tags list of it; tags are used for image search, along with photo information (retrieved from EXIF information analysis).\
+If a photo contains geo-localization information, those gets used to create photo markers on a Google Maps.\
+An user can share a selection of his photos on the Net by creating a custom URL. The share system is based on Azure SAS Token - every shared photo goes with its unique access token which provides Read permissions to it, set with an user-defined expiration date.\
 
 ### Specs
 The site has: 
@@ -121,9 +122,9 @@ Go to http://localhost:9999 and have fun :+1:!
 //TODO//
 
 # Help Needed?
-If you have doubts or requests, feel write to at:
-[erika](erika.soncin@edu.itspiemonte.it)
-[mario](mario.daugelli@edu.itspiemonte.it)
-[matteo](matteo.gregoricchio@edu.itspiemonte.it)
+If you have doubts or requests, feel write to at:\
+[erika](<erika.soncin@edu.itspiemonte.it>)\
+[mario](<mario.daugelli@edu.itspiemonte.it>)\
+[matteo](<matteo.gregoricchio@edu.itspiemonte.it>)\
 
 This software is released under the [Apache License](/LICENSE), Version 2.0.

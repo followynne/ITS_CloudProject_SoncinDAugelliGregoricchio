@@ -1,6 +1,6 @@
 {
   "require": {
-    "php": ">=7.2",
+    "php": "=7.3",
     "league/plates": "^3.3",
     "microsoft/azure-storage-blob": "*",
     "microsoft/azure-storage-table": "*",
@@ -9,14 +9,21 @@
     "pear/http_request2": "^2.3",
     "monolog/monolog": "^2.0",
     "vlucas/phpdotenv": "^3.5",
-    "php-di/php-di": "^6.0"
+    "php-di/php-di": "^6.0",
+    "zendframework/zend-diactoros": "^2.2"
   },
-  "autoload": {
-    "files": ["php/ExifProcessing.php"],
+  "require-dev": {
+    "phpunit/phpunit": "^8.4"
+  }, "autoload": {
+    "files": ["src/Model/ExifProcessing.php"],
     "psr-4":
     {
-      "AzureClasses\\": "php/",
-      "Interfaces\\": "php/"
+      "SimpleMVC\\": "src/"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SimpleMVC\\Test\\": "test/"
+        }
     }
   }
 }

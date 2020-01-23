@@ -1,21 +1,44 @@
 # Image Hosting Site Project
 ## Cloud Services Final Project
 ### Made by [E.Soncin](https://github.com/erikasoncin), [M.D'Augelli](https://github.com/MariodAugelli97), [M.Gregoricchio](https://www.matteogregoricchio.com/)
-Description:
-//TODO//
+
+**You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
 
 Final Project for Cloud Service course at ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
 
-Based mainly on:
+## DESCRIPTION
+This is a cloud-based photo management website. An user can register to the service and upload its photos, to host and manage them remotely.\
+Site access is available only to registered user. Every user container is private - each user gets access to their unique container by Azure SAS Token. The reason for this architectural choice is to preserve photo privacy.\
+If a container or blob access level is set to Public:
+- a malicious user could try retrieving blobs by a simple brute-force attack, known a single blob url;
+- every user could access and read a blob, if it gets its unique url.
+
+In this site, Azure SAS Token are created on every Resource Request, with an expiration date set to 3 minutes in the future and parameters related to each user. This way 1. blobs and containers aren't accessible from external users 2. only the logged user can access its own photos 3 if a blob/container link with token is stolen, it will expiry soon and won't be useable for long for further container crawl.\
+Photos are uploaded on two cloud services, the first being Azure Cloud Storage (photo and data hosting) and the latter a SQL SERVER Database (photo information and tags hosting).\
+On photo upload, Azure Computer Vision service is used to analyze the photo and retrieve a tags list of it; tags are used for image search, along with photo information (retrieved from EXIF information analysis).\
+If a photo contains geo-localization information, those gets used to create photo markers on a Google Maps.\
+An user can share a selection of his photos on the Net by creating a custom URL. The share system is based on Azure SAS Token - every shared photo goes with its unique access token which provides Read permissions to it, set with an user-defined expiration date.
+
+### Specs
+The site has: 
+- a Login page;
+- a Registration page;
+- a Home page, with a small selection of the last blobs uploaded;
+- a Map page, with the blob geo-location;
+- a Gallery page, with the Search Images function and the Share Selected Blobs function;
+- a Show Single Blob page, complete of EXIF Informations and related Tags.
+
+### Based mainly on
 - [PHP](https://php.net/>), using via Composer libraries: [Azure Storage PHP](https://github.com/Azure/azure-storage-php), [HTTP_Request2](https://packagist.org/packages/pear/http_request2), [Plates](https://packagist.org/packages/league/plates), [DotEnv](https://packagist.org/packages/vlucas/phpdotenv), [PHP-DI] (http://php-di.org/)
 - [Javascript](https://www.javascript.com/), using via npm libraries: [JQuery](https://jquery.com/), [Bootstrap](https://getbootstrap.com/)
+- [Simple_MVC](README_MVC.md), a simplified PHP MVC Framework developed by E. Zimuel for didactic reasons.
 - Azure Cloud Services
   - [Blob Storage](https://azure.microsoft.com/it-it/services/storage/blobs/)
   - [SQL Database](https://azure.microsoft.com/en-in/services/sql-database/)
   - [Linux Server](https://azure.microsoft.com/en-us/services/virtual-machines/)
   - [Computer Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
 
-## INSTALL LOCALLY (Windows||Linux)
+## LOCAL CONFIGURATION (Windows||Linux)
 ### 1. Clone the Repo, get dependencies
 First, clone this repository. Recommended on TripAdvisor, 10/10. If you want to try this image hosting project, I wouldn't skip this step!
 
@@ -68,34 +91,41 @@ DB_USER = "<your_database_user>"
 DB_PASSWORD = "<your_database_user_password>"
 COMPUTERVISION_KEY = "<your_azure_computervision_key>"
 ```
-Replace the "string_example" with the proper string/key values got from your Subscriptions. You can find an example in the project.
+Replace the "string_example" with the proper string/key values got from your Subscriptions. You can find an example in the project you can use, by renaming it to *.env*.
 
 ### 3.1 (Optional) Add Google Maps API Key
 For the sake of this project, a Google Maps API Key isn't required. If the G.Maps connection string is left as provided, it will be rendered a Google Maps for Development Use.
 
 If you'd like to include a API Key, you can insert it in the file \_map.php, line 28:58 (directly there or saving it in the .env file and then loading it via DotEnv class).
 
-### 3.2 Save .env file to private directory
-Move the .env file you just created in the parent folder of this project root.
+### 3.2 Save .env file in the correct folder
+Move the .env file you just created in .
 
-### 4. Set internal project elements
-//TODO :: gestioneorigin, server host...//
-Modify these files as instructed.
-- /php/GetJsonBlobs.php: line xx, set [...]
-- /php/CreateShareableLink.php: line xx, set [...]
+### 4 Build node_modules static files
+From project root, in a shell execute:
+```
+$ node_modules/gulp/bin/gulp.js
+```
+This command create a build of all js/css/... static files that the application requires, under *public/dist*.
 
-### 5. Test the project
+### Final. Test the project
 Open a shell/command prompt in the project root folder and execute:
 ```
-php -S 0.0.0.0:9999
+php -S 0.0.0.0:9999 -t public/
 ```
-Go to http://localhost:9999/public/start.php and have fun :+1:!
+Go to http://localhost:9999 and have fun :+1:!
 
-## SETUP IN LINUX SERVER
+
+## TODO: LINUX SERVER CONFIGURATION
 ### follow step 1-? from [Local Setup](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#install-locally-windows-linux)
 //TODO also the correct link//
-### put prj in server root
+### put prj in apache root + apache config
 //TODO//
 
 # Help Needed?
-Write at _______ //TODO//
+If you have doubts or requests, feel write to at:\
+[erika](mailto:erika.soncin@edu.itspiemonte.it)\
+[mario](mailto:mario.daugelli@edu.itspiemonte.it)\
+[matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it)
+
+This software is released under the [Apache License](/LICENSE), Version 2.0.

@@ -1,51 +1,34 @@
 <?php
 declare(strict_types=1);
-namespace AzureClasses;
-
 session_start();
+
 chdir(dirname(__DIR__));
-require "vendor/autoload.php";
 
-use League\Plates\Engine;
-use AzureClasses\AzureInteractionContainer;
-use AzureClasses\AzureInteractionComputerVision;
-use AzureClasses\DAOInteraction;
-use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
-use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
+require 'vendor/autoload.php';
 
-$_SESSION['username'] = 'prova';
-$_SESSION['idContainer'] = 1;
-$_SESSION['containerName'] = 'prova1';
-$user = $_SESSION['username'];
-$idcont = $_SESSION['idContainer'];
-$contname = $_SESSION['containerName'];
-//TODO
+use DI\ContainerBuilder;
+use SimpleMVC\Controller\Error404;
+use Zend\Diactoros\ServerRequestFactory;
 
-$builder = new \DI\ContainerBuilder();
+$builder = new ContainerBuilder();
 $builder->addDefinitions('config/config.php');
-$cont = $builder->build();
+$container = $builder->build();
 
-$templates = new Engine('templates/');
+$request = ServerRequestFactory::fromGlobals(
+  $_SERVER,
+  $_GET,
+  $_POST,
+  $_COOKIE,
+  $_FILES
+);
 
-$builder = new \DI\ContainerBuilder();
-$builder->addDefinitions('config/config.php');
-$cont = $builder->build();
-try {
+// Routing
+$path   = $request->getUri()->getPath();
+$method = $request->getMethod();
+$murl   = sprintf("%s %s", $method, $path);
 
-    $blob = $cont->get(AzureInteractionContainer::class);
-    $blob->setContainer('prova1');
-    $interaction = $cont->get(AzureInteractionComputerVision::class);
-  } catch (Exception $e){
-    echo "Error establishing connection.";
-    die();
-  }
-  $blobUrl = $blob->getLastsFiveBlobs(); 
-if (isset($_SESSION['mail'])) {
-  $mail = $_SESSION['mail'];
-  echo $templates->render('_homepage', ['mail'=> $mail, 'url' => $blobUrl]);
-} else {
-  echo '<script type="text/javascript">
-          alert("Credentials wrong");
-        </script>';
-  header('Location: start.php');
-}
+$routes = require 'config/route.php';
+$controllerName = $routes[$murl] ?? Error404::class;
+
+$controller = $container->get($controllerName);
+$controller->execute($request);

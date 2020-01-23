@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cf17c7e67c3f7547df1274a44aed7a3",
+    "content-hash": "fc81e38b99a729de3cbe7bcf76fdd106",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.5.1",
+            "version": "6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0274c05370a7bc9bb3a33838858253418bd7d14b"
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0274c05370a7bc9bb3a33838858253418bd7d14b",
-                "reference": "0274c05370a7bc9bb3a33838858253418bd7d14b",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-12-21T08:51:15+00:00"
+            "time": "2019-12-23T11:57:10+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -310,16 +310,16 @@
         },
         {
             "name": "microsoft/azure-storage-blob",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Azure/azure-storage-blob-php.git",
-                "reference": "8310c2ecab488fa325db3dcf2f8723bbcfe58941"
+                "reference": "6a333cd28a3742c3e99e79042dc6510f9f917919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-blob-php/zipball/8310c2ecab488fa325db3dcf2f8723bbcfe58941",
-                "reference": "8310c2ecab488fa325db3dcf2f8723bbcfe58941",
+                "url": "https://api.github.com/repos/Azure/azure-storage-blob-php/zipball/6a333cd28a3742c3e99e79042dc6510f9f917919",
+                "reference": "6a333cd28a3742c3e99e79042dc6510f9f917919",
                 "shasum": ""
             },
             "require": {
@@ -350,20 +350,20 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2019-04-26T15:06:52+00:00"
+            "time": "2020-01-02T07:18:59+00:00"
         },
         {
             "name": "microsoft/azure-storage-common",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Azure/azure-storage-common-php.git",
-                "reference": "435adf4d09f0b34375f899b5627d2926bfe317e6"
+                "reference": "be4df800761d0d0fa91a9460c7f42517197d57a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-common-php/zipball/435adf4d09f0b34375f899b5627d2926bfe317e6",
-                "reference": "435adf4d09f0b34375f899b5627d2926bfe317e6",
+                "url": "https://api.github.com/repos/Azure/azure-storage-common-php/zipball/be4df800761d0d0fa91a9460c7f42517197d57a0",
+                "reference": "be4df800761d0d0fa91a9460c7f42517197d57a0",
                 "shasum": ""
             },
             "require": {
@@ -394,20 +394,20 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2019-04-26T15:02:17+00:00"
+            "time": "2020-01-02T07:15:54+00:00"
         },
         {
             "name": "microsoft/azure-storage-file",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Azure/azure-storage-file-php.git",
-                "reference": "e5e22e0cd61f303926f386f5c5eaab0447f8f4e4"
+                "reference": "8c6b1c0797fe7cd2274e111213b4cfaf0053050f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-file-php/zipball/e5e22e0cd61f303926f386f5c5eaab0447f8f4e4",
-                "reference": "e5e22e0cd61f303926f386f5c5eaab0447f8f4e4",
+                "url": "https://api.github.com/repos/Azure/azure-storage-file-php/zipball/8c6b1c0797fe7cd2274e111213b4cfaf0053050f",
+                "reference": "8c6b1c0797fe7cd2274e111213b4cfaf0053050f",
                 "shasum": ""
             },
             "require": {
@@ -438,20 +438,20 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2019-04-26T15:14:26+00:00"
+            "time": "2020-01-02T23:30:56+00:00"
         },
         {
             "name": "microsoft/azure-storage-queue",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Azure/azure-storage-queue-php.git",
-                "reference": "c7ef31c640f8baa2aa3c1612d1d17be82a28b38f"
+                "reference": "c85f9c6ce9f7cefd21bb8755f455f2cecd6aed1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-queue-php/zipball/c7ef31c640f8baa2aa3c1612d1d17be82a28b38f",
-                "reference": "c7ef31c640f8baa2aa3c1612d1d17be82a28b38f",
+                "url": "https://api.github.com/repos/Azure/azure-storage-queue-php/zipball/c85f9c6ce9f7cefd21bb8755f455f2cecd6aed1e",
+                "reference": "c85f9c6ce9f7cefd21bb8755f455f2cecd6aed1e",
                 "shasum": ""
             },
             "require": {
@@ -482,20 +482,20 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2019-04-26T15:12:13+00:00"
+            "time": "2020-01-02T23:25:33+00:00"
         },
         {
             "name": "microsoft/azure-storage-table",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Azure/azure-storage-table-php.git",
-                "reference": "d2a172d03870c1ab0f08994c5b830845f3fe51c6"
+                "reference": "b5f3bf09df6a4d71cf6bc32765f1a019556b78c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-table-php/zipball/d2a172d03870c1ab0f08994c5b830845f3fe51c6",
-                "reference": "d2a172d03870c1ab0f08994c5b830845f3fe51c6",
+                "url": "https://api.github.com/repos/Azure/azure-storage-table-php/zipball/b5f3bf09df6a4d71cf6bc32765f1a019556b78c6",
+                "reference": "b5f3bf09df6a4d71cf6bc32765f1a019556b78c6",
                 "shasum": ""
             },
             "require": {
@@ -526,7 +526,7 @@
                 "storage",
                 "table"
             ],
-            "time": "2019-04-26T15:10:17+00:00"
+            "time": "2020-01-02T07:23:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1563,6 +1563,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-11-13T19:16:13+00:00"
         }
     ],
@@ -1625,16 +1626,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.9.4",
+            "version": "1.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "579bb7356d91f9456ccd505f24ca8b667966a0a7"
+                "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/579bb7356d91f9456ccd505f24ca8b667966a0a7",
-                "reference": "579bb7356d91f9456ccd505f24ca8b667966a0a7",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/b2c28789e80a97badd14145fda39b545d83ca3ef",
+                "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef",
                 "shasum": ""
             },
             "require": {
@@ -1669,7 +1670,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2019-12-15T19:12:40+00:00"
+            "time": "2020-01-17T21:11:47+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1827,16 +1828,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.3",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62"
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62",
-                "reference": "2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/da3fd972d6bafd628114f7e7e036f45944b62e9c",
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c",
                 "shasum": ""
             },
             "require": {
@@ -1848,6 +1849,7 @@
             "require-dev": {
                 "doctrine/instantiator": "^1.0.5",
                 "mockery/mockery": "^1.0",
+                "phpdocumentor/type-resolver": "0.4.*",
                 "phpunit/phpunit": "^6.4"
             },
             "type": "library",
@@ -1874,7 +1876,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2019-12-20T13:40:23+00:00"
+            "time": "2019-12-28T18:55:12+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1925,24 +1927,24 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.10.1",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc"
+                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
-                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
+                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
-                "sebastian/comparator": "^1.2.3|^2.0|^3.0",
-                "sebastian/recursion-context": "^1.0|^2.0|^3.0"
+                "sebastian/comparator": "^1.2.3|^2.0|^3.0|^4.0",
+                "sebastian/recursion-context": "^1.0|^2.0|^3.0|^4.0"
             },
             "require-dev": {
                 "phpspec/phpspec": "^2.5 || ^3.2",
@@ -1984,7 +1986,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-12-22T21:05:45+00:00"
+            "time": "2020-01-20T15:57:02+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2240,16 +2242,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.0",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3ee1c1fd6fc264480c25b6fb8285edefe1702dab"
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3ee1c1fd6fc264480c25b6fb8285edefe1702dab",
-                "reference": "3ee1c1fd6fc264480c25b6fb8285edefe1702dab",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
                 "shasum": ""
             },
             "require": {
@@ -2319,7 +2321,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-06T05:41:38+00:00"
+            "time": "2020-01-08T08:49:49+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3031,7 +3033,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2"
+        "php": ">7.3"
     },
     "platform-dev": []
 }

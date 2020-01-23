@@ -39,13 +39,7 @@ try {
     echo "Error establishing connection.";
     die();
   }
-  $blobUrl = $blob->getLastsFiveBlobs(); 
-if (isset($_SESSION['mail'])) {
-  $mail = $_SESSION['mail'];
-  echo $templates->render('_homepage', ['mail'=> $mail, 'url' => $blobUrl]);
-} else {
-  echo '<script type="text/javascript">
-          alert("Credentials wrong");
-        </script>';
-  header('Location: start.php');
-}
+  $blobUrl = $blob->getLastsFiveBlobs();
+  print_r($blobUrl);
+//   echo $templates->render('_homepage', ['url' => $blobUrl->getUrl(), 'name' =>  $blobUrl->getName()]);
+ 

@@ -45,7 +45,7 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 if (isset($_POST["upload"])) {
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
+        //echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
     } else {
         echo "File is not an image.";
@@ -81,7 +81,7 @@ if ($uploadOk == 0) {
     $randString = generateRandomString(15);
     $originalfilename = $fileName;
     $fileName = $randString;
-    $referenceName = $onDb->checkRandNameImage($fileName);
+    $referenceName = $onDb->checkRandNameImage($fileName) ? generateRandomString(15) : $fileName;
     
     $blob->uploadBlob($referenceName, $contents);
     $idPhotoonDb = $onDb->addDataPhotos($referenceName,$originalfilename);
@@ -119,20 +119,6 @@ function generateRandomString($length) {
     }
     return $randomString;
 }
-
-//if randomName photo exists, creates a new randomName
-/*function checkRandNameImage($namePhoto){
-    $container = [];
-    for ($i = 0; $i < strlen($namePhoto); $i++){//sizeof
-        $container[] = $namePhoto;
-            if (in_array($namePhoto, $container)) { 
-                return $namePhoto = generateRandomString(15); 
-            }else { 
-                return $namePhoto;
-            } 
-    return $namePhoto;
-    }
-}*/
 
 // check MAX image size for Computer Vision 
 function sizeMaxForComputerVision($size) {

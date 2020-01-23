@@ -72,16 +72,13 @@ class AzureInteractionContainer
   /**
    * TODO: WIP
    */
-  function getLastsFiveBlobs($blob)
+  function getLastsFiveBlobs()
   {
-    for ($i=0; $i<6; $i++){
-      $blob = $this->blobClient->getBlob($this->resource, $blob);
-      usort($blob, function ($a, $b){
-        return strcmp(get_object_vars($b->getProperties()->getLastModified())['date'], get_object_vars($a->getProperties()->getLastModified())['date']);
-      });
-  
-      return fpassthru($blob->getContentStream());
+    $blobs = $this->getBlobsListfromContainer();
+    if ($blobs==null){
+      return;
     }
+    return $blob = $blobs->getBlobs();
   }
 
   /**

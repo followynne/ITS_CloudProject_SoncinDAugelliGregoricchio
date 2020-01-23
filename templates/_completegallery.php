@@ -61,6 +61,10 @@
     </ul>
 </div>
 
+<div> </div>
+<div style="display:block"> </div>
 <?php $this->start('js') ?>
 <script type="module" src="/script/gallery.js"></script>
 <?php $this->stop() ?>
+
+<div style="display:block"> </div>

@@ -101,7 +101,7 @@ class DAOInteraction {
       if ($result){
         return true;
       }else{
-        return $namePhoto;
+        return false;
       }
     }catch (PDOException $e) {
       print("Error");
@@ -123,7 +123,7 @@ class DAOInteraction {
   /**
    * WIP
    */
-  function idUser(){
+  function idUser($id){
     if(checkUser($mail, $password)){
       $id = $this->conn->lastInsertId();
       return $id;

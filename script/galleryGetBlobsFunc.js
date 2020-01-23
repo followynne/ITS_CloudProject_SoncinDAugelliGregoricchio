@@ -2,13 +2,13 @@ export function displayImagesForSubPage(blobs, tempToken){
   let images = '';
   $.each(blobs, function(key, value) {
     images += '<div class="col-3 p-3"> ' +
-    '<div class="card h-100 border-dark">'+
+    '​<picture>'+
     '<div class="card-img-top">'+
     '<div class="embed-responsive embed-responsive-4by3">'+
     '<div class="embed-responsive-item">'+
     '<a href="/public/showsingleblob.php?name='+ value.name +'" target="_blank">'+
     '<img class="img-fluid w-100" src="' + value.url + '?' + tempToken + '"/>'+
-    '</a></div></div></div></div></div>'+
+    '</a></div></div></div></div></​picture>'+
     '<div><input class="form-check-input position-static mt-4 blankCheckbox" type="checkbox"'+
     '" style="margin:auto;display:block">'+
     '<button type="button" class="btn btn-danger mt-2 btnDeleteOne" value="'+ value.name +'" style="height:35px;">Delete</button></div>';

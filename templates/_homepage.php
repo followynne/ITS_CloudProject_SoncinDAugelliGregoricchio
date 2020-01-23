@@ -10,15 +10,28 @@
 
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-50" src="https://www.zingarate.com/pictures/2018/05/28/aurora-boreale_1.jpeg" alt="First slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-50" src="https://cdn-01.independent.ie/irish-news/article37870710.ece/5f8ab/AUTOCROP/w620/2019-03-02_iri_48402126_I1.JPG" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-50" src="https://files.salsacdn.com/service/1251-STABG/image/Dollarphotoclub-30128064-X3_z_0_27_514.20190207122938.jpg" alt="Third slide">
-      </div>
+    <?php foreach ($url as $bb)
+          {
+            for($i = 0; $i <1; $i++)
+            {
+              if(!empty($bb))
+              {
+                  ?><div class="carousel-item active">
+                  <img class="d-block w-50" src="<?= $this->e($bb->getUrl())?>" alt="<?= $this->e($bb->getName())?>" >
+                </div>
+                <?php
+                }
+                else
+                {
+                  $imageRandom = array();
+                  for($i = 0; $i <6; $i++){
+                    ?><div class="carousel-item active">
+                    <img class="d-block w-50" src="https://www.phonetoday.it/wp-content/uploads/2018/02/Nothing.jpg" alt="" >
+                  </div><?php
+                  }
+                }
+            }
+          } ?> 
     </div>
   </div>
 

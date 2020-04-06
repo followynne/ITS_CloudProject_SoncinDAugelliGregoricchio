@@ -18,8 +18,8 @@
         <span> Scegli la data e l'ora (UTC) di scadenza dello share: </span>
           <input type="date" id="datetimepicker">
           <input type="time" id="hourpicker" value="00:00">
-        
-          <button type="button" id="getlink" class="btn-primary btn-md" data-toggle="popover" data-trigger="focus" data-content="Hai selezionato una scadenza non valida o nessuna immagine.">Get Link</button>
+
+          <button type="button" id="getlink" class="btn btn-cyan btn-md" data-toggle="popover" data-trigger="focus" data-content="Hai selezionato una scadenza non valida o nessuna immagine.">Get Link</button>
           <input id="sharelink" readonly>
           <button type= "button" class="btn btn-md copy" data-clipboard-target="#sharelink">
             <img src="/images/clippy.svg" alt="Copy to clipboard">

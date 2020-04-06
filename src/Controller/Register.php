@@ -49,6 +49,8 @@ class Register implements ControllerInterface
             } while (!$this->azure->createContainer($containername));
             $dati['containername'] = $containername;
             $res = $this->dao->registerUser($dati);
+            print_r($res);
+            die();
             if ($res == 'correct') {
                 echo $this->plates->render('_login', ['msg' => "Account creato. :)."]);
                 exit;

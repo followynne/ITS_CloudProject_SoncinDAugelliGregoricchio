@@ -60,10 +60,10 @@ class DAOInteraction
   function validateLogin($mail, $password)
   {
     $result = $this->checkUserExistence($mail);
-    var_dump($result);
+    //var_dump($result);
     if (!empty($result)) {
       if ($mail == $result['mail'] ){//&& password_verify($password, $result['pwd'])) {
-        var_dump($result);
+        //var_dump($result);
         return $result;
       }
     }
@@ -78,7 +78,7 @@ class DAOInteraction
                     WHERE u.Id = c.IdUtente AND mail=:mail;";
       $query = $this->conn->prepare($sqlQuery);
       $x=$query->execute([':mail' => '' . $mail . '']);
-      var_dump($x);
+      //var_dump($x);
       return $query->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
       return $e;

@@ -35,11 +35,11 @@ class Login implements ControllerInterface
       $password = $request->getParsedBody()['pwd'];
       try {
         $user = $this->dao->validateLogin($mail, $password);
-        var_dump($user);
+        //var_dump($user);
         
       } catch (PDOException $ex) {
         $user = false;
-        var_dump($ex);
+        //var_dump($ex);
       }
       if (!$user) {
         echo $this->plates->render('_login', ['msg' => 'Login Error.']);

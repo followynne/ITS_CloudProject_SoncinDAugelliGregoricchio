@@ -1,32 +1,51 @@
-.gallery {
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-    -webkit-column-width: 33%;
-    -moz-column-width: 33%;
-    column-width: 33%; }
-    .gallery .pics {
-    -webkit-transition: all 350ms ease;
-    transition: all 350ms ease; }
-    .gallery .animation {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1); }
     
-    @media (max-width: 450px) {
-    .gallery {
-    -webkit-column-count: 1;
-    -moz-column-count: 1;
-    column-count: 1;
-    -webkit-column-width: 100%;
-    -moz-column-width: 100%;
-    column-width: 100%;
-    }
-    }
-    
-    @media (max-width: 400px) {
-    .btn.filter {
-    padding-left: 1.1rem;
-    padding-right: 1.1rem;
-    }
-    }
+body, html {
+	height: 100%;
+  font-family: Ubuntu-Regular, sans-serif;
+  background-color: #F5F5F5;
+}
+
+.myBackground{
+  font-family: Ubuntu-Regular, sans-serif;
+  background-color: #F5F5F5;
+}
+
+.imagePositionDetail{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+            .active-pink-2 input.form-control[type=text]:focus:not([readonly]) {
+              border-bottom: 1px solid #f48fb1;
+              box-shadow: 0 1px 0 0 #f48fb1;
+            }
+            .active-pink input.form-control[type=text] {
+              border-bottom: 1px solid #f48fb1;
+              box-shadow: 0 1px 0 0 #f48fb1;
+            }
+            .active-purple-2 input.form-control[type=text]:focus:not([readonly]) {
+              border-bottom: 1px solid #ce93d8;
+              box-shadow: 0 1px 0 0 #ce93d8;
+            }
+            .active-purple input.form-control[type=text] {
+              border-bottom: 1px solid #ce93d8;
+              box-shadow: 0 1px 0 0 #ce93d8;
+            }
+            .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+              border-bottom: 1px solid #4dd0e1;
+              box-shadow: 0 1px 0 0 #4dd0e1;
+            }
+            .active-cyan input.form-control[type=text] {
+              border-bottom: 1px solid #4dd0e1;
+              box-shadow: 0 1px 0 0 #4dd0e1;
+            }
+            .active-cyan .fa, .active-cyan-2 .fa {
+              color: #4dd0e1;
+            }
+            .active-purple .fa, .active-purple-2 .fa {
+              color: #ce93d8;
+            }
+            .active-pink .fa, .active-pink-2 .fa {
+              color: #f48fb1;
+            }

@@ -1,35 +1,26 @@
 <?php $this->layout('home', ['title' => 'HomePage']) ?>
-<div class="text-right">
-  <button type="button" class="btn btn-success btn-lg gallery" onclick="window.location.href='/gallery'">Gallery</button>
-  <button type="button" class="btn btn-danger btn-lg upPhotos" data-toggle="modal" data-target="#exampleModal">Upload Photos</button>
-  <button type="button" class="btn btn-warning btn-lg mp" onclick="window.location.href='/map'">Go To Maps Photo Location Page</button>
-  <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href='/logout'">Log-out</button>
+
+
+<div class="container align-items-center myCarousel">
+<div class="jumbotron myCarousel">
+  <div class="text-center">
+    <h1 class="display-4">Hello, <?= $this->e($user) ?></h1>
+  <!-- <button type="button" class="mt-2 btn btn-primary btn-lg upPhotos" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-cloud-upload"></i> Upload Photos</button> -->
+
+  
 </div>
-
-<div class="jumbotron">
-  <h1 class="display-4">Hello, <?= $this->e($user) ?></h1>
-  <h2 class="lead"> Dashboard</h2>
-
-  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div id="carouselExampleSlidesOnly" class="mt-5 carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <?php foreach ($data as $img) : ?>
         <div class="carousel-item">
-          <img class="d-block w-50" src="<?= $this->e($img) ?>" alt="slide">
+          <img class="imagePosition d-block w-50 h-50" src="<?= $this->e($img) ?>" alt="slide" style="width:100%;">
         </div>
       <?php endforeach ?>
     </div>
   </div>
 </div>
+</div>
 
-<!--
-<hr class="my-4">
-<p class="lead">
-  <div class="container-fluid" style="width:40%">
-    <button type="button" class="btn btn-success btn-lg gallery" onclick="window.location.href='/gallery'">Gallery</button>
-    <button type="button" class="btn btn-danger btn-lg upPhotos" data-toggle="modal" data-target="#exampleModal">Upload Photos</button>
-    <button type="button" class="btn btn-warning btn-lg mp" onclick="window.location.href='/map'">Go To Maps Photo Location Page</button>
-  </div>
--->
   <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" id="exampleModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -55,7 +46,7 @@
       </div>
     </div>
   </div>
-<!-- </p>  -->
+
 
 <?php $this->start('js') ?>
 <script type="module" src="/script/index.js"></script>

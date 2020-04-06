@@ -1,4 +1,4 @@
-<?php $this->layout('home', ['title' => 'Register']) ?>
+<?php $this->layout('login', ['title' => 'Register']) ?>
 
 <div class="limiter">
     <div class="container-login100" style="background-image: url('/images/bg-01.jpg');">

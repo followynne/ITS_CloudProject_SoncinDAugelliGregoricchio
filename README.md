@@ -60,6 +60,7 @@ max_execution_time = 300
 
 ### 2. Set your environment ready for SQL Server database
 - on Linux => go to [first_link](https://docs.microsoft.com/it-it/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-2017) and follow ALL the instructions for your distro. I link you also [this second_link](https://docs.microsoft.com/it-it/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017), which you'll need to complete at step 2 of the first link. Please bear in mind to follow all the steps in the guides, even the optional ones.
+PLEASE NOTE: Install the correct drivers for your php version(Ex: 7.1, 7.2, 7.3..).
 
 To test the installation you can follow steps at the end of the first link or you can use SQL Server on shell following these [instr](https://docs.microsoft.com/it-it/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-2017)
 
@@ -71,6 +72,7 @@ Go to [Building SQLSRV PHP Drivers for Windows](https://github.com/microsoft/msp
   + You'll need to load the 2 drivers in the /ext folder of your php
   + add to php.ini configuration file these two lines: "extension=php_sqlsrv.dll",  "extension=php_pdo_sqlsrv.dll" (about the lines position, search for similar syntax lines)
   + (optional) restart the web server.
+  PLEASE NOTE: Based on our experience, We recommend the usage of NON-THREAD SAFE x64 drivers. 
 
 ### 2.1 Recover the Database from the .sql file inside config/
 In your SQL Server DB, retrieve the Database Model from the .sql file you can find in the root of this repository.

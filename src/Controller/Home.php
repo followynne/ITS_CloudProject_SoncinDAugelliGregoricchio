@@ -27,8 +27,10 @@ class Home implements ControllerInterface
             $photos = $this->blob->getLastBlobs();
             if (empty($photos)){
                 $photos = [
-                    'https://www.zingarate.com/pictures/2018/05/28/aurora-boreale_1.jpeg',
-                    'https://cdn-01.independent.ie/irish-news/article37870710.ece/5f8ab/AUTOCROP/w620/2019-03-02_iri_48402126_I1.JPG',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRDotp6lpWuQVLM3PHPk0sko5Xv3yvalBYbmEzcGOcnFsVi5N76&usqp=CAU',
+                    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRS6OtIG3BUtuqDzMvbr7GdEO_4BrcL-Jrz1jVKt2l2V9rCjY1n&usqp=CAU',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhbe5-kI2PTHa6-4MAFPJFk2DmDPTuj_Wikb_JRRyZvF43hlxb&usqp=CAU',
                     'https://files.salsacdn.com/service/1251-STABG/image/Dollarphotoclub-30128064-X3_z_0_27_514.20190207122938.jpg'
                 ];
             }

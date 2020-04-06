@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="page-footer font-small cyan darken-2">
+<footer class="page-footer font-small darken-2">
 
   <!-- Footer Elements -->
   <div class="container">
@@ -9,13 +9,13 @@
 
       <!-- Grid column -->
       <div class="col-md-12 py-3 d-flex justify-content-center ">
-          <a href="#" class="circle circle-github">
+          <a href="https://github.com/followynne" class="circle circle-github">
           <i class="fa fa-github fa-2x"></i>
           </a>
-          <a href="#" class="circle circle-github">
+          <a href="https://github.com/erikasoncin" class="circle circle-github">
           <i class="fa fa-github fa-2x"></i>
           </a>
-          <a href="#" class="circle circle-github">
+          <a href="https://github.com/MariodAugelli97" class="circle circle-github">
           <i class="fa fa-github fa-2x"></i>
           </a>
           </div>

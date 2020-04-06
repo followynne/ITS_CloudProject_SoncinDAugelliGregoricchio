@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Controller;
 
-use Exception;
+use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\AzureInteractionComputerVision;
 use SimpleMVC\Model\AzureInteractionContainer;
@@ -15,15 +15,18 @@ class Upload implements ControllerInterface
     protected $onDb;
     protected $blob;
     protected $interaction;
+    protected $plates;
 
     public function __construct(
         DAOInteraction $onDb,
         AzureInteractionContainer $blob,
-        AzureInteractionComputerVision $interaction
+        AzureInteractionComputerVision $interaction,
+        Engine $plates
     ) {
         $this->onDb = $onDb;
         $this->blob = $blob;
         $this->interaction = $interaction;
+        $this->plates = $plates;
 
     }
 
@@ -50,18 +53,11 @@ class Upload implements ControllerInterface
 
         // Check if image file is an actual image or a fake image
         if (isset($request->getParsedBody()["upload"])) {
-            $check = getimagesize($_FILES["image"]["tmp_name"]);
-            if ($check !== false) {
+            if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 $uploadOk = 1;
             } else {
                 $uploadOk = 0;
             }
-        }
-
-        // Check the file size to validate the upload
-        if ($_FILES["image"]["size"] > 10000000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
         }
 
         // Allow only certain file formats upload
@@ -75,7 +71,10 @@ class Upload implements ControllerInterface
 
         // Check: if $uploadOk was set to 0 by an error stop the processing.
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            echo '<script type="text/javascript">
+                        alert("Sorry, your file was not uploaded.")
+                        window.location.href = "/"
+                      </script>';
         } else {
             $stream = fopen($_FILES["image"]["tmp_name"], 'r');
             $size = filesize($_FILES["image"]["tmp_name"]);

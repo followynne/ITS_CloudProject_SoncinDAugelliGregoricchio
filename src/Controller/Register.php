@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Controller;
 
-use Exception;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\AzureStorageSASOperations;

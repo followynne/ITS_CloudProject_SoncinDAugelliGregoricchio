@@ -1,7 +1,6 @@
 export function displayImagesForSubPage(blobs, tempToken){
   let images = '';
   $.each(blobs, function(key, value) {
-    console.log(blobs);
     images += '<div class="col-3 p-3">'+
     '<div class="card">'+
      '<div class="view overlay">'+

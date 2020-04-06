@@ -52,10 +52,8 @@ class Upload implements ControllerInterface
         if (isset($request->getParsedBody()["upload"])) {
             $check = getimagesize($_FILES["image"]["tmp_name"]);
             if ($check !== false) {
-                //echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                //echo "File is not an image.";
                 $uploadOk = 0;
             }
         }

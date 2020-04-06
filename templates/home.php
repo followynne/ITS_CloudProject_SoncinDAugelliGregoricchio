@@ -24,7 +24,5 @@
     <link rel="stylesheet" type="text/css" href="/css/util.css">
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel="stylesheet" type="text/css" href="/css/home.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css"> -->   
-    <!-- <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css"> -->
 </body>
 </html>

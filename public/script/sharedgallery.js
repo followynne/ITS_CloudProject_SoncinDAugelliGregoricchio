@@ -17,7 +17,6 @@ function fetchSelectedPage(index)
 function displayImagesForSubPage(blobs){
   let images = '';
   $.each(blobs, function(value, key) {
-    console.log(key);
     images += '<div class="col-3 p-3 "> ' +
     '<div class="card w-100">'+
     '<div class="view overlay">'+

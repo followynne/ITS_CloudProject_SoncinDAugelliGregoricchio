@@ -26,6 +26,7 @@ function fetchSelectedPage(index)
     enableDeleteForSingleImage(data.pageData, index-1);
   }).catch((err) => {
       console.log('Potresti non aver foto al momento o aver eliminato l\'ultima pagina di foto.');
+      //location.reload();
       alert('If you have photos, refresh page please. Check log if info needed.')
     })
 };
@@ -193,8 +194,8 @@ function deleteSelectedImages(id)
       if (data!= 'successful delete'){
         alert("Some deletes were not successful. Please check after page reload.");
       }
-      fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
       location.reload();
+      fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
     })
   })
 }

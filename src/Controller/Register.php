@@ -51,12 +51,12 @@ class Register implements ControllerInterface
             $res = $this->dao->registerUser($dati);
             if ($res == 'correct') {
                 echo $this->plates->render('_login', ['msg' => "Account creato. :)."]);
-                exit;
+                die();
             } else {
                 echo $res;
                 http_response_code(401);
                 echo $this->plates->render('_register', ['msg' => "Errore nel processamento dei tuoi dati."]);
-                exit;
+                die();
             }
         } else {
             echo $this->plates->render('_register', ['msg' => "Errore, dati di registrazione non validi.Riprova."]);

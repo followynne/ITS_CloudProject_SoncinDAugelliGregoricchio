@@ -101,7 +101,7 @@ For the sake of this project, a Google Maps API Key isn't required. If the G.Map
 If you'd like to include a API Key, you can insert it in the file \_map.php, line 28:58 (directly there or saving it in the .env file and then loading it via DotEnv class).
 
 ### 3.2 Save .env file in the correct folder
-Move the .env file you just created in .
+Move the .env file you just created inside folder *config/*.
 
 ### 4 Build node_modules static files
 From project root, in a shell execute:

@@ -6,8 +6,9 @@
 		<div class="container-login100" style="background-image: url('/images/photo-1495422964407-28c01bf82b0d.jpg');">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
-					Login <?= $this->e($msg) ?>
+					Login
 				</span>
+				<span class="login100-form-title p-b-41"><?= $this->e($msg) ?></span>
 				<form class="login100-form validate-form p-b-33 p-t-5" action="/login" method="POST">
 
 					<div class="wrap-input100 validate-input" data-validate="Enter mail">

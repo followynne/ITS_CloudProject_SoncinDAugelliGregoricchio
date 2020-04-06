@@ -4,7 +4,7 @@
   <div class="container-fluid" style="width:90%">
     <div class="row justify-content-end">
       <a href="/completegallery" target="_blank">
-        <button type="button" class="mt-5 btn btn-warning btn-lg" id="fetchall" style="<?= $this->e($display) ?>">Show All Images</button>
+        <button type="button" class="mt-5 btn btn-warning btn-lg" id="fetchall" style="<?= $this->e($display)?>" >Show All Images</button>
       </a>
       <button type="button" class="mt-5 btn btn-light btn-lg" id="selectall">Select All</button>
       <button type="button" class="mt-5 btn btn-dark btn-lg" id="deselectall">DeSelect All</button>

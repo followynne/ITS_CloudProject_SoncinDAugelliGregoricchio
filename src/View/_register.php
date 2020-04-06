@@ -27,9 +27,11 @@
 
                 <div class="container-login100-form-btn m-t-32">
                     <button class="login100-form-btn" type="submit">
-                        Login
+                        Register
                     </button>
-
+                    <button class="login100-form-btn" type="button" onclick="window.location.href='/login'">
+                        Go Back
+                    </button>
                 </div>
 
             </form>

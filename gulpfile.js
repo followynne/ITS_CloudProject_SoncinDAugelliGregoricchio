@@ -13,7 +13,8 @@ gulp.task('default', function () {
         'node_modules/popper.js/dist/umd/popper.js',
         'node_modules/popper.js/dist/umd/popper.js.map',
         'node_modules/popper.js/dist/umd/popper-utils.js',
-        'node_modules/popper.js/dist/umd/popper-utils.js.map'
+        'node_modules/popper.js/dist/umd/popper-utils.js.map',
+        'node_modules/mdbootstrap/css/mdb.min.css'
         ])
         .pipe(gulp.dest('./public/dist/assets/'));
 });

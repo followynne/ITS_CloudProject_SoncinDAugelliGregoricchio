@@ -75,7 +75,7 @@ Go to [Building SQLSRV PHP Drivers for Windows](https://github.com/microsoft/msp
   PLEASE NOTE: Based on our experience, We recommend the usage of NON-THREAD SAFE x64 drivers. 
 
 ### 2.1 Recover the Database from the .sql file inside config/
-In your SQL Server DB, retrieve the Database Model from the .sql file you can find in the root of this repository.
+In your SQL Server DB, restore the Database Structure using the .sql file you can find in *config/setup_files*.
 It will be used in the project to store users and images data.
 
 ### 3. Prepare .env file
@@ -93,7 +93,7 @@ DB_USER = "<your_database_user>"
 DB_PASSWORD = "<your_database_user_password>"
 COMPUTERVISION_KEY = "<your_azure_computervision_key>"
 ```
-Replace the "string_example" with the proper string/key values got from your Subscriptions. You can find an example in the project you can use, by renaming it to *.env*.
+Replace the "string_example" with the proper string/key values got from your Subscriptions. You can find an example under *config/setup_files* you can use, by renaming it to *.env* and replacing with your apikeys.
 
 ### 3.1 (Optional) Add Google Maps API Key
 For the sake of this project, a Google Maps API Key isn't required. If the G.Maps connection string is left as provided, it will be rendered a Google Maps for Development Use.
@@ -118,7 +118,9 @@ php -S 0.0.0.0:9999 -t public/
 Go to http://localhost:9999 and have fun :+1:!
 
 
-## TODO: LINUX SERVER CONFIGURATION
+## LINUX SERVER CONFIGURATION
+This guide will suppose you have a clean linux install on your server, that needs an full setup to be ready.
+### 
 ### follow step 1-? from [Local Setup](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#install-locally-windows-linux)
 //TODO also the correct link//
 ### put prj in apache root + apache config

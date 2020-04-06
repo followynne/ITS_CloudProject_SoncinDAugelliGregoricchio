@@ -163,14 +163,16 @@ function enableDeleteOneIfNoneAreSelected()
 function enableDeleteForSingleImage(dataJson, indexPage)
 {
   $('.btnDeleteOne').on('click', (event) => {
-    var myInit = { method: 'DELETE'};
-    fetch('/deleteblobs?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
-      if (data!= 'successful delete'){
-        alert("Delete not successful.");
-        return;
-      }
-      fetchSelectedPage(indexPage+1);
-    })
+    if (confirm('Are you sure? This will delete the selected files forever.')){
+      var myInit = { method: 'DELETE'};
+      fetch('/deleteblobs?name='+$(event.target).val(), myInit).then((result) => (result.text())).then((data) => {
+        if (data!= 'successful delete'){
+          alert("Delete not successful.");
+          return;
+        }
+        fetchSelectedPage(indexPage+1);
+      })
+    }
   })
 }
 
@@ -185,18 +187,20 @@ function selectOrDeselectAllImagesInPage(id, boolValue)
 function deleteSelectedImages(id)
 {
   $(id).on('click', (event) => {
-    let parameterImages = func.createQueryStringFromImagesValue('.divForImagesShowing input:checked');
-    if (parameterImages === ''){
-      return;
-    }
-    var myInit = { method: 'DELETE'};
-    fetch('/deleteblobs?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
-      if (data!= 'successful delete'){
-        alert("Some deletes were not successful. Please check after page reload.");
+    if (confirm('Are you sure? This will delete the selected files forever.')){
+      let parameterImages = func.createQueryStringFromImagesValue('.divForImagesShowing input:checked');
+      if (parameterImages === ''){
+        return;
       }
-      location.reload();
-      fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
-    })
+      var myInit = { method: 'DELETE'};
+      fetch('/deleteblobs?'+parameterImages, myInit).then((result) => (result.text())).then((data) => {
+        if (data!= 'successful delete'){
+          alert("Some deletes were not successful. Please check after page reload.");
+        }
+        location.reload();
+        fetchSelectedPage($('.pagination li.active').children('a').attr('value'));
+      })
+    }
   })
 }
 

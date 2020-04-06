@@ -31,6 +31,7 @@
             <input type="file" name="image" id="image">
             <button type="submit" class="btn btn-primary btn-round" name="upload">Upload</button>
           </form>
+          <span class=""><?= $this->e($error) ?></span>
         </div>
         <div class="row">
           <div class="col-lg-5 mx-auto">

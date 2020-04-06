@@ -20,7 +20,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
 
   
-  <script src="/script/index.js"></script>
   <script src="/dist/assets/jquery.min.js"></script>
   <script src="/dist/assets/popper.js"></script>
   <script src="/dist/assets/bootstrap.js"></script>

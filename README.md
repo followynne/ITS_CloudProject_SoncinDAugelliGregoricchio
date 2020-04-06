@@ -51,10 +51,10 @@ to download the project dependencies.
 
 ### 1.1 (Optional) Update the php.ini Max Filesize
 I recommend to follow this step to enable users to upload bigger files (if you already did it, that's fine).
-You should go inside the php.ini configuration file and set those attributes to your desidered value, upgrading default values (the values you can read down below are mine test specs):
+You should go inside the *php.ini* configuration file and set those attributes to your desidered value, upgrading default values (the values you can read down below are mine test specs):
 ```
-upload_max_filesize = 250M
-post_max_size = 250M
+upload_max_filesize = 25M
+post_max_size = 25M
 max_execution_time = 300  
 ```
 

@@ -35,7 +35,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
   
-  <script src="/script/index.js"></script>
   <link rel="stylesheet" href="/dist/assets/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/dist/assets/select2.min.css">
   <link rel="stylesheet" type="text/css" href="/css/main.css">

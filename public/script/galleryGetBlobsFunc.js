@@ -1,17 +1,25 @@
 export function displayImagesForSubPage(blobs, tempToken){
   let images = '';
   $.each(blobs, function(key, value) {
-    images += '<div class="col-3 p-3"> ' +
-    '<div class="card h-100 border-dark">'+
-    '<div class="card-img-top">'+
-    '<div class="embed-responsive embed-responsive-4by3">'+
-    '<div class="embed-responsive-item">'+
-    '<a href="/showone?name='+ value.name +'" target="_blank">'+
-    '<img class="img-fluid w-100" src="' + value.url + '?' + tempToken + '"/>'+
-    '</a></div></div></div></div></div>'+
-    '<div><input class="form-check-input position-static mt-4 blankCheckbox" type="checkbox"'+
-    ' style="margin:auto;display:block">'+
-    '<button type="button" class="btn btn-danger mt-2 btnDeleteOne" value="'+ value.name +'" style="height:35px;">Delete</button></div>';
+    console.log(blobs);
+    images += '<div class="col-3 p-3">'+
+    '<div class="card">'+
+     '<div class="view overlay">'+
+        '<img class="card-img-top" src="' + value.url + '?' + tempToken + '" alt="Card image cap">'+
+        '<a href="/showone?name='+ value.name +'" target="_blank">'+
+         '<div class="mask rgba-white-slight"></div>'+
+        '</a>'+
+      '</div>'+
+      '<div class="card-body">'+
+      '<div class="row divForImagesShowing justify-content-center">'+
+              '<input class="form-check-input position-static mt-5 blankCheckbox" type="checkbox"'+
+              '>'+
+              '<button type="button" class="btn btn-danger mt-5 ml-3 btnDeleteOne" value="'+ value.name +'" style="height:35px;">Delete</button>'+
+        '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  
   });
   $(".divForImagesShowing").html(images);
 }

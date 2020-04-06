@@ -60,8 +60,10 @@ class DAOInteraction
   function validateLogin($mail, $password)
   {
     $result = $this->checkUserExistence($mail);
+    var_dump($result);
     if (!empty($result)) {
-      if ($mail == $result['mail'] && password_verify($password, $result['pwd'])) {
+      if ($mail == $result['mail'] ){//&& password_verify($password, $result['pwd'])) {
+        var_dump($result);
         return $result;
       }
     }
@@ -75,11 +77,11 @@ class DAOInteraction
                     FROM Utente u, Container c
                     WHERE u.Id = c.IdUtente AND mail=:mail;";
       $query = $this->conn->prepare($sqlQuery);
-      $query->execute([':mail' => '' . $mail . '']);
+      $x=$query->execute([':mail' => '' . $mail . '']);
+      var_dump($x);
       return $query->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-      print("Error retrieving user data.");
-      die(print_r($e));
+      return $e;
     }
   }
 
@@ -108,6 +110,24 @@ class DAOInteraction
       return 'error saving user data';
     }
   }
+
+    //if randomName photo exists, creates a new randomName
+    function checkRandNameImage($namePhoto){
+      try{
+        $sqlQuery = "SELECT ReferenceName FROM Photo WHERE ReferenceName =:namePhoto;";
+        $query = $this->conn->prepare($sqlQuery);
+        $query->execute([':namePhoto' => ''.$namePhoto.'']);
+        $result = $query->fetch();
+        if ($result){
+          return true;
+        }else{
+          return false;
+        }
+      }catch (PDOException $e) {
+        print("Error");
+        die(print_r($e));
+      }
+    }
 
   function addDataContainer($idU, $containername)
   {

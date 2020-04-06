@@ -93,6 +93,7 @@ class AzureInteractionContainer
     } catch (ServiceException $ex) {
       return;
     }
+    return $blob = $blobs->getBlobs();
   }
 
   /**

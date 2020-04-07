@@ -3,7 +3,8 @@
 ### Made by [E.Soncin](https://github.com/erikasoncin), [M.D'Augelli](https://github.com/MariodAugelli97), [M.Gregoricchio](https://www.matteogregoricchio.com/)
 
 **You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
-This software is released under the [Apache License](/LICENSE), Version 2.0.
+
+*This software is released under the [Apache License](/LICENSE), Version 2.0.*
 
 Final Project for Cloud Service course at ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
 
@@ -124,7 +125,7 @@ Go to http://localhost:9999 and have fun :+1:!
 ### LSC-1. Fresh Start: Requirements
 Right now we'll create a new Virtual Machine to host the site. Go on [portal.azure.com](portal.azure.com) and create a new Virtual Machine with your preferred OS. As specified before, I'll be using a Debian 9 Stretch OS.
 
-Configure its options as required by your project, be sure to set a secure connection method (passowrd/ssh auth). After the VM is deployed, please update the dnsname. From the VM Dashboard you can click on dnsname=>configure; set the DNS as static and assign a name that we'll use later.
+Configure its options as required by your project, be sure to set a secure connection method (password/ssh auth). After the VM is deployed, please update the dnsname. From the VM Dashboard you can click on dnsname=>configure; set the DNS as static and assign a name that we'll use later.
 
 Log in to the VM via Shell on Linux-OS or Putty on Microsoft-system.
 
@@ -135,22 +136,23 @@ Let's now setup the Linux environment for hosting the site. The packages require
 - Composer => eg [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-debian-9)
 - PHP => eg [7.4](https://computingforgeeks.com/how-to-install-latest-php-on-debian/), [7.3](https://www.rosehosting.com/blog/how-to-install-php-7-3-on-debian-9/)
 - Apache2 => ```apt install apache2```
+
 This isn't a complete list; please add/install other missing sub-packages where you are prompted by shell.
 
-### LSC-2.1. Please execute step [LC-1.1](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#11-optional-update-the-phpini-max-filesize)
+### LSC-2.1. Please execute step [LC-1.1](#11-optional-update-the-phpini-max-filesize)
 
 ### LSC-2.2 Prepare Repository
 ```
 cd /var/www/html/
-git clone <repo_url>
+git clone https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio
 cd <repo_name>/
 npm i
 composer i
 ```
 
-### LSC-2.3. Please execute step [LC-2, 2.1](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#2-set-your-environment-ready-for-sql-server-database)
+### LSC-2.3. Please execute step [LC-2, 2.1](#2-set-your-environment-ready-for-sql-server-database)
 
-### LSC-3 Create site config for Apache2
+### LSC-3. Create site config for Apache2
 ```
 sudo su
 nano /etc/apache2/apache2.conf
@@ -158,9 +160,9 @@ nano /etc/apache2/apache2.conf
 In the file search and update the following Directory directive with those options:
 ```
 <Directory /var/www/>
-Options Indexes FollowSymLinks
-AllowOverride All
-Require all granted
+  Options Indexes FollowSymLinks
+  AllowOverride All
+  Require all granted
 </Directory>
 ```
 Next:
@@ -168,23 +170,23 @@ Next:
 cd /etc/apache2/sites-available/
 nano file.conf
 ```
-Inside file.conf copy those lines, replacing <yourdnsname> with the Dns Name you set before:
+Inside file.conf copy those lines, replacing *yourdnsname* with the Dns Name you set before:
 ```
 Listen 80
-<VirtualHost *:80>
-ServerAdmin admin@<yourdnsname>
-ServerName <yourdnsname>
-ServerAlias <dnsname>
-DocumentRoot /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio/public/
-<Directory /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio>
-AllowOverride All
-Options -Indexes
-</Directory>
-DirectoryIndex index.html index.php
-Options -Indexes
-ErrorLog ${APACHE_LOG_DIR}/error.log
-CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+  <VirtualHost *:80>
+    ServerAdmin admin@<yourdnsname>
+    ServerName <yourdnsname>
+    ServerAlias <yourdnsname>
+    DocumentRoot /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio/public/
+    <Directory /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio>
+      AllowOverride All
+      Options -Indexes
+    </Directory>
+    DirectoryIndex index.html index.php
+    Options -Indexes
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
 ```
 Lastly:
 ```
@@ -192,7 +194,7 @@ sudo a2ensite file.conf
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 ```
-### LSC-4. Execute steps [LC-3, LC-4](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#3-prepare-env-file)
+### LSC-4. Execute steps [LC-3, LC-4](#3-prepare-env-file)
 
 ### LSC-Final. Test the project
 Connect to <dnsname.com> and start playing with your new site!
@@ -202,6 +204,9 @@ If you have doubts or requests, feel write to at:\
 [erika](mailto:erika.soncin@edu.itspiemonte.it)\
 [mario](mailto:mario.daugelli@edu.itspiemonte.it)\
 [matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it)
+
 or contact us on Github.
 
-This software is released under the [Apache License](/LICENSE), Version 2.0.
+<p align="center">
+  <img width="460" height="300" src="https://gph.is/1C6VV2M">
+</p>

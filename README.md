@@ -3,6 +3,7 @@
 ### Made by [E.Soncin](https://github.com/erikasoncin), [M.D'Augelli](https://github.com/MariodAugelli97), [M.Gregoricchio](https://www.matteogregoricchio.com/)
 
 **You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
+This software is released under the [Apache License](/LICENSE), Version 2.0.
 
 Final Project for Cloud Service course at ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
 
@@ -39,7 +40,7 @@ The site has:
   - [Computer Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
 
 ## LOCAL CONFIGURATION (Windows||Linux)
-### 1. Clone the Repo, get dependencies
+### LC-1. Clone the Repo, get dependencies
 First, clone this repository. Recommended on TripAdvisor, 10/10. If you want to try this image hosting project, I wouldn't skip this step!
 
 This project requires npm and composer. To install them, please refer to each documentation. After the install, open a shell in the project root folder and execute
@@ -49,7 +50,7 @@ composer install
 ```
 to download the project dependencies.
 
-### 1.1 (Optional) Update the php.ini Max Filesize
+### LC-1.1 (Optional) Update the php.ini Max Filesize
 I recommend to follow this step to enable users to upload bigger files (if you already did it, that's fine).
 You should go inside the *php.ini* configuration file and set those attributes to your desidered value, upgrading default values (the values you can read down below are mine test specs):
 ```
@@ -58,7 +59,7 @@ post_max_size = 25M
 max_execution_time = 300  
 ```
 
-### 2. Set your environment ready for SQL Server database
+### LC-2. Set your environment ready for SQL Server database
 - on Linux => go to [first_link](https://docs.microsoft.com/it-it/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-2017) and follow ALL the instructions for your distro. I link you also [this second_link](https://docs.microsoft.com/it-it/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017), which you'll need to complete at step 2 of the first link. Please bear in mind to follow all the steps in the guides, even the optional ones.
 PLEASE NOTE: Install the correct drivers for your php version(Ex: 7.1, 7.2, 7.3..).
 
@@ -74,11 +75,11 @@ Go to [Building SQLSRV PHP Drivers for Windows](https://github.com/microsoft/msp
   + (optional) restart the web server.
   PLEASE NOTE: Based on our experience, We recommend the usage of NON-THREAD SAFE x64 drivers. 
 
-### 2.1 Recover the Database from the .sql file inside config/
+### LC-2.1 Recover the Database from the .sql file inside config/
 In your SQL Server DB, restore the Database Structure using the .sql file you can find in *config/setup_files*.
 It will be used in the project to store users and images data.
 
-### 3. Prepare .env file
+### LC-3. Prepare .env file
 Get an Azure Subscription to use the services listed in this project. The Services you'll need to sign for are:
 - [ ] Azure Blob Storage
 - [ ] Azure SQL Server Database
@@ -95,41 +96,112 @@ COMPUTERVISION_KEY = "<your_azure_computervision_key>"
 ```
 Replace the "string_example" with the proper string/key values got from your Subscriptions. You can find an example under *config/setup_files* you can use, by renaming it to *.env* and replacing with your apikeys.
 
-### 3.1 (Optional) Add Google Maps API Key
+### LC-3.1 (Optional) Add Google Maps API Key
 For the sake of this project, a Google Maps API Key isn't required. If the G.Maps connection string is left as provided, it will be rendered a Google Maps for Development Use.
 
 If you'd like to include a API Key, you can insert it in the file \_map.php, line 28:58 (directly there or saving it in the .env file and then loading it via DotEnv class).
 
-### 3.2 Save .env file in the correct folder
+### LC-3.2 Save .env file in the correct folder
 Move the .env file you just created inside folder *config/*.
 
-### 4 Build node_modules static files
+### LC-4 Build node_modules static files
 From project root, in a shell execute:
 ```
 $ node_modules/gulp/bin/gulp.js
 ```
 This command create a build of all js/css/... static files that the application requires, under *public/dist*.
 
-### Final. Test the project
+### LC-Final. Test the project
 Open a shell/command prompt in the project root folder and execute:
 ```
 php -S 0.0.0.0:9999 -t public/
 ```
 Go to http://localhost:9999 and have fun :+1:!
 
-
 ## LINUX SERVER CONFIGURATION
-This guide will suppose you have a clean linux install on your server, that needs an full setup to be ready.
-### 
-### follow step 1-? from [Local Setup](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#install-locally-windows-linux)
-//TODO also the correct link//
-### put prj in apache root + apache config
-//TODO//
+**Bear in mind: this guide is based on Debian 9, hosted on Microsoft Azure Cloud. If your hw/sw differs, changes to this guide will be required.**
 
-# Help Needed?
+### LSC-1. Fresh Start: Requirements
+Right now we'll create a new Virtual Machine to host the site. Go on [portal.azure.com](portal.azure.com) and create a new Virtual Machine with your preferred OS. As specified before, I'll be using a Debian 9 Stretch OS.
+
+Configure its options as required by your project, be sure to set a secure connection method (passowrd/ssh auth). After the VM is deployed, please update the dnsname. From the VM Dashboard you can click on dnsname=>configure; set the DNS as static and assign a name that we'll use later.
+
+Log in to the VM via Shell on Linux-OS or Putty on Microsoft-system.
+
+### LSC-2. VM Requirements Config
+Let's now setup the Linux environment for hosting the site. The packages required are listed here, followed by commands or links containing further install instructions:
+- Git => ```apt install git```
+- Node => [here](https://github.com/nodesource/distributions/blob/master/README.md)
+- Composer => eg [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-debian-9)
+- PHP => eg [7.4](https://computingforgeeks.com/how-to-install-latest-php-on-debian/), [7.3](https://www.rosehosting.com/blog/how-to-install-php-7-3-on-debian-9/)
+- Apache2 => ```apt install apache2```
+This isn't a complete list; please add/install other missing sub-packages where you are prompted by shell.
+
+### LSC-2.1. Please execute step [LC-1.1](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#11-optional-update-the-phpini-max-filesize)
+
+### LSC-2.2 Prepare Repository
+```
+cd /var/www/html/
+git clone <repo_url>
+cd <repo_name>/
+npm i
+composer i
+```
+
+### LSC-2.3. Please execute step [LC-2, 2.1](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#2-set-your-environment-ready-for-sql-server-database)
+
+### LSC-3 Create site config for Apache2
+```
+sudo su
+nano /etc/apache2/apache2.conf
+```
+In the file search and update the following Directory directive with those options:
+```
+<Directory /var/www/>
+Options Indexes FollowSymLinks
+AllowOverride All
+Require all granted
+</Directory>
+```
+Next:
+```
+cd /etc/apache2/sites-available/
+nano file.conf
+```
+Inside file.conf copy those lines, replacing <yourdnsname> with the Dns Name you set before:
+```
+Listen 80
+<VirtualHost *:80>
+ServerAdmin admin@<yourdnsname>
+ServerName <yourdnsname>
+ServerAlias <dnsname>
+DocumentRoot /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio/public/
+<Directory /var/www/html/ITS_CloudProject_SoncinDAugelliGregoricchio>
+AllowOverride All
+Options -Indexes
+</Directory>
+DirectoryIndex index.html index.php
+Options -Indexes
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+Lastly:
+```
+sudo a2ensite file.conf
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+```
+### LSC-4. Execute steps [LC-3, LC-4](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio#3-prepare-env-file)
+
+### LSC-Final. Test the project
+Connect to <dnsname.com> and start playing with your new site!
+
+# Want Help?
 If you have doubts or requests, feel write to at:\
 [erika](mailto:erika.soncin@edu.itspiemonte.it)\
 [mario](mailto:mario.daugelli@edu.itspiemonte.it)\
 [matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it)
+or contact us on Github.
 
 This software is released under the [Apache License](/LICENSE), Version 2.0.

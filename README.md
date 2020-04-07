@@ -139,7 +139,7 @@ Let's now setup the Linux environment for hosting the site. The packages require
 
 This isn't a complete list; please add/install other missing sub-packages where you are prompted by shell.
 
-### LSC-2.1. Please execute step [LC-1.1](#11-optional-update-the-phpini-max-filesize)
+### LSC-2.1. Please execute step [LC-1.1](#lc-11-optional-update-the-phpini-max-filesize)
 
 ### LSC-2.2 Prepare Repository
 ```
@@ -150,7 +150,7 @@ npm i
 composer i
 ```
 
-### LSC-2.3. Please execute step [LC-2, 2.1](#2-set-your-environment-ready-for-sql-server-database)
+### LSC-2.3. Please execute step [LC-2, 2.1](#lc-2-set-your-environment-ready-for-sql-server-database)
 
 ### LSC-3. Create site config for Apache2
 ```
@@ -194,7 +194,7 @@ sudo a2ensite file.conf
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 ```
-### LSC-4. Execute steps [LC-3, LC-4](#3-prepare-env-file)
+### LSC-4. Execute steps [LC-3, LC-4](#lc-3-prepare-env-file)
 
 ### LSC-Final. Test the project
 Connect to <dnsname.com> and start playing with your new site!
@@ -208,5 +208,5 @@ If you have doubts or requests, feel write to at:\
 or contact us on Github.
 
 <p align="center">
-  <img width="460" height="300" src="https://gph.is/1C6VV2M">
+  ![](https://gph.is/1C6VV2M)
 </p>

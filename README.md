@@ -4,9 +4,11 @@
 
 **You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
 
+**You can see it on action here: https://cloudprojectdeploy.westus.cloudapp.azure.com (if the site doesn't work, our free time on Azure expired ;-] )**
+
 *This software is released under the [Apache License](/LICENSE), Version 2.0.*
 
-Final Project for Cloud Service course at ([ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20). Teacher: [E. Zimuel](https://github.com/ezimuel).
+Final Project for Cloud Service course at [ITS-ICT Piemonte](http://www.its-ictpiemonte.it/), IBS 18-20. Teacher: [E. Zimuel](https://github.com/ezimuel).
 
 ## DESCRIPTION
 This is a cloud-based photo management website. An user can register to the service and upload its photos, to host and manage them remotely.\
@@ -31,7 +33,7 @@ The site has:
 - a Show Single Blob page, complete of EXIF Informations and related Tags.
 
 ### Based mainly on
-- [PHP](https://php.net/>), using via Composer libraries: [Azure Storage PHP](https://github.com/Azure/azure-storage-php), [HTTP_Request2](https://packagist.org/packages/pear/http_request2), [Plates](https://packagist.org/packages/league/plates), [DotEnv](https://packagist.org/packages/vlucas/phpdotenv), [PHP-DI] (http://php-di.org/)
+- [PHP](https://php.net/>), using via Composer libraries: [Azure Storage PHP](https://github.com/Azure/azure-storage-php), [HTTP_Request2](https://packagist.org/packages/pear/http_request2), [Plates](https://packagist.org/packages/league/plates), [DotEnv](https://packagist.org/packages/vlucas/phpdotenv), [PHP-DI](http://php-di.org/)
 - [Javascript](https://www.javascript.com/), using via npm libraries: [JQuery](https://jquery.com/), [Bootstrap](https://getbootstrap.com/)
 - [Simple_MVC](README_MVC.md), a simplified PHP MVC Framework developed by E. Zimuel for didactic reasons.
 - Azure Cloud Services
@@ -123,7 +125,7 @@ Go to http://localhost:9999 and have fun :+1:!
 **Bear in mind: this guide is based on Debian 9, hosted on Microsoft Azure Cloud. If your hw/sw differs, changes to this guide will be required.**
 
 ### LSC-1. Fresh Start: Requirements
-Right now we'll create a new Virtual Machine to host the site. Go on [portal.azure.com](portal.azure.com) and create a new Virtual Machine with your preferred OS. As specified before, I'll be using a Debian 9 Stretch OS.
+Right now we'll create a new Virtual Machine to host the site (*note*, for the entire guide I'll take for granted you already have subs for all Azure services you need in the project). Go on [portal.azure.com](portal.azure.com) and create a new Virtual Machine with your preferred OS. As specified before, I'll be using a Debian 9 Stretch OS.
 
 Configure its options as required by your project, be sure to set a secure connection method (password/ssh auth). After the VM is deployed, please update the dnsname. From the VM Dashboard you can click on dnsname=>configure; set the DNS as static and assign a name that we'll use later.
 
@@ -199,14 +201,11 @@ sudo systemctl restart apache2
 ### LSC-Final. Test the project
 Connect to <dnsname.com> and start playing with your new site!
 
-# Want Help?
-If you have doubts or requests, feel write to at:\
-[erika](mailto:erika.soncin@edu.itspiemonte.it)\
-[mario](mailto:mario.daugelli@edu.itspiemonte.it)\
-[matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it)
+# Doubts or requests?
+Contact us via email: [erika](mailto:erika.soncin@edu.itspiemonte.it), [mario](mailto:mario.daugelli@edu.itspiemonte.it), [matteo](mailto:matteo.gregoricchio@edu.itspiemonte.it) or on Github!
 
-or contact us on Github.
+If you have any bug fix or improvements to suggest, feel free to open a PR/Issue!
 
 <p align="center">
- <img src="https://media.giphy.com/media/ckfJmpfUQaYVi/giphy.gif"/>
+ <img src="https://media.giphy.com/media/ckfJmpfUQaYVi/giphy.gif"/ height="200px" width="200px">
 </p>

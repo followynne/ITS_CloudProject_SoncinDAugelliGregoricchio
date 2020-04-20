@@ -4,7 +4,7 @@
 
 **You can find the source code for this project at: [https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio](https://github.com/followynne/ITS_CloudProject_SoncinDAugelliGregoricchio)**
 
-**You can see it on action here: https://cloudprojectdeploy.westus.cloudapp.azure.com (if the site doesn't work, our free time on Azure expired ;-] )**
+**You can see it on action here: http://cloudprojectdeploy.westus.cloudapp.azure.com/ (if the site doesn't work, our free time on Azure expired ;-] )**
 
 *This software is released under the [Apache License](/LICENSE), Version 2.0.*
 
